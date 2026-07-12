@@ -16,11 +16,13 @@ This project is derived from Adrián Cardona's MSc thesis repository (`Paper_TFM
 
 Required reading:
 
-- [`docs/WORKSPACE_POLICY.md`](docs/WORKSPACE_POLICY.md) — read-only rules for `Paper_TFM-main`
-- [`docs/REPRODUCTION_PLAN.md`](docs/REPRODUCTION_PLAN.md) — reproduction without modifying the snapshot
-- [`docs/audit/PROJECT_AUDIT.md`](docs/audit/PROJECT_AUDIT.md) — phase-1 audit
-- [`docs/audit/RESEARCH_ROADMAP.md`](docs/audit/RESEARCH_ROADMAP.md)
-- [`docs/audit/QUESTIONS_FOR_STUDENT.md`](docs/audit/QUESTIONS_FOR_STUDENT.md)
+- [`docs/FROZEN_BASELINE.md`](docs/FROZEN_BASELINE.md) — baseline freeze policy
+- [`docs/project_architecture.md`](docs/project_architecture.md) — layout and execution flow
+- [`docs/research_design.md`](docs/research_design.md) — scientific roadmap
+- [`docs/dataset/dataset.md`](docs/dataset/dataset.md) — dataset specification
+- [`docs/evaluation_metrics.md`](docs/evaluation_metrics.md) — metric definitions
+- [`docs/WORKSPACE_POLICY.md`](docs/WORKSPACE_POLICY.md) — read-only snapshot rules
+- [`docs/reproduction/REPRODUCTION_SUMMARY.md`](docs/reproduction/REPRODUCTION_SUMMARY.md) — Phase 2 results (frozen)
 
 ## Repository layout
 

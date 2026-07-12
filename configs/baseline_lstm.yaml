@@ -1,0 +1,72 @@
+# Frozen baseline LSTM experiment — thesis reproduction parameters.
+# DO NOT modify values in this file until original checkpoint has been validated.
+# See docs/FROZEN_BASELINE.md
+
+experiment:
+  name: baseline_lstm_thesis
+  seed: 42
+  device: auto
+
+paths:
+  # Inherited from configs/reproduction.yaml snapshot_root at runtime.
+  use_reproduction_paths: true
+
+dataset:
+  window_size: 31
+  stride: 1
+  use_z: true
+  use_visibility: false
+  drop_unlabeled: true
+  num_landmarks: 33
+  features_per_frame: 99
+
+split:
+  strategy: athlete_level
+  source: athlete_split.json  # read-only snapshot
+  train_athletes: 49
+  val_athletes: 10
+  test_athletes: 11
+
+model:
+  name: lstm_baseline
+  hidden_size: 128
+  num_layers: 1
+  dropout: 0.2
+
+optimizer:
+  name: adam
+  learning_rate: 0.001
+  weight_decay: 0.0001
+
+scheduler:
+  name: none
+
+training:
+  batch_size: 64
+  epochs: 40
+  early_stopping:
+    monitor: val_macro_f1
+    patience: 8
+  class_weighting: true
+  standardize: train_only
+
+evaluation:
+  levels:
+    - window
+  # Future benchmark levels (not used by frozen baseline):
+  # - frame
+  # - segment
+  frame_aggregation: majority_vote
+  segment_iou_thresholds: [0.10, 0.25, 0.50]
+
+output:
+  processed_dir: data/processed/rebuilt
+  checkpoint_dir: outputs/reproduction/lstm_retrain
+  reports_dir: docs/reproduction/reports
+
+expected:
+  samples: 21249
+  X_shape: [21249, 31, 99]
+  test_samples: 3877
+  accuracy: 0.9517668300232138
+  macro_f1: 0.9186193964938126
