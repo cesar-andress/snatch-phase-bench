@@ -1,7 +1,9 @@
 # Frozen Baseline Policy
 
-The thesis LSTM baseline is **frozen** until the original `best_model.pt` checkpoint
-has been received and validated.
+The thesis LSTM baseline is **frozen and verified** (2026-07-13).
+
+**Specification:** [`benchmark/BASELINE_SPECIFICATION.md`](benchmark/BASELINE_SPECIFICATION.md)  
+**Validation:** [`reproduction/CHECKPOINT_VALIDATION.md`](reproduction/CHECKPOINT_VALIDATION.md)
 
 ## Do not modify
 
@@ -10,7 +12,7 @@ has been received and validated.
 - `src/snatch_phase_bench/evaluation/checkpoint_eval.py`
 - `scripts/run_phase2_reproduction.py` (behavior)
 - `configs/baseline_lstm.yaml` (parameter values)
-- `docs/reproduction/REPRODUCTION_SUMMARY.md` (scientific conclusions)
+- Scientific conclusions in [`reproduction/REPRODUCTION_SUMMARY.md`](reproduction/REPRODUCTION_SUMMARY.md) regarding verified checkpoint metrics
 
 ## Allowed
 
@@ -18,12 +20,12 @@ has been received and validated.
 - Documentation and tests
 - New models registered separately from `lstm_baseline`
 
-## Validation gate
+## Validation gate — PASSED
 
-When `best_model.pt` is available, run checkpoint evaluation and confirm:
+Checkpoint evaluation on canonical copy `outputs/baseline/best_model.pt`:
 
-- Test accuracy `0.9517668300`
-- Macro-F1 `0.9186193965`
+- Test accuracy `0.9517668300232138` — **EXACT**
+- Macro-F1 `0.9186193964811207` — **EXACT**
 - `Matches saved report: YES`
 
-Only then may benchmark model development begin.
+Benchmark model development (B0–B3) may proceed per [`benchmark/BENCHMARK_PLAN.md`](benchmark/BENCHMARK_PLAN.md). The frozen LSTM remains a historical reproduction artifact, not a substitute for B0/B1 TAS tiers.

@@ -1,6 +1,6 @@
 # Benchmark plan
 
-**Status:** Planning document (Phase 3+). Frozen LSTM baseline is not part of this benchmark tier system except as a historical reproduction artifact.
+**Status:** Planning document (Phase 3+). Frozen LSTM baseline is **verified** (2026-07-13) — see [`BASELINE_SPECIFICATION.md`](BASELINE_SPECIFICATION.md). It is not part of benchmark tiers B0–B3 except as a historical reproduction artifact.
 
 **Scientific guidance:** [`SnatchPhaseBench_Literature_Foundation.md`](../../../SnatchPhaseBench_Literature_Foundation.md) Parts 3, 4, 6, and 12.
 
