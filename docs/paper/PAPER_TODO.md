@@ -15,14 +15,14 @@ Extracted from the literature foundation, gap analysis, benchmark plan, and curr
 | ID | Action | Section affected | Blocker |
 |----|--------|------------------|---------|
 | LIT-01 | Verify all `[V]`/`[K]`/`[?]` entries from literature Part 9 before BibTeX | Related Work, Introduction | Manual DOI check |
-| LIT-02 | Populate Related Work §2.1 markerless validity (Kanko, Theia3D, OpenCap) | §2 | Verified papers |
-| LIT-03 | Populate Related Work §2.2 skeleton encoders (ST-GCN, CTR-GCN, PoseC3D) | §2 | Verified papers |
-| LIT-04 | Populate Related Work §2.3 TAS (MS-TCN, ASFormer, DiffAct) | §2 | Verified papers |
-| LIT-05 | Populate Related Work §2.4 sports phase segmentation (Sensors 2018 wearable) | §2 | Verified papers |
-| LIT-06 | Populate Related Work §2.5 weightlifting CV prior art table | §2, §3 | Part 5.2 comparison |
-| LIT-07 | Add benchmarks & reproducibility subsection (PoseBench3D, OpenCap) | §2 | Verified papers |
-| LIT-08 | Remove all `\todosource{...}` macros once real citations inserted | All | LIT-01–07 |
-| LIT-09 | Replace `@misc{todo_*}` placeholders in `bibliography.bib` | Bibliography | LIT-01 |
+| LIT-02 | Populate Related Work §2.1 markerless validity (Kanko, Theia3D, OpenCap) | §2 | **Done** (2026-07-13) |
+| LIT-03 | Populate Related Work §2.2 skeleton encoders (ST-GCN, CTR-GCN, PoseC3D) | §2 | **Done** |
+| LIT-04 | Populate Related Work §2.3 TAS (MS-TCN, ASFormer, DiffAct) | §2 | **Done** — expanded §2.4 |
+| LIT-05 | Populate Related Work §2.4 sports phase segmentation (Sensors 2018 wearable) | §2 | **Done** — §2.5 |
+| LIT-06 | Populate Related Work §2.5 weightlifting CV prior art table | §2, §3 | **Done** — `tab:prior_art_comparison` |
+| LIT-07 | Add benchmarks & reproducibility subsection (PoseBench3D, OpenCap) | §2 | Partial — OpenCap cited; PoseBench3D pending |
+| LIT-08 | Remove all `\todosource{...}` macros once real citations inserted | All | **Partial** — intro + §2 done; other sections remain |
+| LIT-09 | Replace `@misc{todo_*}` placeholders in `bibliography.bib` | Bibliography | **Done** |
 
 ### Essential citations to verify first (literature Part 9 ESSENTIAL tier)
 
@@ -67,7 +67,7 @@ Extracted from the literature foundation, gap analysis, benchmark plan, and curr
 | FIG-08 | Benchmark comparison bar/radar | EXP-03 results | Future work |
 | FIG-09 | Boundary error per transition | EXP-04 | Future work |
 | FIG-10 | Qualitative error analysis | Predictions + pose overlay | Blocked EXP-01 |
-| FIG-11 | Prior-art comparison schematic | Related Work | Future work |
+| FIG-11 | Prior-art comparison schematic | Related Work | **Done** — `fig:related_landscape` (TikZ) |
 
 See also [`../figures_plan.md`](../figures_plan.md).
 
@@ -89,7 +89,7 @@ See also [`../figures_plan.md`](../figures_plan.md).
 | TAB-10 | Boundary MAE per transition | **Not in manuscript yet** | EXP-04 — **add to §6** |
 | TAB-11 | Ablation study | Shell | Ablation experiments |
 | TAB-12 | Runtime comparison | Shell | EXP-10 |
-| TAB-13 | Prior art comparison (weightlifting CV) | **Not in manuscript yet** | LIT-06 — **add to §2 or §3** |
+| TAB-13 | Prior art comparison (weightlifting CV) | **`tab:prior_art_comparison` in §2** | LIT-06 — **done** 2026-07-13 |
 
 See also [`../tables_plan.md`](../tables_plan.md).
 
@@ -144,7 +144,7 @@ Items to name but **not** execute in current submission (literature Part 11):
 |----|--------|------|
 | NAR-01 | Ensure abstract uses benchmark story sentence (literature Part 7.2) | `main.tex` |
 | NAR-02 | Reframe contributions: dataset > benchmark > formalization > software | `01_introduction.tex` |
-| NAR-03 | Add explicit “seam between three communities” gap paragraph | `02_related_work.tex` |
+| NAR-03 | Add explicit “seam between three communities” gap paragraph | `02_related_work.tex` | **Done** |
 | NAR-04 | Separate thesis LSTM from benchmark baselines in Methods | `04_methods.tex` |
 | NAR-05 | Add boundary-ms metrics to Experimental Protocol | `05_experimental_protocol.tex` |
 | NAR-06 | Add `tab:boundary_per_transition` placeholder to Results | `06_results.tex` |
@@ -172,4 +172,6 @@ See [`../SCIENTIFIC_WORKFLOW.md`](../SCIENTIFIC_WORKFLOW.md).
 2. **EXP-01** — Validate checkpoint (unblocks baseline tables)
 3. **EXP-02** — Implement B0 rule-based baseline
 4. **EXP-04** — Implement boundary-ms metrics in code + manuscript table
-5. **LIT-01** — Verify essential tier citations; begin Related Work prose
+5. **LIT-DEADLIFT** — Verify deadlift CV citations; extend `tab:prior_art_comparison` if added
+
+See [`RELATED_WORK_REVISION.md`](RELATED_WORK_REVISION.md) for the 2026-07-13 Section 2 rewrite log.

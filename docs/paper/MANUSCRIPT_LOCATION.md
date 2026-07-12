@@ -35,6 +35,7 @@ These files **stay in Git** (process trackers, not LaTeX):
 - [`PAPER_TODO.md`](PAPER_TODO.md)
 - [`REVIEWER_CHECKLIST.md`](REVIEWER_CHECKLIST.md)
 - [`../thesis/`](../thesis/) — thesis integration review (2026-07-13)
+- [`RELATED_WORK_REVISION.md`](RELATED_WORK_REVISION.md) — Section 2 rewrite log (2026-07-13)
 
 Manuscript-local trackers (outside Git, editable):
 
