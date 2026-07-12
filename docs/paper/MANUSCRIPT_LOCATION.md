@@ -34,5 +34,11 @@ These files **stay in Git** (process trackers, not LaTeX):
 
 - [`PAPER_TODO.md`](PAPER_TODO.md)
 - [`REVIEWER_CHECKLIST.md`](REVIEWER_CHECKLIST.md)
+- [`../thesis/`](../thesis/) — thesis integration review (2026-07-13)
+
+Manuscript-local trackers (outside Git, editable):
+
+- `~/papers/snatch-phase-bench/paper/MISSING_FROM_THESIS.md`
+- `~/papers/snatch-phase-bench/paper/FIGURE_REVIEW.md`
 
 See [`../SCIENTIFIC_WORKFLOW.md`](../SCIENTIFIC_WORKFLOW.md) for synchronization rules.
