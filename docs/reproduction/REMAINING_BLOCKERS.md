@@ -1,112 +1,54 @@
-# Remaining blockers — post checkpoint validation
+# Remaining blockers — post Phase 3 benchmark design
 
 **Updated:** 2026-07-13  
-**Context:** Thesis LSTM checkpoint **VERIFIED** (all metrics EXACT). Baseline reproduction phase **closed**.
-
-Ranked by **scientific importance** (highest first).
+**Context:** Baseline reproduction **closed**. Phase 3 benchmark **design complete**; implementation **not** started.
 
 ---
 
-## 1. Phase ontology reconciliation (7 vs 5 phases)
-
-**Impact:** High — affects biomechanical interpretability, prior-art comparison, and rule-based B0 design.
-
-**Evidence:** Thesis uses seven labels (`setup`, `first_pull`, `transition`, `second_pull`, `turnover`, `catch`, `recovery`); IJES 2025 snatch kinematics and coaching literature often collapse to five phases. `tab:phase_taxonomy` lists names without operational definitions.
-
-**Status:** Unresolved (EXP-12).
-
----
-
-## 2. Benchmark tiers B0–B3 not implemented
-
-**Impact:** High — core SnatchPhaseBench contribution is comparative evaluation; only thesis LSTM is validated.
-
-**Evidence:** [`BENCHMARK_PLAN.md`](../benchmark/BENCHMARK_PLAN.md) — B0 rule-based, B1–B3 TAS models marked “Not implemented”.
-
-**Status:** Gate for checkpoint passed; implementation not started.
-
----
-
-## 3. Segment- and boundary-level metrics
-
-**Impact:** High — window-level accuracy is secondary endpoint; boundary MAE (ms) is the planned primary benchmark metric.
-
-**Evidence:** `tab:segment_metrics`, `tab:boundary_metrics` are placeholders; no frame/segment inference pipeline results committed.
-
-**Status:** Blocked on B0+ model implementations and dense prediction export.
-
----
-
-## 4. Frame count discrepancy (37,125 vs 35,825)
-
-**Impact:** Medium-high — affects trust in dataset documentation if unexplained.
-
-**Evidence:** Phase 1 audit vs thesis narrative; rebuilt tensors match manifest (21,249 windows) but raw frame accounting differs.
-
-**Status:** Requires student/source clarification; does not affect validated checkpoint metrics.
-
----
-
-## 5. Inter-annotator agreement undocumented
-
-**Impact:** Medium — reviewers will ask about label reliability.
-
-**Evidence:** Limitations §; no κ or boundary-error study on annotation subset.
-
-**Status:** EXP-11 planned.
-
----
-
-## 6. Legal / licensing / public release
-
-**Impact:** Medium — blocks Zenodo DOI and external reproducibility.
-
-**Evidence:** Athlete identifiers in paths; `Public Zenodo DOI` pending in reproducibility appendix.
-
-**Status:** Legal review required.
-
----
-
-## 7. Camera metadata and robustness
-
-**Impact:** Medium — generalization claims need FPS, resolution, angle diversity.
-
-**Evidence:** `tab:dataset_stats` — native FPS/resolution pending; oblique-camera robustness rows are placeholders.
-
-**Status:** Metadata collection + EXP-08.
-
----
-
-## 8. Publication figures (confusion matrix, training curves)
-
-**Impact:** Low-medium — metrics verified; visualization export pending.
-
-**Evidence:** `fig:confusion_matrix`, `fig:training_curves` still placeholders; predictions not yet plotted.
-
-**Status:** Can generate from checkpoint eval outputs.
-
----
-
-## 9. Statistical testing protocol
-
-**Impact:** Low-medium — needed before claiming significant differences between models.
-
-**Evidence:** §5 statistical testing marked planned.
-
-**Status:** After benchmark runs complete.
-
----
-
-## Resolved (no longer blockers)
+## Resolved
 
 | Item | Resolution |
 |------|------------|
-| Missing `best_model.pt` binary | Recovered at snapshot root; SHA matches manifest |
-| Exact checkpoint evaluation | **VERIFIED** 2026-07-13 |
-| LFS pointer at `outputs/lstm_phases/best_model.pt` | Bypassed via canonical copy |
+| Checkpoint validation | **VERIFIED** (B1-repro-v1) |
+| Benchmark scientific design | [`BENCHMARK_PROTOCOL.md`](../benchmark/BENCHMARK_PROTOCOL.md) |
+| Statistical protocol | [`STATISTICAL_PROTOCOL.md`](../benchmark/STATISTICAL_PROTOCOL.md) |
+| Governance / versioning | [`BENCHMARK_GOVERNANCE.md`](../benchmark/BENCHMARK_GOVERNANCE.md) |
+| Experiment matrix | [`EXPERIMENT_MATRIX.md`](../benchmark/EXPERIMENT_MATRIX.md) |
 
 ---
 
-## Recommended next milestone
+## Open blockers (implementation phase)
 
-**M2** per benchmark plan: implement **B0 rule-based** baseline + boundary metrics on the frozen split and dataset version.
+Ranked by scientific importance:
+
+1. **Phase ontology reconciliation (EXP-ONT / EXP-12)** — blocks B0 threshold semantics  
+2. **Boundary metric implementation (`boundary.py`)** — blocks all primary endpoints  
+3. **B0 rule-based baseline** — highest reviewer risk  
+4. **B2-core TAS models** — main benchmark table  
+5. **LOAO / multi-seed uncertainty** — required for inferential claims  
+6. Frame count discrepancy (37,125 vs 35,825) — documentation trust  
+7. Inter-annotator agreement — EXP-IAA  
+8. Legal / Zenodo release  
+9. Camera metadata and robustness studies  
+
+See prior detail in [`CHECKPOINT_VALIDATION.md`](CHECKPOINT_VALIDATION.md) companion; implementation order in [`BENCHMARK_PROTOCOL.md`](../benchmark/BENCHMARK_PROTOCOL.md) §11.
+
+---
+
+## Open decisions (require sign-off before coding)
+
+| ID | Decision | Doc reference |
+|----|----------|---------------|
+| OD-1 | Seven-phase vs mapped five-phase for B0 | BENCHMARK_PROTOCOL §13 |
+| OD-2 | B0 knee-angle operational definition | BENCHMARK_PROTOCOL §13 |
+| OD-3 | LOAO vs k-fold | STATISTICAL_PROTOCOL §3.3 |
+| OD-4 | Seed count (3 vs 5) | STATISTICAL_PROTOCOL §3.1 |
+| OD-5 | Early-stop metric for B2 | BENCHMARK_PROTOCOL §13 |
+| OD-6 | Reference GPU for runtime | BENCHMARK_PROTOCOL §13 |
+| OD-7 | Video public release scope | BENCHMARK_GOVERNANCE §9 |
+
+---
+
+## Recommended first implementation step
+
+**EXP-ONT** (ontology) in parallel with **EXP-MET** (boundary evaluator) — then **EXP-B0**.

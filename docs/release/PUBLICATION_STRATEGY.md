@@ -56,7 +56,7 @@ Adapt only if experiments contradict; never promise superiority in advance.
 | Raw videos | Not in current export | **Legal review required** |
 | Athlete pseudonyms | Required before public dataset | TODO |
 | Zenodo DOI | On public release milestone | TODO |
-| Checkpoint | `best_model.pt` when validated | Blocked (LFS) |
+| Checkpoint | `best_model.pt` when validated | **VERIFIED** (B1-repro-v1) |
 
 A benchmark that is not fully reproducible is not a benchmark — release checklist is submission-critical.
 
@@ -64,7 +64,8 @@ A benchmark that is not fully reproducible is not a benchmark — release checkl
 
 ## 5. Submission readiness gates
 
-- [ ] G0: Checkpoint validated
+- [ ] G0: Checkpoint validated — **DONE**
+- [ ] G0.5: Phase 3 benchmark protocol documented — **DONE**
 - [ ] G1: Phase ontology reconciled
 - [ ] G2: B0 + boundary metrics reported
 - [ ] G3: MS-TCN / ASFormer baselines complete

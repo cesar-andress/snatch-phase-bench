@@ -11,9 +11,9 @@ Each item lists why reviewers may raise the criticism, current repository status
 | Field | Detail |
 |-------|--------|
 | **Why reviewers raise it** | Weightlifting biomechanics defines snatch phases via knee-extension-angle changes; markerless validity literature shows knee angles recoverable to ~few degrees RMSD. A learned model must justify its complexity. |
-| **Current status** | **Not mitigated.** No B0 rule-based baseline in codebase. Literature foundation ranks this as the single most dangerous reviewer question. |
-| **Remaining work** | Implement `rule_knee_angle` segmenter; compute boundary-ms metrics; report where learning wins/loses (occlusion, oblique views, cross-athlete). |
-| **Mitigation** | Include B0 as **first-class baseline** in all comparison tables. Frame paper as benchmark + honest comparison, not “our LSTM beats heuristics.” See [`../benchmark/BENCHMARK_PLAN.md`](../benchmark/BENCHMARK_PLAN.md). |
+| **Current status** | **Mitigated** for checkpoint; **Not mitigated** for B0 rule baseline. Literature foundation ranks B0 as the single most dangerous reviewer question. |
+| **Remaining work** | Implement `rule_knee_angle` segmenter per [`../benchmark/BENCHMARK_PROTOCOL.md`](../benchmark/BENCHMARK_PROTOCOL.md); compute boundary-ms metrics. |
+| **Mitigation** | Include B0 as **first-class baseline** (tier B0) in all comparison tables. See [`../benchmark/BENCHMARK_PROTOCOL.md`](../benchmark/BENCHMARK_PROTOCOL.md) §7. |
 
 ---
 
@@ -88,9 +88,9 @@ Each item lists why reviewers may raise the criticism, current repository status
 | Field | Detail |
 |-------|--------|
 | **Why reviewers raise it** | Sports-CV papers often lack code, splits, and checkpoints. |
-| **Current status** | **Strong infrastructure** — config-driven rebuild, manifest hashes, tests, frozen baseline policy. **Weak point:** original checkpoint and LFS binaries missing in one export. |
-| **Remaining work** | Obtain `best_model.pt`; Zenodo release; CI badge; pin environment. |
-| **Mitigation** | Reproduction summary + public repo; one-command eval script when checkpoint available. |
+| **Current status** | **Strong infrastructure** — config-driven rebuild, manifest hashes, tests, frozen baseline policy. **B1 checkpoint validated** (2026-07-13). |
+| **Remaining work** | Zenodo release; CI badge; B0/B2 benchmark runs. |
+| **Mitigation** | Reproduction summary + [`../benchmark/BENCHMARK_GOVERNANCE.md`](../benchmark/BENCHMARK_GOVERNANCE.md); public repo. |
 
 ---
 
@@ -149,7 +149,7 @@ Each item lists why reviewers may raise the criticism, current repository status
 | 5 | Data leakage | ✅ Mitigated | Maintain |
 | 6 | Extractor dependence | ❌ Open | P1 |
 | 7 | Metric saturation | ⚠️ Partial | P0 |
-| 8 | Reproducibility | ⚠️ Strong but checkpoint gap | P0 |
+| 8 | Reproducibility | ⚠️ B1 verified; release pending | P0 |
 | 9 | Annotation subjectivity | ❌ Open | P1 |
 | 10 | Overclaimed gap | ⚠️ Partial | P1 |
 | 11 | Phase ontology | ❌ Open | **P0** |

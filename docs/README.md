@@ -10,7 +10,11 @@
 ## Research and benchmark
 
 - [`research_design.md`](research_design.md) — scientific goals and contribution framing
-- [`benchmark/BENCHMARK_PLAN.md`](benchmark/BENCHMARK_PLAN.md) — baseline tiers, metrics, milestones
+- [`benchmark/BENCHMARK_PROTOCOL.md`](benchmark/BENCHMARK_PROTOCOL.md) — **canonical** Phase 3 benchmark specification
+- [`benchmark/EXPERIMENT_MATRIX.md`](benchmark/EXPERIMENT_MATRIX.md) — planned experiments
+- [`benchmark/STATISTICAL_PROTOCOL.md`](benchmark/STATISTICAL_PROTOCOL.md) — inferential analysis rules
+- [`benchmark/BENCHMARK_GOVERNANCE.md`](benchmark/BENCHMARK_GOVERNANCE.md) — versioning policy
+- [`benchmark/BENCHMARK_PLAN.md`](benchmark/BENCHMARK_PLAN.md) — implementation checklist (legacy summary)
 - [`evaluation_metrics.md`](evaluation_metrics.md) — metric definitions
 - [`release/PUBLICATION_STRATEGY.md`](release/PUBLICATION_STRATEGY.md) — venue fit and release plan
 
@@ -46,6 +50,6 @@
 
 ## Status
 
-Phase 2 reproduction is **complete**: dataset rebuild exact; thesis checkpoint **VERIFIED** (all metrics EXACT).
-Phase 2.5 infrastructure and Phase 2.6 living manuscript are active.
-Benchmark experiments (B0–B3) may proceed; see [`reproduction/REMAINING_BLOCKERS.md`](reproduction/REMAINING_BLOCKERS.md).
+Phase 2 reproduction is **complete** (checkpoint VERIFIED).
+Phase 3 benchmark **design** is **complete**; implementation **not** started.
+See [`benchmark/BENCHMARK_PROTOCOL.md`](benchmark/BENCHMARK_PROTOCOL.md).

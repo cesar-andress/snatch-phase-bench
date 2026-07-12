@@ -51,20 +51,18 @@ Do not blur stages 1–3 (literature Part 4.2). See [`project_architecture.md`](
 | Checkpoint eval | **Verified exact** (2026-07-13; see [`CHECKPOINT_VALIDATION.md`](reproduction/CHECKPOINT_VALIDATION.md)) |
 | Retrain proxy | ~0.944 accuracy, ~0.899 macro-F1 (CPU) |
 
-This LSTM is the **historical thesis baseline**, not the literature-recommended benchmark tier (B0–B3). See [`FROZEN_BASELINE.md`](FROZEN_BASELINE.md) and [`benchmark/BENCHMARK_PLAN.md`](benchmark/BENCHMARK_PLAN.md).
+This LSTM is **benchmark tier B1** — verified historical reference. Primary learned comparators are **B2** TAS models; primary heuristic comparator is **B0**. See [`benchmark/BENCHMARK_PROTOCOL.md`](benchmark/BENCHMARK_PROTOCOL.md).
 
 ## Benchmark strategy (post-checkpoint)
 
-Full plan: [`benchmark/BENCHMARK_PLAN.md`](benchmark/BENCHMARK_PLAN.md)
+**Canonical specification:** [`benchmark/BENCHMARK_PROTOCOL.md`](benchmark/BENCHMARK_PROTOCOL.md)
 
-### Tier 0 (essential)
+### Tier hierarchy (Phase 3)
 
 - **B0** Rule-based knee-angle threshold segmenter
-- **B1–B3** MS-TCN, MS-TCN++, ASFormer on raw normalized keypoints
-
-### Tier 1 (recommended)
-
-- DiffAct; CTR-GCN and PoseC3D encoders → TAS head
+- **B1** Frozen thesis LSTM (**verified**)
+- **B2** MS-TCN, MS-TCN++, ASFormer (+ optional DiffAct, encoders)
+- **B3** Foundation-model representations (optional)
 
 ### Evaluation priority
 
@@ -109,11 +107,12 @@ Definitions: [`evaluation_metrics.md`](evaluation_metrics.md)
 | Pose upper-limb weakness at catch | Literature + limitation; not quantified locally |
 | Metric saturation risk | Long phases dominate frame accuracy |
 
-## Gates before benchmark development
+## Gates before benchmark implementation
 
-1. **Original `best_model.pt` must evaluate to thesis metrics** (`FROZEN_BASELINE.md`)
-2. **Phase ontology reconciliation** with biomechanics standard
-3. **B0 implementation** before claiming benchmark completeness
+1. ~~**Original `best_model.pt` must evaluate to thesis metrics**~~ — **DONE**
+2. **Phase 3 benchmark design reviewed** — **DONE** ([`benchmark/BENCHMARK_PROTOCOL.md`](benchmark/BENCHMARK_PROTOCOL.md))
+3. **Phase ontology reconciliation** with biomechanics standard — **OPEN**
+4. **B0 + boundary metrics** before claiming benchmark completeness — **OPEN**
 
 ## Related documents
 

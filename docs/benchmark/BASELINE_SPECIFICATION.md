@@ -3,9 +3,9 @@
 **Designation:** Official frozen baseline for SnatchPhaseBench historical reproduction  
 **Registry name:** `lstm_baseline`  
 **Status:** **VERIFIED** (2026-07-13)  
-**Version:** B1-repro-v1
+**Version:** B1-repro-v1 (benchmark tier **B1**)
 
-> **Naming note:** In [`BENCHMARK_PLAN.md`](BENCHMARK_PLAN.md), tier **B1** denotes MS-TCN on raw keypoints (planned). This document defines the **thesis LSTM reproduction baseline**—the first frozen model artifact validated against prior work. Report it separately from benchmark tiers B0–B3.
+> **Tier naming:** [`BENCHMARK_PROTOCOL.md`](BENCHMARK_PROTOCOL.md) defines **B1** as this frozen thesis LSTM. **B2** denotes modern TAS architectures (MS-TCN, ASFormer, etc.).
 
 ---
 
@@ -132,7 +132,7 @@ Inference is deterministic on CPU for this checkpoint; GPU is not required for e
 | Bug fix in evaluator (no metric change) | Patch + regression test against this checksum |
 | Preprocessing / dataset rebuild change | New dataset version; **re-validate** checkpoint; bump baseline version |
 | New checkpoint / retrain | New SHA-256; do not overwrite B1-repro-v1 |
-| Benchmark models (B0–B3) | Separate registry entries; must use same split and data version |
+| Benchmark models (B0, B2, B3) | Separate registry entries; must use same split and data version |
 
 Modifications to frozen files listed in [`../FROZEN_BASELINE.md`](../FROZEN_BASELINE.md) require explicit project approval after this validation.
 

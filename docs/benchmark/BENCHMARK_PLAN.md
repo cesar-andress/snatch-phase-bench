@@ -1,6 +1,8 @@
 # Benchmark plan
 
-**Status:** Planning document (Phase 3+). Frozen LSTM baseline is **verified** (2026-07-13) — see [`BASELINE_SPECIFICATION.md`](BASELINE_SPECIFICATION.md). It is not part of benchmark tiers B0–B3 except as a historical reproduction artifact.
+> **Canonical specification (Phase 3):** [`BENCHMARK_PROTOCOL.md`](BENCHMARK_PROTOCOL.md) — use that document for scientific decisions, tier naming, and experiment design. This file retains implementation checklists and literature cross-references.
+
+**Status:** Phase 3 design complete; implementation **not** started. Frozen LSTM ( **B1** ) is **verified** (2026-07-13) — see [`BASELINE_SPECIFICATION.md`](BASELINE_SPECIFICATION.md).
 
 **Scientific guidance:** [`SnatchPhaseBench_Literature_Foundation.md`](../../../SnatchPhaseBench_Literature_Foundation.md) Parts 3, 4, 6, and 12.
 
@@ -54,26 +56,28 @@ All models must respect this separation (literature Part 4.2):
 
 ## 2. Baseline hierarchy
 
-### Tier 0 — Essential (non-negotiable)
+**Canonical tiers (Phase 3):** see [`BENCHMARK_PROTOCOL.md`](BENCHMARK_PROTOCOL.md) §7.
 
 | ID | Model | Role | Repo status |
 |----|-------|------|-------------|
 | **B0** | Rule-based knee-angle threshold segmenter | Biomechanics heuristic; **primary competitor** | **Not implemented** |
-| **B1** | Raw normalized keypoints → MS-TCN | Standard TAS baseline | Not implemented |
-| **B2** | MS-TCN++ | Refined TAS baseline | Not implemented |
-| **B3** | ASFormer | Strong attention baseline | Not implemented |
+| **B1** | Frozen thesis LSTM (window classifier) | Historical reference; **verified** | **VERIFIED** |
+| **B2** | MS-TCN, MS-TCN++, ASFormer (+ DiffAct, encoders optional) | Modern TAS baselines | Not implemented |
+| **B3** | MotionBERT / PoseFormer / foundation representations | Optional future reach | Not planned for v1 |
 
-**Historical note:** The frozen **LSTM window classifier** (thesis) remains in `training/lstm_trainer.py` for reproduction only. It is **not** the literature-recommended benchmark baseline. Report it separately as “thesis replication baseline” if needed.
+### Legacy note
 
-### Tier 1 — Recommended
+Earlier drafts labeled MS-TCN as “B1.” Phase 3 renames tiers: **B1 = thesis LSTM**, **B2 = TAS family**. See [`BENCHMARK_GOVERNANCE.md`](BENCHMARK_GOVERNANCE.md) §8.
+
+### B2 extensions (recommended)
 
 | ID | Model | Role | Repo status |
 |----|-------|------|-------------|
-| **A1** | DiffAct | Advanced generative TAS | Not implemented |
-| **A2** | CTR-GCN encoder → MS-TCN/ASFormer head | Skeleton encoder contribution | Not implemented |
-| **A3** | PoseC3D heatmap → segmentation head | Representation contrast | Not implemented |
+| A1 | DiffAct | Advanced generative TAS (B2 extension) | Not implemented |
+| A2 | CTR-GCN encoder → MS-TCN/ASFormer head | Skeleton encoder (B2/B3) | Not implemented |
+| A3 | PoseC3D heatmap → segmentation head | Representation contrast | Not implemented |
 
-### Tier 2 — Optional reach
+### Tier 2 — Optional reach (B3)
 
 | ID | Model | When to include |
 |----|-------|-----------------|
@@ -105,7 +109,7 @@ Implement via `models/registry.py` without modifying frozen baseline modules.
 | GRU (matched to LSTM) | `gru_baseline` | Window or frame | P2 — ablation only |
 | LSTM (thesis) | `lstm_baseline` | Window | Frozen reproduction only |
 
-**Gate:** Do not register Tier 0 learned models until `best_model.pt` checkpoint validation passes (`docs/FROZEN_BASELINE.md`).
+**Gate:** Checkpoint validation **passed** (2026-07-13). Implement B0 and B2 per [`BENCHMARK_PROTOCOL.md`](BENCHMARK_PROTOCOL.md) implementation order.
 
 ---
 
@@ -206,10 +210,11 @@ Aligned with literature Part 12 prioritized roadmap:
 
 | Milestone | Deliverable | Blocks |
 |-----------|-------------|--------|
-| **M0** | Checkpoint validation (`best_model.pt`) | All benchmark training |
+| **M0** | Checkpoint validation (`best_model.pt`) | **DONE** |
+| **M0.5** | Benchmark protocol + stats + governance docs | **DONE** (Phase 3 design) |
 | **M1** | Phase ontology reconciliation (5 vs 7) | Methods + dataset text |
 | **M2** | B0 rule-based baseline + boundary metrics | Core scientific credibility |
-| **M3** | B1–B3 TAS baselines under frozen recipe | Main results table |
+| **M3** | B2-core TAS baselines under frozen recipe | Main results table |
 | **M4** | LOAO or grouped k-fold results | Uncertainty reporting |
 | **M5** | Pose-extractor + camera robustness | Reviewer risk mitigation |
 | **M6** | A1–A3 advanced contrasts | Optional enrichment |
@@ -236,7 +241,10 @@ When implementing each benchmark model:
 
 ## 11. Related documents
 
-- [`../research_design.md`](../research_design.md) — scientific goals
+- [`BENCHMARK_PROTOCOL.md`](BENCHMARK_PROTOCOL.md) — **canonical** benchmark specification
+- [`STATISTICAL_PROTOCOL.md`](STATISTICAL_PROTOCOL.md) — inferential analysis rules
+- [`BENCHMARK_GOVERNANCE.md`](BENCHMARK_GOVERNANCE.md) — versioning policy
+- [`EXPERIMENT_MATRIX.md`](EXPERIMENT_MATRIX.md) — full experiment matrix
 - [`../evaluation_metrics.md`](../evaluation_metrics.md) — metric math
 - [`../paper/REVIEWER_CHECKLIST.md`](../paper/REVIEWER_CHECKLIST.md) — risk mitigation
 - [`../SCIENTIFIC_WORKFLOW.md`](../SCIENTIFIC_WORKFLOW.md) — sync process

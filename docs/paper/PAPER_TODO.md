@@ -40,7 +40,7 @@ Extracted from the literature foundation, gap analysis, benchmark plan, and curr
 |----|------------|-----------|----------|
 | EXP-01 | Validate `best_model.pt` checkpoint vs thesis JSON | `tab:baseline_reproduction` | **Done** (VERIFIED 2026-07-13) |
 | EXP-02 | Implement B0 rule-based knee-angle baseline | `tab:benchmark_comparison` | **P0** |
-| EXP-03 | Implement MS-TCN, MS-TCN++, ASFormer (B1–B3) | `tab:benchmark_comparison` | P0 |
+| EXP-03 | Implement MS-TCN, MS-TCN++, ASFormer (**B2-core**) | `tab:benchmark_comparison` | **P0** |
 | EXP-04 | Boundary MAE (ms) per phase transition | `tab:segment_metrics`, new boundary table | **P0** |
 | EXP-05 | Segmental F1@10/25/50 + edit score for all models | `tab:segment_metrics` | P0 |
 | EXP-06 | Grouped leave-one-athlete-out or k-fold | Results uncertainty columns | P1 |
@@ -50,6 +50,22 @@ Extracted from the literature foundation, gap analysis, benchmark plan, and curr
 | EXP-10 | Runtime analysis (params, FPS) | `tab:runtime` | P2 |
 | EXP-11 | Inter-annotator agreement on boundary subset | Dataset §, Limitations | P1 |
 | EXP-12 | Phase ontology reconciliation (5 vs 7 phases) | `tab:phase_taxonomy`, Methods | **P0** |
+
+**Phase 3 design (2026-07-13):** Canonical specs in [`../benchmark/BENCHMARK_PROTOCOL.md`](../benchmark/BENCHMARK_PROTOCOL.md), [`EXPERIMENT_MATRIX.md`](../benchmark/EXPERIMENT_MATRIX.md), [`STATISTICAL_PROTOCOL.md`](../benchmark/STATISTICAL_PROTOCOL.md), [`BENCHMARK_GOVERNANCE.md`](../benchmark/BENCHMARK_GOVERNANCE.md). **No model implementation until design review sign-off.**
+
+### Manuscript dependency map (benchmark milestones)
+
+| Milestone | Experiments | Manuscript sections / artifacts |
+|-----------|-------------|--------------------------------|
+| M0 B1 verified | EXP-01 | §5 baseline protocol, `tab:baseline_reproduction`, `tab:baseline_perclass` |
+| M1 Ontology | EXP-12 | §3–4, `tab:phase_taxonomy`, `fig:phase_illustration` |
+| M2 B0 + metrics | EXP-02, EXP-04, EXP-MET | `tab:benchmark_comparison` (B0 row), `tab:boundary_*`, `tab:segment_metrics` |
+| M3 B2-core | EXP-03, EXP-05, EXP-SEED | `tab:benchmark_comparison`, `fig:benchmark_comparison`, §6.2 |
+| M4 Uncertainty | EXP-06 | §5 statistical testing prose, CI columns |
+| M5 Discussion | DIS-01–03 | §7 after M2+M3 |
+| M6 Runtime / ablation | EXP-10, EXP-ABL | `tab:runtime`, `tab:ablation` |
+| M7 Robustness | EXP-07, EXP-08 | §7, appendices, `fig:error_analysis` |
+| M8 IAA | EXP-11 | §3, §8 limitations |
 
 ---
 
@@ -168,10 +184,10 @@ See [`../SCIENTIFIC_WORKFLOW.md`](../SCIENTIFIC_WORKFLOW.md).
 
 ## 10. Priority queue (next 5 actions)
 
-1. **EXP-12 / LIM-03** — Resolve phase ontology with domain expert
-2. **EXP-02** — Implement B0 rule-based baseline
-3. **EXP-04** — Implement boundary-ms metrics in code + manuscript table
-4. Generate `fig:confusion_matrix` from checkpoint predictions (EXP-01 done)
-5. **LIT-DEADLIFT** — Verify deadlift CV citations; extend `tab:prior_art_comparison` if added
+1. **EXP-12 / LIM-03** — Resolve phase ontology (blocks B0)
+2. **EXP-MET + EXP-02** — Boundary metrics + B0 rule baseline
+3. **EXP-03** — B2-core TAS models (MS-TCN → MS-TCN++ → ASFormer)
+4. **EXP-04 / EXP-06** — Boundary tables + LOAO uncertainty
+5. **EXP-B1-FIG** — Confusion matrix from checkpoint predictions
 
 See [`RELATED_WORK_REVISION.md`](RELATED_WORK_REVISION.md) for the 2026-07-13 Section 2 rewrite log.
