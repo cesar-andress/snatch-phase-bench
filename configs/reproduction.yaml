@@ -12,7 +12,8 @@ paths:
   baseline_X_npy: "{snapshot_root}/data/processed/X.npy"
   baseline_y_npy: "{snapshot_root}/data/processed/y.npy"
   athlete_split_json: "{snapshot_root}/outputs/lstm_phases/athlete_split.json"
-  baseline_checkpoint: "{snapshot_root}/outputs/lstm_phases/best_model.pt"
+  # Canonical copy (verified 2026-07-13). Snapshot path outputs/lstm_phases/best_model.pt is LFS pointer only.
+  baseline_checkpoint: outputs/baseline/best_model.pt
   baseline_report_json: "{snapshot_root}/outputs/lstm_phases/classification_report.json"
   baseline_manifest_json: "{snapshot_root}/baseline_tfm/manifest.json"
   pose_model_task: "{snapshot_root}/models/pose_landmarker_full.task"
@@ -51,4 +52,4 @@ expected:
   val_athletes: 10
   test_athletes: 11
   accuracy: 0.9517668300232138
-  macro_f1: 0.9186193964938126
+  macro_f1: 0.9186193964811207

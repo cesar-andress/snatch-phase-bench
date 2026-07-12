@@ -1,0 +1,293 @@
+{
+  "checkpoint_sha256": "ea5ff9ca8a6dd163ad88efe06e1e221ae1b06393538c365b6c185faa7ef6b7fb",
+  "data_dir": "data/processed/rebuilt",
+  "matches_saved_report": true,
+  "global_metrics": [
+    {
+      "metric": "accuracy",
+      "thesis": 0.9517668300232138,
+      "evaluated": 0.9517668300232138,
+      "absolute_difference": 0.0,
+      "status": "EXACT"
+    },
+    {
+      "metric": "macro_precision",
+      "thesis": 0.9132237952982087,
+      "evaluated": 0.9132237952982087,
+      "absolute_difference": 0.0,
+      "status": "EXACT"
+    },
+    {
+      "metric": "macro_recall",
+      "thesis": 0.9250259239618474,
+      "evaluated": 0.9250259239618474,
+      "absolute_difference": 0.0,
+      "status": "EXACT"
+    },
+    {
+      "metric": "macro_f1",
+      "thesis": 0.9186193964811207,
+      "evaluated": 0.9186193964811207,
+      "absolute_difference": 0.0,
+      "status": "EXACT"
+    },
+    {
+      "metric": "weighted_precision",
+      "thesis": 0.9537798429829668,
+      "evaluated": 0.9537798429829668,
+      "absolute_difference": 0.0,
+      "status": "EXACT"
+    },
+    {
+      "metric": "weighted_recall",
+      "thesis": 0.9517668300232138,
+      "evaluated": 0.9517668300232138,
+      "absolute_difference": 0.0,
+      "status": "EXACT"
+    },
+    {
+      "metric": "weighted_f1",
+      "thesis": 0.9523614152610658,
+      "evaluated": 0.9523614152610658,
+      "absolute_difference": 0.0,
+      "status": "EXACT"
+    },
+    {
+      "metric": "test_samples",
+      "thesis": 3877.0,
+      "evaluated": 3877,
+      "absolute_difference": 0.0,
+      "status": "EXACT"
+    }
+  ],
+  "per_class": [
+    {
+      "phase": "setup",
+      "metric": "precision",
+      "thesis": 0.9746070133010882,
+      "evaluated": 0.9746070133010882,
+      "absolute_difference": 0.0,
+      "status": "EXACT"
+    },
+    {
+      "phase": "setup",
+      "metric": "recall",
+      "thesis": 0.9829268292682927,
+      "evaluated": 0.9829268292682927,
+      "absolute_difference": 0.0,
+      "status": "EXACT"
+    },
+    {
+      "phase": "setup",
+      "metric": "f1-score",
+      "thesis": 0.978749241044323,
+      "evaluated": 0.978749241044323,
+      "absolute_difference": 0.0,
+      "status": "EXACT"
+    },
+    {
+      "phase": "setup",
+      "metric": "support",
+      "thesis": 820.0,
+      "evaluated": 820.0,
+      "absolute_difference": 0.0,
+      "status": "EXACT"
+    },
+    {
+      "phase": "first_pull",
+      "metric": "precision",
+      "thesis": 0.9282051282051282,
+      "evaluated": 0.9282051282051282,
+      "absolute_difference": 0.0,
+      "status": "EXACT"
+    },
+    {
+      "phase": "first_pull",
+      "metric": "recall",
+      "thesis": 0.9118387909319899,
+      "evaluated": 0.9118387909319899,
+      "absolute_difference": 0.0,
+      "status": "EXACT"
+    },
+    {
+      "phase": "first_pull",
+      "metric": "f1-score",
+      "thesis": 0.9199491740787802,
+      "evaluated": 0.9199491740787802,
+      "absolute_difference": 0.0,
+      "status": "EXACT"
+    },
+    {
+      "phase": "first_pull",
+      "metric": "support",
+      "thesis": 397.0,
+      "evaluated": 397.0,
+      "absolute_difference": 0.0,
+      "status": "EXACT"
+    },
+    {
+      "phase": "transition",
+      "metric": "precision",
+      "thesis": 0.8151260504201681,
+      "evaluated": 0.8151260504201681,
+      "absolute_difference": 0.0,
+      "status": "EXACT"
+    },
+    {
+      "phase": "transition",
+      "metric": "recall",
+      "thesis": 0.8290598290598291,
+      "evaluated": 0.8290598290598291,
+      "absolute_difference": 0.0,
+      "status": "EXACT"
+    },
+    {
+      "phase": "transition",
+      "metric": "f1-score",
+      "thesis": 0.8220338983050848,
+      "evaluated": 0.8220338983050848,
+      "absolute_difference": 0.0,
+      "status": "EXACT"
+    },
+    {
+      "phase": "transition",
+      "metric": "support",
+      "thesis": 117.0,
+      "evaluated": 117.0,
+      "absolute_difference": 0.0,
+      "status": "EXACT"
+    },
+    {
+      "phase": "second_pull",
+      "metric": "precision",
+      "thesis": 0.9346733668341709,
+      "evaluated": 0.9346733668341709,
+      "absolute_difference": 0.0,
+      "status": "EXACT"
+    },
+    {
+      "phase": "second_pull",
+      "metric": "recall",
+      "thesis": 0.9117647058823529,
+      "evaluated": 0.9117647058823529,
+      "absolute_difference": 0.0,
+      "status": "EXACT"
+    },
+    {
+      "phase": "second_pull",
+      "metric": "f1-score",
+      "thesis": 0.9230769230769231,
+      "evaluated": 0.9230769230769231,
+      "absolute_difference": 0.0,
+      "status": "EXACT"
+    },
+    {
+      "phase": "second_pull",
+      "metric": "support",
+      "thesis": 204.0,
+      "evaluated": 204.0,
+      "absolute_difference": 0.0,
+      "status": "EXACT"
+    },
+    {
+      "phase": "turnover",
+      "metric": "precision",
+      "thesis": 0.9073482428115016,
+      "evaluated": 0.9073482428115016,
+      "absolute_difference": 0.0,
+      "status": "EXACT"
+    },
+    {
+      "phase": "turnover",
+      "metric": "recall",
+      "thesis": 0.9403973509933775,
+      "evaluated": 0.9403973509933775,
+      "absolute_difference": 0.0,
+      "status": "EXACT"
+    },
+    {
+      "phase": "turnover",
+      "metric": "f1-score",
+      "thesis": 0.9235772357723577,
+      "evaluated": 0.9235772357723577,
+      "absolute_difference": 0.0,
+      "status": "EXACT"
+    },
+    {
+      "phase": "turnover",
+      "metric": "support",
+      "thesis": 302.0,
+      "evaluated": 302.0,
+      "absolute_difference": 0.0,
+      "status": "EXACT"
+    },
+    {
+      "phase": "catch",
+      "metric": "precision",
+      "thesis": 0.8357142857142857,
+      "evaluated": 0.8357142857142857,
+      "absolute_difference": 0.0,
+      "status": "EXACT"
+    },
+    {
+      "phase": "catch",
+      "metric": "recall",
+      "thesis": 0.9335106382978723,
+      "evaluated": 0.9335106382978723,
+      "absolute_difference": 0.0,
+      "status": "EXACT"
+    },
+    {
+      "phase": "catch",
+      "metric": "f1-score",
+      "thesis": 0.8819095477386935,
+      "evaluated": 0.8819095477386935,
+      "absolute_difference": 0.0,
+      "status": "EXACT"
+    },
+    {
+      "phase": "catch",
+      "metric": "support",
+      "thesis": 376.0,
+      "evaluated": 376.0,
+      "absolute_difference": 0.0,
+      "status": "EXACT"
+    },
+    {
+      "phase": "recovery",
+      "metric": "precision",
+      "thesis": 0.9968924798011187,
+      "evaluated": 0.9968924798011187,
+      "absolute_difference": 0.0,
+      "status": "EXACT"
+    },
+    {
+      "phase": "recovery",
+      "metric": "recall",
+      "thesis": 0.9656833232992174,
+      "evaluated": 0.9656833232992174,
+      "absolute_difference": 0.0,
+      "status": "EXACT"
+    },
+    {
+      "phase": "recovery",
+      "metric": "f1-score",
+      "thesis": 0.981039755351682,
+      "evaluated": 0.981039755351682,
+      "absolute_difference": 0.0,
+      "status": "EXACT"
+    },
+    {
+      "phase": "recovery",
+      "metric": "support",
+      "thesis": 1661.0,
+      "evaluated": 1661.0,
+      "absolute_difference": 0.0,
+      "status": "EXACT"
+    }
+  ],
+  "confusion_matrix_shape": [
+    7,
+    7
+  ]
+}
