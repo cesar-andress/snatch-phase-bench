@@ -60,7 +60,9 @@ Contiguous intervals per phase. **Verified:** 856 per-video segment CSV files pr
 | 6 | catch | Yes |
 | 7 | recovery | Yes |
 
-**Future work:** Operational biomechanical definitions and boundary criteria (see `docs/reproduction/QUESTIONS_FOR_STUDENT.md` in audit copy).
+**Phase ontology note (literature integration):** Biomechanics literature often defines a **five-phase** snatch decomposition from knee-extension-angle events (First Pull, Transition, Second Pull, Turnover/Catch, Recovery), while this dataset uses **seven** supervised labels including separate `setup`, `turnover`, and `catch`. Reconciliation with the community standard is **pending** — see [`literature/GAP_ANALYSIS.md`](../literature/GAP_ANALYSIS.md) §5.1. Do not claim “standard five-phase ontology” in publications until mapped or relabeled.
+
+**Future work:** Operational biomechanical definitions with citations (Theia3D IJES 2025, Harbili & Alptekin); see [`paper/PAPER_TODO.md`](../paper/PAPER_TODO.md) EXP-12.
 
 ---
 

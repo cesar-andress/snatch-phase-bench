@@ -53,16 +53,27 @@ flowchart TD
 
 No writes to the student snapshot.
 
-## Model flow
+## Model flow (benchmark target)
+
+Three stages — do not conflate (literature Part 4.2):
+
+```text
+[Stage 1] Pose estimation (MediaPipe)     →  keypoints CSV
+[Stage 2] Skeleton encoding (optional)    →  CTR-GCN / PoseC3D / raw
+[Stage 3] Temporal segmentation           →  per-frame phase labels
+```
+
+Current code (frozen baseline path):
 
 ```text
 TemporalSegmentationModel (interface)
         │
-        └── LSTMBaselineModel (adapter)
+        └── LSTMBaselineModel (adapter)     → window-level labels (thesis)
                  └── LSTMClassifier (frozen architecture)
 ```
 
-Register future models in `models/registry.py` without editing the LSTM trainer.
+Future benchmark models register in `models/registry.py` without editing the LSTM trainer.
+See [`docs/benchmark/BENCHMARK_PLAN.md`](benchmark/BENCHMARK_PLAN.md) for B0–A3 tiers.
 
 ## Evaluation flow
 
@@ -85,6 +96,8 @@ Load via `experiments/config_loader.load_experiment_config()`.
 ## Design principles
 
 - **Frozen baseline first** — no silent changes to thesis pipeline.
+- **Benchmark ≠ thesis baseline** — LSTM is reproduction artifact; B0–B3 follow [`benchmark/BENCHMARK_PLAN.md`](benchmark/BENCHMARK_PLAN.md).
 - **Small modules** — metrics, loaders, registry are independent.
 - **Determinism** — seed 42 in baseline config; logging to stdout.
 - **No over-abstraction** — single LSTM adapter, no factory framework beyond registry.
+- **Scientific sync** — see [`SCIENTIFIC_WORKFLOW.md`](SCIENTIFIC_WORKFLOW.md).

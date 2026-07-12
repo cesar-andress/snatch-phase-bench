@@ -1,5 +1,7 @@
 # SnatchPhaseBench — Research Roadmap
 
+> **Historical document (Phase 1 audit).** Benchmark planning is now maintained in [`../benchmark/BENCHMARK_PLAN.md`](../benchmark/BENCHMARK_PLAN.md). Scientific framing follows [`../SnatchPhaseBench_Literature_Foundation.md`](../../SnatchPhaseBench_Literature_Foundation.md).
+
 **Project vision:** Reframe the MSc thesis work as **SnatchPhaseBench** — a reproducible dataset and benchmark for temporal phase segmentation of the Olympic snatch from markerless pose sequences.
 
 **Guiding principle:** The original LSTM is a **baseline**, not the scientific contribution. The contribution should be the dataset, evaluation protocol, baselines, and audited comparisons.

@@ -53,10 +53,20 @@ Convert GT and predicted segment label sequences to strings of contiguous segmen
 
 Higher is better; equals 1 when segment sequences match exactly.
 
-## Boundary metrics (planned)
+## Boundary metrics (planned — benchmark differentiator)
 
-- **Boundary F1:** tolerance \(\pm b\) frames around each GT boundary.
-- **Mean boundary error:** average absolute frame error at transitions.
+Literature foundation (Part 3.6, 6.4) recommends **millisecond-scale boundary evaluation** per phase transition, especially Second Pull→Turnover.
+
+For each ground-truth transition frame \(t^\*\) and predicted transition \(\hat{t}\):
+
+- **Mean absolute boundary error (frames):** \(\mathrm{MAE}_b = |t^\* - \hat{t}|\)
+- **Mean absolute boundary error (ms):** \(\mathrm{MAE}_b^{ms} = \mathrm{MAE}_b \cdot 1000 / \mathrm{fps}\)
+- **Boundary within tolerance:** fraction of boundaries with \(|\hat{t} - t^\*| \le \tau\) for \(\tau \in \{1, 2, 3\}\) frames
+- **Boundary F1:** match predicted boundaries to GT within ±\(b\) frames
+
+Report **per transition type** (not only aggregated), e.g. transition→second_pull, second_pull→turnover.
+
+Implementation: `boundary.py` (TODO). See [`benchmark/BENCHMARK_PLAN.md`](benchmark/BENCHMARK_PLAN.md).
 
 ## Status
 
@@ -66,4 +76,6 @@ Higher is better; equals 1 when segment sequences match exactly.
 | Frame aggregation + metrics | `frame.py` | Implemented |
 | Edit score | `segment.py` | Implemented |
 | Segmental F1@IoU | `segment.py` | Implemented |
-| Boundary F1 | `boundary.py` | TODO |
+| Boundary MAE (frames/ms) | `boundary.py` | TODO — **P0 for benchmark** |
+| Boundary within-τ | `boundary.py` | TODO |
+| Per-transition breakdown | — | TODO |
