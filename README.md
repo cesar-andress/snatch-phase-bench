@@ -6,18 +6,21 @@ Reproducible research artifact for temporal phase segmentation of the Olympic sn
 
 ## Relationship to the original MSc thesis
 
-This project is derived from Adrián Cardona's MSc thesis repository (`Paper_TFM-main`), which is treated as **read-only source material**. SnatchPhaseBench will:
+This project is derived from Adrián Cardona's MSc thesis repository (`Paper_TFM-main`), which is a **strictly read-only archived snapshot**. SnatchPhaseBench will:
 
 1. Reproduce and audit the original LSTM baseline.
 2. Redesign evaluation as a proper temporal segmentation benchmark.
 3. Compare multiple baseline and stronger temporal models.
 
-See the parent directory for audit documents:
+**All development, environments, experiments, commits, and pushes happen in this repository only.**
 
-- [`../PROJECT_AUDIT.md`](../PROJECT_AUDIT.md)
-- [`../REPRODUCTION_PLAN.md`](../REPRODUCTION_PLAN.md)
-- [`../RESEARCH_ROADMAP.md`](../RESEARCH_ROADMAP.md)
-- [`../QUESTIONS_FOR_STUDENT.md`](../QUESTIONS_FOR_STUDENT.md)
+Required reading:
+
+- [`docs/WORKSPACE_POLICY.md`](docs/WORKSPACE_POLICY.md) — read-only rules for `Paper_TFM-main`
+- [`docs/REPRODUCTION_PLAN.md`](docs/REPRODUCTION_PLAN.md) — reproduction without modifying the snapshot
+- [`docs/audit/PROJECT_AUDIT.md`](docs/audit/PROJECT_AUDIT.md) — phase-1 audit
+- [`docs/audit/RESEARCH_ROADMAP.md`](docs/audit/RESEARCH_ROADMAP.md)
+- [`docs/audit/QUESTIONS_FOR_STUDENT.md`](docs/audit/QUESTIONS_FOR_STUDENT.md)
 
 ## Repository layout
 
@@ -31,14 +34,17 @@ src/              Python package (src layout)
 tests/            Unit tests for splits, dataset logic, metrics
 ```
 
-## Quick start (future)
+## Quick start
 
 ```bash
-python -m venv .venv
+cd ~/papers/snatch-phase-bench/snatch-phase-bench
+python3.12 -m venv .venv
 source .venv/bin/activate
 pip install -e ".[dev]"
-# TODO: add reproduce command after porting baseline pipeline
+pytest tests/
 ```
+
+Do **not** create virtual environments or install packages inside `~/papers/Paper_TFM-main`.
 
 ## Data policy
 
