@@ -35,7 +35,7 @@ dev = [
 ]
 
 [project.scripts]
-# TODO: snatch-phase-bench = "snatch_phase_bench.cli:main"
+spb-run-experiment = "snatch_phase_bench.experiments.runner:run_experiment"
 
 [tool.setuptools.packages.find]
 where = ["src"]
