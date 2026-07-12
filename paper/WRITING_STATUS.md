@@ -92,5 +92,11 @@ See also `docs/tables_plan.md`.
 | `docs/evaluation_metrics.md` | `sec:protocol:metrics` |
 | `docs/reproduction/REPRODUCTION_SUMMARY.md` | `sec:results:baseline`, `sec:limitations` |
 | `docs/FROZEN_BASELINE.md` | Methods/preprocessing freeze policy |
+| `docs/benchmark/BENCHMARK_PLAN.md` | `sec:methods:benchmark`, `tab:benchmark_comparison` |
+| `docs/paper/PAPER_TODO.md` | All pending writing/experiment actions |
+| `docs/paper/REVIEWER_CHECKLIST.md` | Limitations, Discussion threats |
+| `docs/SCIENTIFIC_WORKFLOW.md` | Contributor process |
+
+**External literature reference (read-only):** [`../SnatchPhaseBench_Literature_Foundation.md`](../SnatchPhaseBench_Literature_Foundation.md)
 
 Future benchmark merges should update `tab:benchmark_comparison` and `fig:benchmark_comparison` without restructuring sections.
