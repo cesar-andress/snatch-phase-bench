@@ -61,7 +61,7 @@ The largest **ontology inconsistency**: literature recommends the community **fi
 
 ### 2.4 Literature organization (literature Part 8)
 
-| Literature subsection blueprint | Manuscript (`paper/sections/02_related_work.tex`) | Repo doc |
+| Manuscript section blueprint | `~/papers/snatch-phase-bench/paper/sections/` (external) | Repo doc |
 |---------------------------------|--------------------------------------------------|----------|
 | Markerless pose + validity | Outline only, no citations | **Missing** dedicated doc — split across `dataset.md`, `research_design.md` |
 | Skeleton action recognition | Outline | `benchmark/BENCHMARK_PLAN.md` (new) |
@@ -116,7 +116,7 @@ The largest **ontology inconsistency**: literature recommends the community **fi
 | Metric math (window/frame/segment) | `docs/evaluation_metrics.md` | **Good** — extend for boundary-ms |
 | Software architecture | `docs/project_architecture.md` | **Good** — needs 3-stage pipeline note |
 | Frozen baseline policy | `docs/FROZEN_BASELINE.md` | **Good** |
-| Manuscript structure | `paper/`, `paper/WRITING_STATUS.md` | **Good** — needs PAPER_TODO sync |
+| Manuscript structure | External `~/papers/snatch-phase-bench/paper/` + `docs/paper/PAPER_TODO.md` | **Good** |
 | Phase 1 audit | `docs/audit/PROJECT_AUDIT.md` | **Good** — historical |
 
 ---

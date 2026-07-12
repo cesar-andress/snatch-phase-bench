@@ -2,8 +2,9 @@
 
 Extracted from the literature foundation, gap analysis, benchmark plan, and current manuscript state.
 
-**Manuscript:** `paper/main.tex`  
+**Manuscript path:** `~/papers/snatch-phase-bench/paper/main.tex` (outside Git)  
 **Writing status:** [`../../paper/WRITING_STATUS.md`](../../paper/WRITING_STATUS.md)  
+**Location policy:** [`MANUSCRIPT_LOCATION.md`](MANUSCRIPT_LOCATION.md)  
 **Reviewer risks:** [`REVIEWER_CHECKLIST.md`](REVIEWER_CHECKLIST.md)  
 **External reference:** [`SnatchPhaseBench_Literature_Foundation.md`](../../../SnatchPhaseBench_Literature_Foundation.md)
 
@@ -155,7 +156,7 @@ Items to name but **not** execute in current submission (literature Part 11):
 
 When any EXP-* completes:
 
-1. Update `paper/WRITING_STATUS.md` completion %
+1. Update external `~/papers/snatch-phase-bench/paper/WRITING_STATUS.md` completion %
 2. Populate corresponding table/figure in LaTeX
 3. Add one paragraph to Discussion outline
 4. Update [`REVIEWER_CHECKLIST.md`](REVIEWER_CHECKLIST.md) status

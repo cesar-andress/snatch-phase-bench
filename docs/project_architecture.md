@@ -7,7 +7,7 @@ SnatchPhaseBench is organized as a **src-layout** Python package with configurat
 ```text
 configs/                 YAML experiment and reproduction paths
 docs/                    Human-readable documentation (not code)
-paper/                   Manuscript skeleton (LaTeX)
+../paper/                Living LaTeX manuscript (outside Git — see docs/paper/MANUSCRIPT_LOCATION.md)
 scripts/                 CLI entry points
 src/snatch_phase_bench/
   config.py              Snapshot path loading (reproduction.yaml)

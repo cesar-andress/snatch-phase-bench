@@ -16,10 +16,11 @@
 
 ## Paper preparation
 
+- [`paper/MANUSCRIPT_LOCATION.md`](paper/MANUSCRIPT_LOCATION.md) — LaTeX lives outside Git
 - [`paper/PAPER_TODO.md`](paper/PAPER_TODO.md) — manuscript action tracker
 - [`paper/REVIEWER_CHECKLIST.md`](paper/REVIEWER_CHECKLIST.md) — reviewer risks and mitigations
 - [`figures_plan.md`](figures_plan.md) / [`tables_plan.md`](tables_plan.md) — artifact inventory
-- Living manuscript: [`../paper/WRITING_STATUS.md`](../paper/WRITING_STATUS.md)
+- Living manuscript (external): `~/papers/snatch-phase-bench/paper/WRITING_STATUS.md`
 
 ## Dataset and architecture
 

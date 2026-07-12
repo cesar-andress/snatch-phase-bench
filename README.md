@@ -23,18 +23,21 @@ Required reading:
 - [`docs/evaluation_metrics.md`](docs/evaluation_metrics.md) — metric definitions
 - [`docs/WORKSPACE_POLICY.md`](docs/WORKSPACE_POLICY.md) — read-only snapshot rules
 - [`docs/reproduction/REPRODUCTION_SUMMARY.md`](docs/reproduction/REPRODUCTION_SUMMARY.md) — Phase 2 results (frozen)
+- [`docs/paper/MANUSCRIPT_LOCATION.md`](docs/paper/MANUSCRIPT_LOCATION.md) — LaTeX manuscript (outside Git)
 
 ## Repository layout
 
 ```text
 configs/          Experiment YAML configurations
-data/             Data staging (raw/interim/processed) — not populated in phase 1
-docs/             Additional documentation
+data/             Data staging (raw/interim/processed)
+docs/             Documentation (includes paper/ process trackers)
 outputs/          Generated experiment outputs (gitignored)
-scripts/          CLI entry points (to be populated)
+scripts/          CLI entry points
 src/              Python package (src layout)
-tests/            Unit tests for splits, dataset logic, metrics
+tests/            Unit tests
 ```
+
+**Manuscript (LaTeX):** `~/papers/snatch-phase-bench/paper/` — sibling directory, not in this repo.
 
 ## Quick start
 

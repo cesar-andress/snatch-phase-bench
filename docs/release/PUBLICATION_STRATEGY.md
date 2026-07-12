@@ -2,8 +2,8 @@
 
 Distilled from [`SnatchPhaseBench_Literature_Foundation.md`](../../../SnatchPhaseBench_Literature_Foundation.md) Part 7.
 
-**Manuscript:** `paper/main.tex`  
-**Reviewer risks:** [`paper/REVIEWER_CHECKLIST.md`](paper/REVIEWER_CHECKLIST.md)
+**Manuscript:** `~/papers/snatch-phase-bench/paper/main.tex` (see [`../paper/MANUSCRIPT_LOCATION.md`](../paper/MANUSCRIPT_LOCATION.md))  
+**Reviewer risks:** [`REVIEWER_CHECKLIST.md`](REVIEWER_CHECKLIST.md)
 
 ---
 

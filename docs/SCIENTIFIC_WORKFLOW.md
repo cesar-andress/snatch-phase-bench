@@ -27,7 +27,7 @@ How to keep **software**, **benchmark experiments**, **repository documentation*
 | Reproduction status (frozen) | `docs/reproduction/REPRODUCTION_SUMMARY.md` | Paper Results (baseline row only) |
 | Reviewer risks | `docs/paper/REVIEWER_CHECKLIST.md` | Planning, Discussion, rebuttals |
 | Manuscript actions | `docs/paper/PAPER_TODO.md` | Writing sprints |
-| Manuscript completion | `paper/WRITING_STATUS.md` | Contributors |
+| Manuscript completion | External `~/papers/snatch-phase-bench/paper/WRITING_STATUS.md` | Contributors |
 | Literature vs repo gaps | `docs/literature/GAP_ANALYSIS.md` | Planning |
 | Venue and release | `docs/release/PUBLICATION_STRATEGY.md` | Submission decisions |
 | Software layout | `docs/project_architecture.md` | Developers |
@@ -63,7 +63,7 @@ flowchart LR
 3. Export metrics JSON to `docs/reproduction/reports/` or `outputs/benchmark/`
 4. Update `docs/paper/PAPER_TODO.md` — mark EXP-* done
 5. Populate corresponding LaTeX table/figure (**numbers only from this run**)
-6. Update `paper/WRITING_STATUS.md` completion %
+6. Update external `~/papers/snatch-phase-bench/paper/WRITING_STATUS.md` completion %
 7. Update `docs/paper/REVIEWER_CHECKLIST.md` if risk mitigated
 8. Commit: `Report <model> benchmark results on test split`
 
@@ -88,9 +88,9 @@ flowchart LR
 
 When this changes… | Also update…
 ---|---
-`evaluation/metrics/*.py` | `docs/evaluation_metrics.md`, `paper/sections/05_experimental_protocol.tex`
+`evaluation/metrics/*.py` | `docs/evaluation_metrics.md`, external `paper/sections/05_experimental_protocol.tex`
 `configs/baseline_lstm.yaml` (frozen — avoid) | `docs/FROZEN_BASELINE.md`, paper `tab:lstm_hyperparams`
-New benchmark model | `models/registry.py`, `BENCHMARK_PLAN.md`, `PAPER_TODO.md`, paper `tab:benchmark_comparison`
+New benchmark model | `models/registry.py`, `BENCHMARK_PLAN.md`, `PAPER_TODO.md`, external `paper/sections/06_results.tex`
 Dataset rebuild verified | `REPRODUCTION_SUMMARY.md`, `dataset/dataset.md`
 Phase ontology decision | `dataset/dataset.md`, `GAP_ANALYSIS.md`, paper `tab:phase_taxonomy`, `PAPER_TODO EXP-12`
 Citation verified | `bibliography.bib`, remove `\todosource`, `WRITING_STATUS` bibliography table
@@ -144,4 +144,5 @@ Always push to `origin/main` after each milestone (project policy).
 - [`paper/PAPER_TODO.md`](paper/PAPER_TODO.md)
 - [`paper/REVIEWER_CHECKLIST.md`](paper/REVIEWER_CHECKLIST.md)
 - [`FROZEN_BASELINE.md`](FROZEN_BASELINE.md)
-- [`../paper/WRITING_STATUS.md`](../paper/WRITING_STATUS.md)
+- [`paper/MANUSCRIPT_LOCATION.md`](paper/MANUSCRIPT_LOCATION.md)
+- [`../paper/WRITING_STATUS.md`](../../paper/WRITING_STATUS.md) — external manuscript status (from repo: `../paper/`)

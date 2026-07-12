@@ -196,7 +196,7 @@ Report for each model on specified CPU and GPU:
 - End-to-end FPS (pose + encode + segment)
 - Training wall-clock time
 
-Populate `paper/sections/06_results.tex` `tab:runtime` when hardware is standardized.
+Populate `~/papers/snatch-phase-bench/paper/sections/06_results.tex` `tab:runtime` when hardware is standardized.
 
 ---
 
@@ -229,7 +229,7 @@ When implementing each benchmark model:
 - [ ] Extend `experiments/runner.py` (post-gate)
 - [ ] Add tests for output shape and determinism
 - [ ] Log results to `outputs/benchmark/<model>/`
-- [ ] Update `docs/paper/PAPER_TODO.md` and `paper/WRITING_STATUS.md`
+- [ ] Update `docs/paper/PAPER_TODO.md` and external `~/papers/snatch-phase-bench/paper/WRITING_STATUS.md`
 - [ ] Populate manuscript tables only after verified run
 
 ---
@@ -240,4 +240,4 @@ When implementing each benchmark model:
 - [`../evaluation_metrics.md`](../evaluation_metrics.md) — metric math
 - [`../paper/REVIEWER_CHECKLIST.md`](../paper/REVIEWER_CHECKLIST.md) — risk mitigation
 - [`../SCIENTIFIC_WORKFLOW.md`](../SCIENTIFIC_WORKFLOW.md) — sync process
-- [`../../paper/WRITING_STATUS.md`](../../paper/WRITING_STATUS.md) — manuscript status
+- [`../paper/MANUSCRIPT_LOCATION.md`](../paper/MANUSCRIPT_LOCATION.md) — external LaTeX path
