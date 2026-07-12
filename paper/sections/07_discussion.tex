@@ -1,14 +1,52 @@
 \section{Discussion}
 \label{sec:discussion}
 
-% CONTENT GUIDANCE:
-% - Interpret baseline performance relative to annotation difficulty (transition).
-% - Window overlap vs segment metrics.
-% - Generalization across athletes.
-% - Practical implications for coaching (careful claims).
+This section provides a structured outline for interpreting SnatchPhaseBench results once benchmark experiments are complete.
+No performance claims are made at the current manuscript stage.
 
-\subsection{Overlap and Metric Choice}
-% TODO: Reference temporal_autocorrelation analysis.
+\subsection{Interpretation of baseline performance}
+\label{sec:discussion:interpretation}
 
-\subsection{Comparison with Prior Work}
-% TODO: Only after bibliography complete.
+\textsc{TODO:} After checkpoint validation, interpret window-level baseline metrics relative to class imbalance (\Cref{tab:class_distribution}) and known difficulty of transition phases.
+\textsc{TODO:} Compare checkpoint vs.\ retrain reproduction gap and attribute to hardware, stochasticity, or implementation differences only with evidence.
+
+\subsection{Overlap and metric choice}
+\label{sec:discussion:overlap}
+
+\textsc{TODO:} Discuss how stride-1 window evaluation affects apparent accuracy vs.\ segment-level scores.
+\textsc{TODO:} Reference temporal autocorrelation analysis in the repository; quantify correlation among adjacent test windows.
+
+\subsection{Benchmark comparison across temporal architectures}
+\label{sec:discussion:benchmark}
+
+\textsc{TODO:} Summarize ranking from \Cref{tab:benchmark_comparison} without overclaiming statistical significance until \Cref{sec:protocol:stats} is executed.
+\textsc{TODO:} Relate differences to receptive field, parameter count, and suitability for short vs.\ long phase durations.
+
+\subsection{Comparison with prior work}
+\label{sec:discussion:prior}
+
+\textsc{TODO:} Position SnatchPhaseBench metrics relative to prior weightlifting studies cited in \Cref{sec:related:wl} once bibliography is complete.
+\textsc{TODO:} Clarify that direct numeric comparison may be impossible if splits and labels differ.
+
+\subsection{Practical implications for coaching and sports science}
+\label{sec:discussion:practice}
+
+\textsc{TODO:} Discuss whether segment-level accuracy is sufficient for automated feedback tools.
+\textsc{TODO:} Address deployment constraints: monocular club footage, real-time latency, interpretability for coaches.
+
+\subsection{Threats to validity}
+\label{sec:discussion:validity}
+
+\paragraph{Internal validity.}
+\textsc{TODO:} Overlapping windows, single annotation pass, pose estimator bias.
+
+\paragraph{External validity.}
+\textsc{TODO:} Athlete cohort diversity, camera conditions, generalization to other weightlifting movements (clean and jerk).
+
+\paragraph{Construct validity.}
+\textsc{TODO:} Alignment between operational phase labels and biomechanical theory once definitions are finalized.
+
+\subsection{Future work}
+\label{sec:discussion:future}
+
+\textsc{TODO:} Public release, multi-annotator study, paired MOCAP subset, barbell tracking fusion, cross-movement transfer, real-time demo.

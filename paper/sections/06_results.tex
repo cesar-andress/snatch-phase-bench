@@ -1,24 +1,195 @@
 \section{Results}
 \label{sec:results}
 
-% CONTENT GUIDANCE:
-% - Subsection: Baseline reproduction (checkpoint vs retrain — distinguish clearly).
-% - Subsection: Benchmark comparison (FUTURE — leave empty or TODO table shell).
-% - Subsection: Segment metrics (FUTURE).
-% - Figures: confusion matrix (F6), benchmark (F9).
-% - Tables: T5 baseline, T6 reproduction, T7 benchmark.
-%
-% CRITICAL: Do NOT insert thesis metrics as reproduced until checkpoint validated.
-% Phase 2 retrain (~0.944 acc) may be reported as approximate with caveats only.
+This section defines the tables and figures required for a complete journal submission.
+\emph{No quantitative experimental results are reported at this stage} except dataset statistics already verified in \Cref{sec:dataset}.
+Each placeholder explicitly states the experiment that will populate it.
 
-\subsection{Baseline Reproduction}
-% TODO: Table~\ref{tab:baseline_results} after checkpoint validation.
+\subsection{Baseline reproduction}
+\label{sec:results:baseline}
 
-\subsection{Benchmark Comparison}
-% TODO (Phase 3)
+\Cref{tab:baseline_reproduction} will report checkpoint-based evaluation on the fixed test split (3{,}877 windows, 11 athletes).
+Population experiment: load original \texttt{best\_model.pt}, run frozen \texttt{evaluate\_checkpoint} on rebuilt \texttt{X.npy}/\texttt{y.npy}, compare against saved thesis \texttt{classification\_report.json}.
 
-\subsection{Segment-Level Evaluation}
-% TODO (Phase 3)
+\begin{table}[t]
+  \centering
+  \caption{Baseline reproduction on held-out test athletes. \textbf{Do not populate until checkpoint validation succeeds.} Rows distinguish thesis artifact values vs.\ reproduced checkpoint evaluation vs.\ optional CPU retrain approximation.}
+  \label{tab:baseline_reproduction}
+  \begin{tabular}{lccc}
+    \toprule
+    Metric & Thesis artifact & Checkpoint eval & Retrain (approx.) \\
+    \midrule
+    Accuracy & \textit{[TODO]} & \textit{[TODO]} & \textit{[TODO]} \\
+    Macro precision & \textit{[TODO]} & \textit{[TODO]} & \textit{[TODO]} \\
+    Macro recall & \textit{[TODO]} & \textit{[TODO]} & \textit{[TODO]} \\
+    Macro F1 & \textit{[TODO]} & \textit{[TODO]} & \textit{[TODO]} \\
+    Weighted F1 & \textit{[TODO]} & \textit{[TODO]} & \textit{[TODO]} \\
+    Test windows & 3{,}877 & 3{,}877 & 3{,}877 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
 
-\subsection{Ablation Studies}
-% TODO (Phase 4)
+\textsc{Experiment gate:} obtain real \texttt{best\_model.pt} binary; confirm \texttt{Matches saved report: YES} in reproduction script output.
+
+\begin{figure}[t]
+  \centering
+  \todofig{Window-level confusion matrix for LSTM baseline on test split (7$\times$7). Source: regenerated from checkpoint predictions export.}
+  \caption{Baseline confusion matrix (placeholder). Populate from \texttt{test\_predictions.csv} after checkpoint validation.}
+  \label{fig:confusion_matrix}
+\end{figure}
+
+\begin{figure}[t]
+  \centering
+  \todofig{Training and validation curves (loss, accuracy, macro-F1) for baseline LSTM. Source: \texttt{history.csv} or retrain logs.}
+  \caption{Baseline training curves (placeholder).}
+  \label{fig:training_curves}
+\end{figure}
+
+\subsection{Per-class baseline performance}
+\label{sec:results:perclass}
+
+\Cref{tab:baseline_perclass} will report per-phase precision, recall, and F1 on the test split.
+
+\begin{table}[t]
+  \centering
+  \caption{Per-class test metrics for the \acs{LSTM} baseline. Populate after checkpoint validation.}
+  \label{tab:baseline_perclass}
+  \begin{tabular}{lccc}
+    \toprule
+    Phase & Precision & Recall & F1 \\
+    \midrule
+    setup & \textit{[TODO]} & \textit{[TODO]} & \textit{[TODO]} \\
+    first\_pull & \textit{[TODO]} & \textit{[TODO]} & \textit{[TODO]} \\
+    transition & \textit{[TODO]} & \textit{[TODO]} & \textit{[TODO]} \\
+    second\_pull & \textit{[TODO]} & \textit{[TODO]} & \textit{[TODO]} \\
+    turnover & \textit{[TODO]} & \textit{[TODO]} & \textit{[TODO]} \\
+    catch & \textit{[TODO]} & \textit{[TODO]} & \textit{[TODO]} \\
+    recovery & \textit{[TODO]} & \textit{[TODO]} & \textit{[TODO]} \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\subsection{Benchmark comparison}
+\label{sec:results:benchmark}
+
+\Cref{tab:benchmark_comparison} will compare all registered temporal models under the shared protocol (\Cref{sec:protocol:benchmark}).
+
+\begin{table}[t]
+  \centering
+  \caption{Benchmark model comparison on test athletes. Populate after Phase~3 experiments.}
+  \label{tab:benchmark_comparison}
+  \resizebox{\linewidth}{!}{%
+  \begin{tabular}{lcccccc}
+    \toprule
+    Model & Window Acc & Macro F1 & Frame Macro F1 & F1@50 & Edit score & Params \\
+    \midrule
+    LSTM (baseline) & \textit{[TODO]} & \textit{[TODO]} & \textit{[TODO]} & \textit{[TODO]} & \textit{[TODO]} & \textit{[TODO]} \\
+    GRU & \textit{[TODO]} & \textit{[TODO]} & \textit{[TODO]} & \textit{[TODO]} & \textit{[TODO]} & \textit{[TODO]} \\
+    TCN & \textit{[TODO]} & \textit{[TODO]} & \textit{[TODO]} & \textit{[TODO]} & \textit{[TODO]} & \textit{[TODO]} \\
+    MS-TCN & \textit{[TODO]} & \textit{[TODO]} & \textit{[TODO]} & \textit{[TODO]} & \textit{[TODO]} & \textit{[TODO]} \\
+    ST-GCN & \textit{[TODO]} & \textit{[TODO]} & \textit{[TODO]} & \textit{[TODO]} & \textit{[TODO]} & \textit{[TODO]} \\
+    Transformer & \textit{[TODO]} & \textit{[TODO]} & \textit{[TODO]} & \textit{[TODO]} & \textit{[TODO]} & \textit{[TODO]} \\
+    \bottomrule
+  \end{tabular}}
+\end{table}
+
+\begin{figure}[t]
+  \centering
+  \todofig{Bar chart or radar plot comparing benchmark models across window and segment metrics. See \texttt{docs/figures\_plan.md} F9.}
+  \caption{Benchmark comparison figure (placeholder).}
+  \label{fig:benchmark_comparison}
+\end{figure}
+
+\subsection{Segment-level evaluation}
+\label{sec:results:segment}
+
+\Cref{tab:segment_metrics} will report segmental F1 at IoU thresholds and edit score derived from aggregated frame predictions.
+
+\begin{table}[t]
+  \centering
+  \caption{Segment-level test metrics. Populate after frame/segment inference pipeline is run for each model.}
+  \label{tab:segment_metrics}
+  \begin{tabular}{lcccc}
+    \toprule
+    Model & F1@10 & F1@25 & F1@50 & Edit score \\
+    \midrule
+    LSTM (baseline) & \textit{[TODO]} & \textit{[TODO]} & \textit{[TODO]} & \textit{[TODO]} \\
+    \multicolumn{5}{l}{\textit{[Additional models after benchmark experiments]}} \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\subsection{Ablation studies}
+\label{sec:results:ablation}
+
+\Cref{tab:ablation} will summarize ablations defined in \Cref{sec:protocol:ablations}.
+
+\begin{table}[t]
+  \centering
+  \caption{Ablation study results (placeholder).}
+  \label{tab:ablation}
+  \begin{tabular}{llcc}
+    \toprule
+    Factor & Variant & Macro F1 & $\Delta$ vs.\ baseline \\
+    \midrule
+    Window size & \textit{[TODO]} & \textit{[TODO]} & \textit{[TODO]} \\
+    Stride & \textit{[TODO]} & \textit{[TODO]} & \textit{[TODO]} \\
+    Visibility features & \textit{[TODO]} & \textit{[TODO]} & \textit{[TODO]} \\
+    Standardization & \textit{[TODO]} & \textit{[TODO]} & \textit{[TODO]} \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\subsection{Runtime and efficiency}
+\label{sec:results:runtime}
+
+\Cref{tab:runtime} will report training time, inference throughput, and parameter counts.
+
+\begin{table}[t]
+  \centering
+  \caption{Runtime comparison (placeholder). Requires consistent hardware across runs.}
+  \label{tab:runtime}
+  \begin{tabular}{lccc}
+    \toprule
+    Model & Parameters & Train time & Inference ms/window \\
+    \midrule
+    LSTM (baseline) & \textit{[TODO]} & \textit{[TODO]} & \textit{[TODO]} \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\subsection{Dataset overview figure}
+\label{sec:results:dataset_fig}
+
+\begin{figure}[t]
+  \centering
+  \todofig{Dataset overview: example frames per phase, athlete diversity montage, annotation timeline. See \texttt{docs/figures\_plan.md} F1.}
+  \caption{Dataset overview (placeholder). Requires cleared exemplar videos for publication.}
+  \label{fig:dataset_overview}
+\end{figure}
+
+\begin{figure}[t]
+  \centering
+  \todofig{Split visualization: athletes assigned to train/val/test without leakage. See \texttt{docs/figures\_plan.md} F4.}
+  \caption{Athlete-level split visualization (placeholder).}
+  \label{fig:split_visualization}
+\end{figure}
+
+\begin{figure}[t]
+  \centering
+  \todofig{Class distribution bar chart (windows per phase). Can be generated from verified counts in \Cref{tab:class_distribution}.}
+  \caption{Window-level class distribution (placeholder; data verified in \Cref{tab:class_distribution}).}
+  \label{fig:class_distribution}
+\end{figure}
+
+\subsection{Error analysis}
+\label{sec:results:error}
+
+\begin{figure}[t]
+  \centering
+  \todofig{Qualitative error analysis: misclassified transition vs.\ second\_pull examples with pose overlay. See \texttt{docs/figures\_plan.md} error analysis figure.}
+  \caption{Qualitative error analysis (placeholder). Populate after baseline predictions are validated.}
+  \label{fig:error_analysis}
+\end{figure}
+
+\textsc{TODO:} Narrative discussion of systematic errors (transition confusion, pose occlusions) after confusion matrix is populated.
