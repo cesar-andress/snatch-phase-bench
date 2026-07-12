@@ -4,32 +4,43 @@
 \usepackage[T1]{fontenc}
 \usepackage{graphicx}
 \usepackage{booktabs}
-\usepackage{hyperref}
-\usepackage{amsmath}
+\usepackage{multirow}
+\usepackage{amsmath,amssymb}
 \usepackage{microtype}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage[hidelinks]{hyperref}
+\usepackage[nameinlink,capitalise,noabbrev]{cleveref}
 
-% TODO: Select target venue template (e.g. IEEE, Elsevier) before submission.
+% TODO: Select target venue template (e.g.\ Elsevier \texttt{elsarticle},
+% IEEE \texttt{IEEEtran}) before journal submission.
 
-\title{SnatchPhaseBench: A Dataset and Benchmark for Temporal Phase Segmentation in Olympic Weightlifting}
+\input{macros}
+
+\title{SnatchPhaseBench: A Reproducible Benchmark for Temporal Phase Segmentation in Olympic Weightlifting from Markerless Pose Estimation}
 \author{%
   % TODO: Author names and affiliations after collaboration agreement.
   Anonymous Authors
 }
-\date{\today}
+\date{} % omit draft date in submission version
 
 \begin{document}
 \maketitle
 
 \begin{abstract}
-% TODO (150--250 words, when benchmark exists):
-% - Problem: automatic snatch phase segmentation from video/pose
-% - Gap: no public benchmark with segment-level evaluation
-% - Contribution: dataset + protocol + baselines
-% DO NOT insert unverified accuracy numbers here.
-Provisional abstract placeholder. Quantitative claims require validated checkpoint evaluation.
+\noindent
+Automatic analysis of Olympic weightlifting technique requires reliable identification of biomechanical phases within each lift attempt.
+Expert annotation remains the reference standard but does not scale to large video collections or routine coaching workflows.
+Markerless pose estimation offers a practical alternative to instrumented \acs{MOCAP}, yet public benchmarks for temporal phase segmentation in weightlifting remain scarce, and published pipelines are often difficult to reproduce exactly.
+
+This manuscript introduces \emph{SnatchPhaseBench}, an evolving research artifact that couples a curated snatch dataset, a documented preprocessing pipeline, and a reproducibility-oriented evaluation framework.
+At the time of writing, we have verified dataset reconstruction (\numwindows{} sliding windows from \numvideos{} videos of \numathletes{} athletes), athlete-level data splits, and a frozen \acs{LSTM} baseline protocol derived from prior thesis work.
+Quantitative performance claims in saved source artifacts have \emph{not} yet been re-validated on the original trained checkpoint; benchmark comparisons against alternative temporal models are planned but not reported here.
+
+The intended contribution is therefore methodological and infrastructural: a reproducible benchmark protocol for temporal phase segmentation rather than a single architecture.
+Future revisions of this living manuscript will incorporate verified benchmark results, segment-level metrics, and public release details as those experiments are completed.
 \end{abstract}
 
-\noindent\textbf{Keywords:} temporal action segmentation; Olympic weightlifting; pose estimation; benchmark
+\noindent\textbf{Keywords:} temporal action segmentation; Olympic weightlifting; markerless pose estimation; reproducibility; sports biomechanics; benchmark
 
 \input{sections/01_introduction}
 \input{sections/02_related_work}
