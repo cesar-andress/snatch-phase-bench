@@ -1,19 +1,139 @@
 \section{Experimental Protocol}
 \label{sec:protocol}
 
-% CONTENT GUIDANCE:
-% - Athlete-level split (no leakage).
-% - Window vs frame vs segment metrics (define mathematically).
-% - Overlap / autocorrelation discussion (neutral language).
-% - Hardware, seeds, software versions from environment.json.
-% - Statistical testing plan for future multi-fold CV.
+This section specifies how experiments are executed and evaluated in SnatchPhaseBench.
+The baseline protocol matches the verified thesis reproduction configuration; extended benchmark and statistical protocols are defined structurally but not yet populated with results.
 
-\subsection{Evaluation Metrics}
-% TODO: Reference docs/evaluation_metrics.md equations.
-% Window-level (baseline), frame aggregation, segmental F1, edit score.
+\subsection{Reproducibility principles}
+\label{sec:protocol:repro}
 
-\subsection{Training Details}
-% VERIFIED hyperparameters in configs/baseline_lstm.yaml.
+All experiments are driven by version-controlled YAML configuration files (\texttt{configs/baseline\_lstm.yaml}, \texttt{configs/reproduction.yaml}).
+The canonical repository separates read-only student snapshot paths from rebuilt artifacts under \texttt{data/processed/rebuilt/}.
+Dataset checksums are compared against \texttt{baseline\_tfm/manifest.json} after each rebuild.
 
-\subsection{Reproducibility}
-% TODO: Zenodo DOI, config files, deterministic seeds.
+Deterministic execution uses a fixed random seed (42 in the baseline configuration) for weight initialization and batch shuffling where supported by the backend.
+Hardware and software versions are recorded in \texttt{docs/reproduction/reports/environment.json} for each reproduction run.
+
+\textsc{TODO:} Assign a Zenodo DOI and release tag upon public artifact publication.
+\textsc{TODO:} Document continuous integration tests executed on each commit.
+
+\subsection{Hardware and software reporting}
+\label{sec:protocol:hardware}
+
+Each experiment log must report:
+CPU/GPU model, operating system, Python version, PyTorch version, and CUDA availability.
+The verified Phase~2 reproduction run used Python~3.12.3 on Linux x86\_64 with CPU-only PyTorch~2.10.0; CUDA was unavailable on that machine.
+
+\textsc{TODO:} Re-run baseline training on GPU hardware for fair runtime comparison across benchmark models.
+
+\subsection{Configuration management}
+\label{sec:protocol:config}
+
+Experiment sections include \texttt{dataset}, \texttt{split}, \texttt{model}, \texttt{optimizer}, \texttt{scheduler}, \texttt{training}, \texttt{evaluation}, and \texttt{output}.
+New benchmark models extend the \texttt{model.name} field via a registry without altering frozen preprocessing code (\Cref{sec:methods:preprocessing}).
+
+\subsection{Evaluation strategy}
+\label{sec:protocol:eval_strategy}
+
+Evaluation proceeds in three nested granularities:
+\begin{enumerate}
+  \item \textbf{Window-level} (verified baseline): metrics on each sliding window independently.
+  \item \textbf{Frame-level} (infrastructure ready): aggregate overlapping window predictions (e.g.\ majority vote at each frame index) before computing classification metrics.
+  \item \textbf{Segment-level} (infrastructure ready): convert frame-wise labels to contiguous segments and compute segmental F1 at IoU thresholds and edit score.
+\end{enumerate}
+
+The frozen baseline reports window-level metrics only (\Cref{sec:protocol:metrics:window}).
+Future benchmark submissions must report both window-level and segment-level numbers to align with \acs{TAS} practice.
+
+\subsection{Evaluation metrics}
+\label{sec:protocol:metrics}
+
+\subsubsection{Window-level metrics (baseline protocol)}
+\label{sec:protocol:metrics:window}
+
+For $N$ test windows with predictions $\hat{y}_i$ and labels $y_i$:
+\begin{align}
+  \mathrm{Acc} &= \frac{1}{N}\sum_{i=1}^{N} \mathbf{1}[\hat{y}_i = y_i], \\
+  \mathrm{F1}_c &= \frac{2\,\mathrm{Prec}_c\,\mathrm{Rec}_c}{\mathrm{Prec}_c + \mathrm{Rec}_c},
+\end{align}
+with macro-averaged precision, recall, and F1 computed uniformly over the seven training phases.
+Implementation matches \texttt{sklearn.metrics.classification\_report} used in the frozen checkpoint evaluator.
+
+\subsubsection{Frame-level metrics}
+\label{sec:protocol:metrics:frame}
+
+Given aggregated frame predictions $\hat{y}_t$ on unique $(\text{video}, t)$ pairs, classification metrics follow the same definitions as above.
+\textsc{TODO:} Report frame-level baseline numbers after aggregation protocol is frozen for publication.
+
+\subsubsection{Segment-level metrics}
+\label{sec:protocol:metrics:segment}
+
+Ground-truth and predicted segments are intervals $[s,e]$ with class label $c$ on discrete timelines.
+Temporal IoU between segments $A$ and $B$ is
+\begin{equation}
+  \mathrm{IoU}(A,B) = \frac{|[s_a,e_a] \cap [s_b,e_b]|}{|[s_a,e_a] \cup [s_b,e_b]|}.
+\end{equation}
+Segmental F1 at threshold $\tau$ matches predicted and reference segments of the same class with $\mathrm{IoU}\ge\tau$ (reported at $\tau \in \{0.10, 0.25, 0.50\}$).
+Edit score is $1 - d/n$, where $d$ is Levenshtein distance between GT and predicted segment label sequences and $n = \max(|\text{GT}|, |\text{Pred}|)$.
+
+Boundary F1 and mean boundary error are planned but not yet implemented (\texttt{boundary.py}).
+
+\subsubsection{Confusion matrices}
+\label{sec:protocol:confusion}
+
+Confusion matrices are computed over window-level predictions for the baseline and will be reported per model at each evaluation granularity once benchmark experiments are complete.
+
+\subsection{Training procedure for the verified baseline}
+\label{sec:protocol:training}
+
+Training uses the athlete-level split (\Cref{tab:split_stats}).
+The model is optimized with Adam on mini-batches of training windows; validation macro-F1 is monitored each epoch for early stopping.
+Class weights are applied in the loss to mitigate imbalance (\Cref{tab:class_distribution}).
+No test-set tuning is performed.
+
+\textsc{TODO:} Confirm whether the original thesis run used GPU acceleration; document impact of CPU retraining on approximate reproduction.
+
+\subsection{Temporal overlap and independence assumptions}
+\label{sec:protocol:overlap}
+
+Stride-1 windows overlap by $\windowsize - 1 = 30$ frames.
+Consequently, test windows from the same video are strongly correlated; window-level accuracy is not equivalent to independent-sample classification accuracy.
+Segment-level metrics partially mitigate optimistic bias by evaluating contiguous phase intervals.
+Autocorrelation analysis is available in the repository (\texttt{temporal\_autocorrelation.py}); quantitative discussion awaits benchmark results.
+
+\subsection{Baseline evaluation protocol (current)}
+\label{sec:protocol:baseline}
+
+The current verified protocol evaluates the \acs{LSTM} baseline on 3{,}877 test windows from 11 held-out athletes.
+Two evaluation modes are distinguished:
+\begin{itemize}
+  \item \textbf{Checkpoint evaluation (target):} load the original \texttt{best\_model.pt} and evaluate on rebuilt tensors without retraining.
+  \item \textbf{Retrain evaluation (approximate):} retrain with frozen hyperparameters and evaluate the newly saved checkpoint.
+\end{itemize}
+Exact checkpoint evaluation has \emph{not} been completed because the original checkpoint binary was unavailable in one exported snapshot (Git LFS pointer).
+Approximate retrain metrics must not be reported as confirmation of thesis numbers (\Cref{sec:results:baseline}).
+
+\subsection{Benchmark protocol (planned)}
+\label{sec:protocol:benchmark}
+
+Future benchmark experiments will:
+\begin{enumerate}
+  \item use identical pose inputs, splits, and seeds;
+  \item train each registered model to convergence with early stopping on validation macro-F1 unless architecture-specific protocols are justified;
+  \item report window-, frame-, and segment-level metrics on the same test athletes;
+  \item store predictions and configuration hashes for reproducibility.
+\end{enumerate}
+
+\textsc{TODO:} Define maximum epoch budget and parameter-count matching rules across architectures.
+
+\subsection{Statistical testing (planned)}
+\label{sec:protocol:stats}
+
+\textsc{TODO:} Specify whether paired tests across models use athlete-level bootstrap or McNemar-style window aggregation; justify handling of overlapping windows.
+\textsc{TODO:} Pre-register primary and secondary endpoints before benchmark experiments.
+
+\subsection{Ablation studies (planned)}
+\label{sec:protocol:ablations}
+
+Candidate ablations include visibility features, window length, stride, standardization scope, and pose estimator choice.
+No ablation results are reported in this version of the manuscript.

@@ -1,31 +1,171 @@
 \section{Dataset}
 \label{sec:dataset}
 
-% CONTENT GUIDANCE:
-% - Source of videos (after legal clearance — TODO).
-% - Clip selection, annotation tool, annotator protocol.
-% - Phase taxonomy with operational definitions.
-% - Statistics: Table~\ref{tab:dataset_stats} (see docs/tables_plan.md T1--T3).
-%
-% VERIFIED (Phase 2): 208 videos, 70 athletes, seven training phases.
-% See docs/dataset/dataset.md — do not contradict verified counts.
+SnatchPhaseBench comprises annotated monocular snatch attempts with per-frame phase labels, segment interval annotations, and precomputed MediaPipe Pose Landmarker keypoints.
+This section summarizes verified dataset statistics and preprocessing outputs; items requiring legal confirmation or additional metadata are marked explicitly.
 
-\subsection{Video Collection}
-% TODO: Competition source, resolution, FPS.
+\subsection{Dataset overview}
+\label{sec:dataset:overview}
 
-\subsection{Phase Taxonomy}
-% TODO: Biomechanical definitions for setup ... recovery.
+The dataset contains \numvideos{} snatch attempts performed by \numathletes{} athletes.
+Each attempt is represented as a video file path key (raw videos are not bundled in the audited export), frame-wise phase annotations, optional segment intervals, and a CSV of pose keypoints aligned by frame index.
+Seven phase classes are used for supervised learning; an additional \texttt{unlabeled} class appears in annotation files but is excluded from training windows when the center frame is unlabeled (\Cref{sec:dataset:preprocessing}).
 
-\subsection{Annotations}
-% TODO: Frame vs segment labels; quality control.
+After sliding-window construction, the processed dataset contains \numwindows{} samples of shape $(\windowsize, \featuredim)$ stored as \texttt{X.npy} with integer labels \texttt{y.npy}.
+Independent rebuilding from annotation and keypoint CSV files reproduced the SHA-256 checksums recorded in the source manifest for \texttt{X.npy} and \texttt{y.npy}.
 
-\subsection{Pose Representation}
-% TODO: MediaPipe settings; 33 landmarks; x/y/z.
+\subsection{Video collection and clip definition}
+\label{sec:dataset:videos}
 
-\subsection{Data Splits}
-% TODO: Athlete-level split; reference Table split stats.
+Each record corresponds to a single snatch attempt clip referenced by a relative path \texttt{video\_relpath} (e.g.\ \texttt{athlete\_folder/attempt.mp4}).
+The audited repository includes 208 unique \texttt{video\_relpath} entries consistent with 208 keypoint CSV files.
 
-% \begin{table}[t]
-%   \caption{Dataset statistics. TODO: populate after public release review.}
-%   \label{tab:dataset_stats}
-% \end{table}
+\textsc{TODO (evidence required):} Document competition or training source, recording dates, camera viewpoints, native frame rate, resolution, and barbell visibility criteria.
+\textsc{TODO (legal):} Confirm redistribution rights before public release.
+
+\subsection{Phase taxonomy}
+\label{sec:dataset:taxonomy}
+
+Phase labels follow a seven-class snatch decomposition used in the source thesis pipeline.
+\Cref{tab:phase_taxonomy} lists class identifiers; operational biomechanical definitions (joint-angle or barbell-height rules) were not independently verified during reproduction.
+
+\begin{table}[t]
+  \centering
+  \caption{Phase taxonomy for supervised learning. Phase~0 is excluded when it appears at the center of a training window.}
+  \label{tab:phase_taxonomy}
+  \begin{tabular}{clp{0.48\linewidth}}
+    \toprule
+    ID & Phase name & Notes \\
+    \midrule
+    0 & \texttt{unlabeled} & Annotation padding / undefined frames; dropped at window center \\
+    1 & \texttt{setup} & Pre-lift positioning \\
+    2 & \texttt{first\_pull} & Initial barbell separation from platform \\
+    3 & \texttt{transition} & Knee--hip coordination change between pulls \\
+    4 & \texttt{second\_pull} & Explosive extension phase \\
+    5 & \texttt{turnover} & Barbell ascent and arm turnover \\
+    6 & \texttt{catch} & Receipt of the barbell overhead \\
+    7 & \texttt{recovery} & Stabilization and stand-up \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\textsc{TODO:} Insert biomechanical definitions with citations once confirmed with domain experts; add figure illustrating phases on exemplar lift.
+
+\subsection{Annotation strategy}
+\label{sec:dataset:annotations}
+
+Two annotation granularities are provided:
+\begin{itemize}
+  \item \textbf{Frame labels} (\texttt{master\_frame\_labels.csv}): one row per $(\text{video}, \text{frame})$ with \texttt{phase\_id} and \texttt{phase\_name}.
+        The audited export contains 35{,}825 frame rows with no duplicate $(\text{video}, \text{frame})$ keys.
+  \item \textbf{Segment labels} (\texttt{master\_segment\_labels.csv} and per-video CSV files): contiguous intervals per phase suitable for segment-level evaluation.
+        856 per-video segment files are present in the audited export.
+\end{itemize}
+
+Annotation was performed using an interactive tool in the source project (\texttt{annotate\_phases.py} in the student repository).
+\textsc{TODO:} Document annotator background, instructions, adjudication protocol, and inter-annotator agreement (not measured in current artifact).
+
+\subsection{Pose representation}
+\label{sec:dataset:pose}
+
+Pose is represented using MediaPipe Pose Landmarker with \numlandmarks{} body landmarks.
+Each frame stores normalized image coordinates $(x, y, z)$, yielding $\featuredim = 3 \times \numlandmarks$ numeric features per frame.
+Visibility scores are available in keypoint CSV headers but are \emph{not} used by the frozen baseline pipeline (\texttt{use\_visibility: false}).
+
+Missing values are handled via interpolation followed by forward and backward filling along each coordinate stream (verified in the frozen preprocessing implementation).
+\textsc{TODO:} Report MediaPipe model version (\texttt{pose\_landmarker\_full.task}) and extraction settings once the binary task file is available locally (currently an incomplete export pointer in one snapshot).
+
+\subsection{Train, validation, and test splits}
+\label{sec:dataset:splits}
+
+Generalization is evaluated under a fixed \emph{athlete-level} split: all attempts from a given athlete belong exclusively to training, validation, or test.
+This prevents near-duplicate lifting styles from leaking across splits through highly correlated windows (stride~1; \Cref{sec:protocol:overlap}).
+
+\Cref{tab:split_stats} summarizes verified split counts from \texttt{athlete\_split.json}.
+No athlete or video identifier appears in more than one split (automated validation test in the canonical repository).
+
+\begin{table}[t]
+  \centering
+  \caption{Verified athlete-level data split. Window counts derive from rebuilt \texttt{meta.csv}.}
+  \label{tab:split_stats}
+  \begin{tabular}{lrrr}
+    \toprule
+    Split & Athletes & Videos & Windows \\
+    \midrule
+    Train & 49 & 145 & 14{,}140 \\
+    Validation & 10 & 30 & 3{,}232 \\
+    Test & 11 & 33 & 3{,}877 \\
+    \midrule
+    Total & 70 & 208 & 21{,}249 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\textsc{TODO:} Report athlete demographics (sex, weight class, performance level) if available and cleared for publication.
+\textsc{TODO:} Evaluate multi-fold cross-validation as robustness analysis (planned; not yet executed).
+
+\subsection{Preprocessing and generated tensors}
+\label{sec:dataset:preprocessing}
+
+The frozen preprocessing pipeline (\Cref{sec:methods:preprocessing}) constructs sliding windows of length $\windowsize = 31$ with stride~1.
+Each window receives the phase label at its center frame; windows whose center is \texttt{unlabeled} are discarded.
+
+Generated artifacts per rebuild:
+\begin{itemize}
+  \item \texttt{X.npy} $\in \mathbb{R}^{\numwindows \times \windowsize \times \featuredim}$ (\texttt{float32})
+  \item \texttt{y.npy} $\in \mathbb{Z}^{\numwindows}$ (\texttt{int64})
+  \item \texttt{meta.csv} with columns linking each window to \texttt{video\_relpath}, frame indices, athlete split, and center \texttt{phase\_id}
+  \item \texttt{label\_map.csv} mapping phase IDs to names (eight entries including \texttt{unlabeled})
+\end{itemize}
+
+\Cref{tab:class_distribution} reports the verified window counts per phase in the rebuilt dataset.
+Transition and \texttt{second\_pull} remain the least frequent actionable phases, suggesting class imbalance relevant to metric interpretation.
+
+\begin{table}[t]
+  \centering
+  \caption{Verified window counts per phase after center-frame labeling (rebuilt dataset).}
+  \label{tab:class_distribution}
+  \begin{tabular}{lc}
+    \toprule
+    Phase & Windows \\
+    \midrule
+    setup & 6{,}017 \\
+    first\_pull & 2{,}434 \\
+    transition & 673 \\
+    second\_pull & 1{,}245 \\
+    turnover & 1{,}903 \\
+    catch & 1{,}912 \\
+    recovery & 7{,}065 \\
+    \midrule
+    Total & 21{,}249 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\subsection{Dataset statistics summary}
+\label{sec:dataset:stats}
+
+\Cref{tab:dataset_stats} consolidates high-level statistics for quick reference.
+Additional columns (frame counts, hours of video, camera types) require metadata not yet verified.
+
+\begin{table}[t]
+  \centering
+  \caption{Dataset statistics (verified fields only). Extended columns are placeholders pending metadata confirmation.}
+  \label{tab:dataset_stats}
+  \begin{tabular}{ll}
+    \toprule
+    Statistic & Value \\
+    \midrule
+    Athletes & \numathletes{} \\
+    Videos (attempts) & \numvideos{} \\
+    Annotated frames & 35{,}825 \\
+    Training phases (excl.\ unlabeled) & \numclasses{} \\
+    Window size / stride & \windowsize{} / 1 \\
+    Processed windows & \numwindows{} \\
+    Feature dimension per frame & \featuredim{} \\
+    Rebuild hash match (\texttt{X.npy}, \texttt{y.npy}) & Verified \\
+    Native FPS / resolution & \textit{[TODO: metadata required]} \\
+    Public release status & \textit{[Pending legal review]} \\
+    \bottomrule
+  \end{tabular}
+\end{table}
