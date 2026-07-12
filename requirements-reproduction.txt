@@ -1,0 +1,13 @@
+# Pinned from Paper_TFM-main/requirements-original.txt (core packages only).
+# Excludes openai, mediapipe, opencv — not required for dataset rebuild or LSTM training.
+
+numpy==2.4.3
+pandas==3.0.1
+scikit-learn==1.8.0
+scipy==1.17.1
+torch==2.10.0
+PyYAML>=6.0
+tqdm==4.67.3
+
+# Development / tests
+pytest>=8.0

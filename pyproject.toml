@@ -18,12 +18,13 @@ classifiers = [
   "Topic :: Scientific/Engineering :: Artificial Intelligence",
 ]
 dependencies = [
-  "numpy>=1.26",
-  "pandas>=2.1",
+  "numpy==2.4.3",
+  "pandas==3.0.1",
   "pyyaml>=6.0",
-  "scikit-learn>=1.4",
-  "torch>=2.2",
-  "tqdm>=4.66",
+  "scikit-learn==1.8.0",
+  "scipy==1.17.1",
+  "torch==2.10.0",
+  "tqdm==4.67.3",
 ]
 
 [project.optional-dependencies]

@@ -1,0 +1,54 @@
+# Phase 2 baseline reproduction configuration.
+# Paths to the read-only student snapshot (never write here).
+
+snapshot_root: /home/cesar/papers/Paper_TFM-main
+
+paths:
+  labels_csv: "{snapshot_root}/data/annotations/master_frame_labels.csv"
+  segment_labels_csv: "{snapshot_root}/data/annotations/master_segment_labels.csv"
+  keypoints_dir: "{snapshot_root}/data/keypoints"
+  baseline_meta_csv: "{snapshot_root}/data/processed/meta.csv"
+  baseline_label_map_csv: "{snapshot_root}/data/processed/label_map.csv"
+  baseline_X_npy: "{snapshot_root}/data/processed/X.npy"
+  baseline_y_npy: "{snapshot_root}/data/processed/y.npy"
+  athlete_split_json: "{snapshot_root}/outputs/lstm_phases/athlete_split.json"
+  baseline_checkpoint: "{snapshot_root}/outputs/lstm_phases/best_model.pt"
+  baseline_report_json: "{snapshot_root}/outputs/lstm_phases/classification_report.json"
+  baseline_manifest_json: "{snapshot_root}/baseline_tfm/manifest.json"
+  pose_model_task: "{snapshot_root}/models/pose_landmarker_full.task"
+
+outputs:
+  processed_dir: data/processed/rebuilt
+  baseline_eval_dir: outputs/reproduction/baseline_eval
+  retrain_dir: outputs/reproduction/lstm_retrain
+  reports_dir: docs/reproduction/reports
+
+dataset:
+  window_size: 31
+  stride: 1
+  use_z: true
+  use_visibility: false
+  drop_unlabeled: true
+
+training:
+  seed: 42
+  batch_size: 64
+  epochs: 40
+  learning_rate: 0.001
+  weight_decay: 0.0001
+  hidden_size: 128
+  num_layers: 1
+  dropout: 0.2
+  patience: 8
+
+expected:
+  samples: 21249
+  X_shape: [21249, 31, 99]
+  videos: 208
+  athletes: 70
+  test_samples: 3877
+  train_athletes: 49
+  val_athletes: 10
+  test_athletes: 11
+  accuracy: 0.9517668300232138
+  macro_f1: 0.9186193964938126

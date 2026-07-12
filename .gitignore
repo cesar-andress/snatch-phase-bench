@@ -26,9 +26,10 @@ env/
 .DS_Store
 Thumbs.db
 
-# Project outputs
+# Project outputs (keep docs/reproduction/reports/ tracked)
 outputs/
 logs/
+!docs/reproduction/reports/
 *.log
 wandb/
 mlruns/
