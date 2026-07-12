@@ -2,9 +2,25 @@
 
 Manuscript changes live in `~/papers/snatch-phase-bench/paper/` (outside Git).
 
+**Canonical scientific source (do not duplicate in the paper):** `SnatchPhaseBench_Literature_Foundation.md`
+
 ## Summary
 
-Section 2 was rewritten as a critical, publication-oriented Related Work with verified citations, a prior-art comparison table, and a TikZ conceptual figure.
+Section 2 was rewritten twice:
+1. **First pass** — verified citations, prior-art table, TikZ figure.
+2. **Synthesis pass (2026-07-13)** — editorial integration from the literature foundation: concise Q1 narrative, removed repetitive “Implication” boilerplate, integrated seam/gap/B0/ontology honesty from Parts 1.2, 3.5–3.6, 5.3, 7.1–7.2.
+
+## Synthesis choices (foundation → manuscript)
+
+| Foundation material | Manuscript placement | Kept out of paper |
+|---------------------|----------------------|-------------------|
+| Part 1.2 task qualifiers (short-horizon, fixed order) | §2 intro, §2.4 | Full comparison table |
+| Part 2.2 knee-angle / B0 threat | §2.2 closing, §2.7 | Reviewer red-team Part 10 |
+| Part 4.2 three-stage roles | §2.3, fig:pipeline ref | Encoder verdict table |
+| Part 3.3–3.6 metrics + athlete splits | §2.4 | Historical TAS timeline detail |
+| Part 5.3 why the gap exists | §2.6 | Part 5.2 exhaustive row list |
+| Part 7.1 contribution ranking | §2.7 | Venue-fit Part 7.3 |
+| Five vs seven phase ontology | §2.7 (honest caveat) | — |
 
 ## Files changed (manuscript)
 
