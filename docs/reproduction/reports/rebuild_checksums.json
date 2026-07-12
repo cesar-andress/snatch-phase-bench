@@ -1,0 +1,14 @@
+{
+  "rebuilt_X_sha256": "8497a69a2c6d80f24c0fc6242500aa931ab2c00e8172b534a98f86d92ed698b4",
+  "rebuilt_y_sha256": "0175c1c314fd22fef37d4b16a96b038d4643765c323c8b13599ff9a9b17c3546",
+  "rebuilt_meta_sha256": "6b1fc02b4062be11781f675bf1c79cc5272198882cfe48b6784b35dbe1089278",
+  "manifest_X_sha256": "8497a69a2c6d80f24c0fc6242500aa931ab2c00e8172b534a98f86d92ed698b4",
+  "manifest_y_sha256": "0175c1c314fd22fef37d4b16a96b038d4643765c323c8b13599ff9a9b17c3546",
+  "manifest_meta_sha256": "4a3b566f47c8a19a64f5848b9a4190d91e1cf3ea850b72dabdb3712dcb351226",
+  "X_matches_manifest": true,
+  "y_matches_manifest": true,
+  "meta_matches_baseline_snapshot_file": true,
+  "meta_matches_manifest_sha256": false,
+  "meta_manifest_size_bytes": 1777829,
+  "meta_baseline_size_bytes": 1756579
+}

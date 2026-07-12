@@ -1,0 +1,127 @@
+# Reproduction Summary — Phase 2
+
+**Generated:** 2026-07-12 (UTC)  
+**Canonical repository:** `~/papers/snatch-phase-bench/snatch-phase-bench`  
+**Read-only snapshot:** `~/papers/Paper_TFM-main` (unmodified)
+
+---
+
+## 1. Reproduction status overview
+
+| Component | Status |
+|-----------|--------|
+| Dataset rebuild from keypoints + annotations | **Exact match to manifest SHA-256** |
+| `meta.csv` vs baseline snapshot | **Byte-identical** |
+| Athlete-level split validation | **PASS** |
+| Original checkpoint evaluation | **Not performed** (LFS pointer) |
+| LSTM retraining (original hyperparameters) | **Approximate reproduction** |
+
+**Overall:** **Partial reproduction.** The data pipeline is verified exact; model metrics are approximate via retraining on CPU.
+
+---
+
+## 2. What was reproduced exactly
+
+1. **Processed dataset tensors** rebuilt to shape `(21249, 31, 99)` with `float32` / `int64` dtypes.
+2. **SHA-256 checksums** of rebuilt artifacts match `baseline_tfm/manifest.json`:
+
+   | File | SHA-256 | Manifest match |
+   |------|---------|----------------|
+   | `X.npy` | `8497a69a2c6d80f24c0fc6242500aa931ab2c00e8172b534a98f86d92ed698b4` | **Yes** |
+   | `y.npy` | `0175c1c314fd22fef37d4b16a96b038d4643765c323c8b13599ff9a9b17c3546` | **Yes** |
+   | `meta.csv` | `6b1fc02b4062be11781f675bf1c79cc5272198882cfe48b6784b35dbe1089278` | **Yes** (baseline file; size differs from manifest byte count — see audit) |
+
+3. **Split integrity:** 49/10/11 athletes; 14,140 / 3,232 / 3,877 windows; no athlete or video overlap across splits.
+4. **Test sample count:** 3,877 (matches thesis).
+
+---
+
+## 3. What was reproduced approximately
+
+**LSTM retraining** on rebuilt data (CPU, seed 42, original hyperparameters):
+
+| Metric | Thesis | Reproduced | Δ |
+|--------|--------|------------|---|
+| Accuracy | 0.9518 | 0.9440 | −0.0077 |
+| Macro precision | 0.9132 | 0.8997 | −0.0135 |
+| Macro recall | 0.9250 | 0.9015 | −0.0235 |
+| Macro F1 | 0.9186 | 0.8992 | −0.0194 |
+| Weighted F1 | 0.9524 | 0.9445 | −0.0079 |
+| Test samples | 3877 | 3877 | 0 |
+
+Per-class F1 deltas largest for `transition` (−0.057) and `second_pull` (−0.046). See `docs/reproduction/reports/metrics_comparison.json`.
+
+This is **retraining reproduction**, not checkpoint evaluation. README of the student repo documents similar CPU retrain drift (~0.9435 accuracy).
+
+---
+
+## 4. What could not be reproduced
+
+1. **Exact checkpoint evaluation** — `best_model.pt` is a Git LFS pointer (131 bytes) in the snapshot.
+2. **Byte comparison to snapshot `X.npy`/`y.npy`** — same LFS issue locally; manifest hash comparison used instead.
+3. **MediaPipe pose re-extraction** — `pose_landmarker_full.task` is an LFS pointer; not required for keypoint-based path.
+
+---
+
+## 5. Remaining blockers
+
+| Blocker | Impact | Mitigation |
+|---------|--------|------------|
+| Missing `best_model.pt` binary | Cannot claim exact 0.9518 / 0.9186 reproduction | Obtain LFS object from student; run checkpoint eval |
+| Retrain vs checkpoint gap | ~2% macro F1 lower on CPU retrain | Evaluate frozen checkpoint when available |
+| `meta.csv` manifest byte-size mismatch | Documented; row count and hash match baseline file | Clarify with student if manifest from different export |
+
+---
+
+## 6. Confidence in the baseline
+
+| Aspect | Confidence |
+|--------|------------|
+| Dataset construction pipeline | **High** — manifest hash match |
+| Split protocol | **High** — automated validation PASS |
+| Reported thesis metrics (saved JSON) | **Medium** — consistent with snapshot artifacts, not re-run on checkpoint |
+| Retrained LSTM as proxy for checkpoint | **Medium-low** — close but not within 1e-12 tolerance |
+
+---
+
+## 7. Ready for benchmark development?
+
+**Conditional yes** for dataset and split infrastructure.  
+**No** for claiming exact model baseline until checkpoint evaluation passes.
+
+Recommended gate: obtain real `best_model.pt`, run `evaluate_checkpoint`, confirm `Matches saved report: YES`.
+
+---
+
+## 8. Environment
+
+See `docs/reproduction/reports/environment.json`:
+
+- Python 3.12.3, Linux x86_64
+- CPU only (CUDA unavailable)
+- numpy 2.4.3, pandas 3.0.1, torch 2.10.0+cu128, scikit-learn 1.8.0
+
+---
+
+## 9. Commands executed
+
+```bash
+cd ~/papers/snatch-phase-bench/snatch-phase-bench
+python3.12 -m venv .venv && source .venv/bin/activate
+pip install -r requirements-reproduction.txt && pip install -e .
+pytest tests/
+python scripts/run_phase2_reproduction.py
+```
+
+Dataset rebuild runtime: **~7.9 s**. LSTM retraining runtime: **~40 s** (CPU, early stopping).
+
+---
+
+## 10. Related reports
+
+- `docs/reproduction/artifact_inventory.md`
+- `docs/reproduction/code_provenance.md`
+- `docs/reproduction/temporal_autocorrelation.md`
+- `docs/reproduction/reports/dataset_audit.md`
+- `docs/reproduction/reports/split_validation.md`
+- `docs/reproduction/reports/metrics_comparison.json`

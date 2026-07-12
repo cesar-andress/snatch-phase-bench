@@ -1,0 +1,18 @@
+{
+  "window_size": 31,
+  "stride": 1,
+  "shared_frames_per_adjacent_window": 30,
+  "overlap_fraction": 0.967741935483871,
+  "total_windows": 21249,
+  "total_videos": 208,
+  "windows_per_video_mean": 102.15865384615384,
+  "windows_per_video_median": 106.0,
+  "approximate_independent_samples_stride_window": 31,
+  "approximate_independent_samples": 581,
+  "ratio_reported_to_approx_independent": 36.57314974182444,
+  "notes": [
+    "Adjacent windows share shared_frames_per_adjacent_window of window_size frames.",
+    "Approximate independent samples uses non-overlapping windows of size window_size per video.",
+    "This quantifies temporal autocorrelation; it is not equivalent to cross-split leakage."
+  ]
+}

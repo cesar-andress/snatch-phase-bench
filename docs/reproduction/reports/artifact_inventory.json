@@ -1,0 +1,46 @@
+[
+  {
+    "path": "/home/cesar/papers/Paper_TFM-main/data/processed/X.npy",
+    "exists": true,
+    "size_bytes": 134,
+    "sha256": null,
+    "file_type": "ASCII text",
+    "status": "reconstructable",
+    "manifest_sha256": "8497a69a2c6d80f24c0fc6242500aa931ab2c00e8172b534a98f86d92ed698b4",
+    "manifest_size_bytes": 260852852,
+    "notes": "Git LFS pointer stub; real binary not present locally. Reconstructable: Rebuild from keypoints + master_frame_labels.csv"
+  },
+  {
+    "path": "/home/cesar/papers/Paper_TFM-main/data/processed/y.npy",
+    "exists": true,
+    "size_bytes": 131,
+    "sha256": null,
+    "file_type": "ASCII text",
+    "status": "reconstructable",
+    "manifest_sha256": "0175c1c314fd22fef37d4b16a96b038d4643765c323c8b13599ff9a9b17c3546",
+    "manifest_size_bytes": 170120,
+    "notes": "Git LFS pointer stub; real binary not present locally. Reconstructable: Rebuild from keypoints + master_frame_labels.csv"
+  },
+  {
+    "path": "/home/cesar/papers/Paper_TFM-main/outputs/lstm_phases/best_model.pt",
+    "exists": true,
+    "size_bytes": 131,
+    "sha256": null,
+    "file_type": "ASCII text",
+    "status": "reconstructable",
+    "manifest_sha256": "ea5ff9ca8a6dd163ad88efe06e1e221ae1b06393538c365b6c185faa7ef6b7fb",
+    "manifest_size_bytes": 478137,
+    "notes": "Git LFS pointer stub; real binary not present locally. Reconstructable: Retrain LSTM with original hyperparameters"
+  },
+  {
+    "path": "/home/cesar/papers/Paper_TFM-main/models/pose_landmarker_full.task",
+    "exists": true,
+    "size_bytes": 132,
+    "sha256": null,
+    "file_type": "ASCII text",
+    "status": "reconstructable",
+    "manifest_sha256": "4eaa5eb7a98365221087693fcc286334cf0858e2eb6e15b506aa4a7ecdcec4ad",
+    "manifest_size_bytes": 9398198,
+    "notes": "Git LFS pointer stub; real binary not present locally. Reconstructable: Not required for keypoint-based reproduction"
+  }
+]

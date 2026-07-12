@@ -1,0 +1,17 @@
+{
+  "passed": true,
+  "train_athletes": 49,
+  "val_athletes": 10,
+  "test_athletes": 11,
+  "train_windows": 14140,
+  "val_windows": 3232,
+  "test_windows": 3877,
+  "train_videos": 145,
+  "val_videos": 30,
+  "test_videos": 33,
+  "athlete_overlap": [],
+  "video_overlap": [],
+  "missing_keypoint_videos": [],
+  "errors": [],
+  "warnings": []
+}

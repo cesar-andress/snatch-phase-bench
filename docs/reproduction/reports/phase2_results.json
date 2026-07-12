@@ -1,0 +1,91 @@
+{
+  "rebuild": {
+    "videos": 208,
+    "samples": 21249,
+    "X_shape": [
+      21249,
+      31,
+      99
+    ],
+    "y_shape": [
+      21249
+    ],
+    "output_dir": "/home/cesar/papers/snatch-phase-bench/snatch-phase-bench/data/processed/rebuilt",
+    "runtime_seconds": 7.867521797000109,
+    "meta_csv_matches_baseline": true,
+    "X_matches_baseline": false,
+    "X_compare_detail": "baseline X.npy unavailable (LFS pointer)",
+    "y_matches_baseline": false,
+    "y_compare_detail": "baseline y.npy unavailable (LFS pointer)"
+  },
+  "checkpoint_evaluation": null,
+  "retraining": {
+    "device": "cpu",
+    "test_samples": 3877,
+    "accuracy": 0.944028888315708,
+    "macro_f1": 0.8992118249283411,
+    "classification_report": {
+      "setup": {
+        "precision": 0.9655990510083037,
+        "recall": 0.9926829268292683,
+        "f1-score": 0.9789536981358989,
+        "support": 820.0
+      },
+      "first_pull": {
+        "precision": 0.914572864321608,
+        "recall": 0.9168765743073047,
+        "f1-score": 0.9157232704402516,
+        "support": 397.0
+      },
+      "transition": {
+        "precision": 0.7787610619469026,
+        "recall": 0.7521367521367521,
+        "f1-score": 0.7652173913043478,
+        "support": 117.0
+      },
+      "second_pull": {
+        "precision": 0.943502824858757,
+        "recall": 0.8186274509803921,
+        "f1-score": 0.8766404199475065,
+        "support": 204.0
+      },
+      "turnover": {
+        "precision": 0.8792569659442725,
+        "recall": 0.9403973509933775,
+        "f1-score": 0.9088,
+        "support": 302.0
+      },
+      "catch": {
+        "precision": 0.8177570093457944,
+        "recall": 0.9308510638297872,
+        "f1-score": 0.8706467661691543,
+        "support": 376.0
+      },
+      "recovery": {
+        "precision": 0.9987460815047022,
+        "recall": 0.9590608067429259,
+        "f1-score": 0.9785012285012284,
+        "support": 1661.0
+      },
+      "accuracy": 0.944028888315708,
+      "macro avg": {
+        "precision": 0.8997422655614773,
+        "recall": 0.9015189894028296,
+        "f1-score": 0.8992118249283411,
+        "support": 3877.0
+      },
+      "weighted avg": {
+        "precision": 0.9467102785891052,
+        "recall": 0.944028888315708,
+        "f1-score": 0.9444829961073664,
+        "support": 3877.0
+      }
+    },
+    "confusion_matrix_shape": [
+      7,
+      7
+    ],
+    "output_dir": "/home/cesar/papers/snatch-phase-bench/snatch-phase-bench/outputs/reproduction/lstm_retrain",
+    "mode": "retraining"
+  }
+}

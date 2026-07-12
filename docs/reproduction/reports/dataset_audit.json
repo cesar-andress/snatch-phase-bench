@@ -1,0 +1,38 @@
+{
+  "keypoint_files": 208,
+  "annotation_frame_rows": 35825,
+  "annotation_videos": 208,
+  "segment_label_files": 208,
+  "meta_rows": 21249,
+  "meta_videos": 208,
+  "meta_athletes": 70,
+  "rebuilt_samples": null,
+  "rebuilt_shape": null,
+  "window_size": 31,
+  "stride": 1,
+  "num_classes_labeled": 7,
+  "class_distribution": {
+    "recovery": 7065,
+    "setup": 6017,
+    "first_pull": 2434,
+    "catch": 1912,
+    "turnover": 1903,
+    "second_pull": 1245,
+    "transition": 673
+  },
+  "space_filename_keypoints": [
+    "nagashima/snatch_-86kg_nagashima_wakana_i1_ok_000182 .csv",
+    "nakajima/snatch_-86kg_nakajima_motoka_i1_fail_000183 .csv",
+    "nakajima/snatch_-86kg_nakajima_motoka_i2_fail_000184 .csv"
+  ],
+  "baseline_meta_bytes": 1756579,
+  "baseline_meta_sha256": "6b1fc02b4062be11781f675bf1c79cc5272198882cfe48b6784b35dbe1089278",
+  "manifest_meta_bytes": 1777829,
+  "manifest_meta_sha256": "4a3b566f47c8a19a64f5848b9a4190d91e1cf3ea850b72dabdb3712dcb351226",
+  "meta_size_discrepancy_bytes": 21250,
+  "warnings": [
+    "baseline meta.csv size differs from manifest by 21250 bytes",
+    "baseline meta.csv SHA-256 differs from manifest entry",
+    "3 keypoint files contain a space before .csv; labels use matching spaced .mp4 paths \u2014 rebuild should still resolve them."
+  ]
+}

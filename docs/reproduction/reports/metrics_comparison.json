@@ -1,0 +1,95 @@
+{
+  "reproduction_mode": "retraining",
+  "global_metrics": [
+    {
+      "metric": "accuracy",
+      "thesis": 0.9517668300232138,
+      "reproduced": 0.944028888315708,
+      "absolute_difference": -0.007737941707505858,
+      "status": "approximate"
+    },
+    {
+      "metric": "macro_precision",
+      "thesis": 0.9132237952982087,
+      "reproduced": 0.8997422655614773,
+      "absolute_difference": -0.013481529736731446,
+      "status": "approximate"
+    },
+    {
+      "metric": "macro_recall",
+      "thesis": 0.9250259239618474,
+      "reproduced": 0.9015189894028296,
+      "absolute_difference": -0.023506934559017756,
+      "status": "approximate"
+    },
+    {
+      "metric": "macro_f1",
+      "thesis": 0.9186193964811207,
+      "reproduced": 0.8992118249283411,
+      "absolute_difference": -0.019407571552779612,
+      "status": "approximate"
+    },
+    {
+      "metric": "weighted_f1",
+      "thesis": 0.9523614152610658,
+      "reproduced": 0.9444829961073664,
+      "absolute_difference": -0.007878419153699356,
+      "status": "approximate"
+    },
+    {
+      "metric": "test_samples",
+      "thesis": 3877.0,
+      "reproduced": 3877,
+      "absolute_difference": 0.0,
+      "status": "approximate"
+    }
+  ],
+  "per_class_f1": [
+    {
+      "phase": "setup",
+      "thesis_f1": 0.978749241044323,
+      "reproduced_f1": 0.9789536981358989,
+      "absolute_difference": 0.00020445709157590475
+    },
+    {
+      "phase": "first_pull",
+      "thesis_f1": 0.9199491740787802,
+      "reproduced_f1": 0.9157232704402516,
+      "absolute_difference": -0.004225903638528594
+    },
+    {
+      "phase": "transition",
+      "thesis_f1": 0.8220338983050848,
+      "reproduced_f1": 0.7652173913043478,
+      "absolute_difference": -0.05681650700073693
+    },
+    {
+      "phase": "second_pull",
+      "thesis_f1": 0.9230769230769231,
+      "reproduced_f1": 0.8766404199475065,
+      "absolute_difference": -0.046436503129416606
+    },
+    {
+      "phase": "turnover",
+      "thesis_f1": 0.9235772357723577,
+      "reproduced_f1": 0.9088,
+      "absolute_difference": -0.014777235772357677
+    },
+    {
+      "phase": "catch",
+      "thesis_f1": 0.8819095477386935,
+      "reproduced_f1": 0.8706467661691543,
+      "absolute_difference": -0.011262781569539193
+    },
+    {
+      "phase": "recovery",
+      "thesis_f1": 0.981039755351682,
+      "reproduced_f1": 0.9785012285012284,
+      "absolute_difference": -0.0025385268504535263
+    }
+  ],
+  "confusion_matrix_shape": [
+    7,
+    7
+  ]
+}
