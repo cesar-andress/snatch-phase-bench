@@ -38,7 +38,7 @@ Extracted from the literature foundation, gap analysis, benchmark plan, and curr
 
 | ID | Experiment | Populates | Priority |
 |----|------------|-----------|----------|
-| EXP-01 | Validate `best_model.pt` checkpoint vs thesis JSON | `tab:baseline_reproduction` | **P0** |
+| EXP-01 | Validate `best_model.pt` checkpoint vs thesis JSON | `tab:baseline_reproduction` | **Done** (VERIFIED 2026-07-13) |
 | EXP-02 | Implement B0 rule-based knee-angle baseline | `tab:benchmark_comparison` | **P0** |
 | EXP-03 | Implement MS-TCN, MS-TCN++, ASFormer (B1–B3) | `tab:benchmark_comparison` | P0 |
 | EXP-04 | Boundary MAE (ms) per phase transition | `tab:segment_metrics`, new boundary table | **P0** |
@@ -82,8 +82,8 @@ See also [`../figures_plan.md`](../figures_plan.md).
 | TAB-03 | Class distribution | **Verified** | None |
 | TAB-04 | Phase taxonomy + biomechanical definitions | Partial | EXP-12, expert review |
 | TAB-05 | LSTM hyperparameters | **Verified** | None |
-| TAB-06 | Baseline reproduction (checkpoint vs retrain) | Shell | EXP-01 |
-| TAB-07 | Per-class baseline metrics | Shell | EXP-01 |
+| TAB-06 | Baseline reproduction (checkpoint vs retrain) | **Verified** | None |
+| TAB-07 | Per-class baseline metrics | **Verified** | None |
 | TAB-08 | Benchmark comparison (all models) | Shell | EXP-02, EXP-03 |
 | TAB-09 | Segment-level metrics | Shell | EXP-05 |
 | TAB-10 | Boundary MAE per transition | **Not in manuscript yet** | EXP-04 — **add to §6** |
@@ -118,7 +118,7 @@ See also [`../tables_plan.md`](../tables_plan.md).
 | LIM-02 | Monocular MediaPipe | Verified | Quantify pose error (EXP-04 context) |
 | LIM-03 | Phase ontology vs biomechanics standard | Gap identified | EXP-12 |
 | LIM-04 | No IAA | Verified absence | EXP-11 |
-| LIM-05 | Checkpoint not validated | Verified | EXP-01 |
+| LIM-05 | Checkpoint validated | Verified (2026-07-13) | Update limitations text — **done** |
 | LIM-06 | Window overlap | Verified autocorrelation | Report segment metrics |
 | LIM-07 | Benchmark incomplete | Verified | Update when EXP-02+ done |
 
@@ -148,7 +148,7 @@ Items to name but **not** execute in current submission (literature Part 11):
 | NAR-04 | Separate thesis LSTM from benchmark baselines in Methods | `04_methods.tex` |
 | NAR-05 | Add boundary-ms metrics to Experimental Protocol | `05_experimental_protocol.tex` |
 | NAR-06 | Add `tab:boundary_per_transition` placeholder to Results | `06_results.tex` |
-| NAR-07 | Do not populate Results numbers until EXP-* complete | `06_results.tex` |
+| NAR-07 | Baseline Results numbers verified for checkpoint row only | `06_results.tex` | **Partial** — benchmark tables still pending |
 
 ---
 
@@ -169,9 +169,9 @@ See [`../SCIENTIFIC_WORKFLOW.md`](../SCIENTIFIC_WORKFLOW.md).
 ## 10. Priority queue (next 5 actions)
 
 1. **EXP-12 / LIM-03** — Resolve phase ontology with domain expert
-2. **EXP-01** — Validate checkpoint (unblocks baseline tables)
-3. **EXP-02** — Implement B0 rule-based baseline
-4. **EXP-04** — Implement boundary-ms metrics in code + manuscript table
+2. **EXP-02** — Implement B0 rule-based baseline
+3. **EXP-04** — Implement boundary-ms metrics in code + manuscript table
+4. Generate `fig:confusion_matrix` from checkpoint predictions (EXP-01 done)
 5. **LIT-DEADLIFT** — Verify deadlift CV citations; extend `tab:prior_art_comparison` if added
 
 See [`RELATED_WORK_REVISION.md`](RELATED_WORK_REVISION.md) for the 2026-07-13 Section 2 rewrite log.

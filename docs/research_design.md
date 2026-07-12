@@ -48,7 +48,7 @@ Do not blur stages 1–3 (literature Part 4.2). See [`project_architecture.md`](
 | Split | 49 / 10 / 11 athletes |
 | Metrics | Window-level accuracy / macro-F1 |
 | Dataset rebuild | **Verified exact** (manifest SHA-256 match) |
-| Checkpoint eval | **Pending** (`best_model.pt` LFS pointer) |
+| Checkpoint eval | **Verified exact** (2026-07-13; see [`CHECKPOINT_VALIDATION.md`](reproduction/CHECKPOINT_VALIDATION.md)) |
 | Retrain proxy | ~0.944 accuracy, ~0.899 macro-F1 (CPU) |
 
 This LSTM is the **historical thesis baseline**, not the literature-recommended benchmark tier (B0–B3). See [`FROZEN_BASELINE.md`](FROZEN_BASELINE.md) and [`benchmark/BENCHMARK_PLAN.md`](benchmark/BENCHMARK_PLAN.md).

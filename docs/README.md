@@ -27,12 +27,16 @@
 - [`dataset/dataset.md`](dataset/dataset.md) — dataset specification
 - [`project_architecture.md`](project_architecture.md) — software layout and flows
 - [`FROZEN_BASELINE.md`](FROZEN_BASELINE.md) — baseline freeze policy
+- [`benchmark/BASELINE_SPECIFICATION.md`](benchmark/BASELINE_SPECIFICATION.md) — verified thesis LSTM baseline (B1-repro-v1)
 
 ## Policies and reproduction
 
 - [`WORKSPACE_POLICY.md`](WORKSPACE_POLICY.md) — read-only `Paper_TFM-main`, canonical workspace rules
 - [`REPRODUCTION_PLAN.md`](REPRODUCTION_PLAN.md) — reproduce baseline without touching the snapshot
 - [`reproduction/REPRODUCTION_SUMMARY.md`](reproduction/REPRODUCTION_SUMMARY.md) — Phase 2 results (frozen)
+- [`reproduction/CHECKPOINT_PROVENANCE.md`](reproduction/CHECKPOINT_PROVENANCE.md) — recovered `best_model.pt` provenance
+- [`reproduction/CHECKPOINT_VALIDATION.md`](reproduction/CHECKPOINT_VALIDATION.md) — thesis metric reproduction (VERIFIED)
+- [`reproduction/REMAINING_BLOCKERS.md`](reproduction/REMAINING_BLOCKERS.md) — post-validation blockers
 
 ## Phase 1 audit (historical)
 
@@ -42,6 +46,6 @@
 
 ## Status
 
-Phase 2 reproduction pipeline is ported and verified (dataset rebuild exact; checkpoint pending).
+Phase 2 reproduction is **complete**: dataset rebuild exact; thesis checkpoint **VERIFIED** (all metrics EXACT).
 Phase 2.5 infrastructure and Phase 2.6 living manuscript are active.
-Benchmark experiments (B0–B3) await checkpoint validation gate.
+Benchmark experiments (B0–B3) may proceed; see [`reproduction/REMAINING_BLOCKERS.md`](reproduction/REMAINING_BLOCKERS.md).

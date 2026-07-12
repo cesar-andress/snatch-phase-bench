@@ -1,6 +1,6 @@
 # Reproduction Summary — Phase 2
 
-**Generated:** 2026-07-12 (UTC)  
+**Generated:** 2026-07-13 (UTC)  
 **Canonical repository:** `~/papers/snatch-phase-bench/snatch-phase-bench`  
 **Read-only snapshot:** `~/papers/Paper_TFM-main` (unmodified)
 
@@ -13,10 +13,12 @@
 | Dataset rebuild from keypoints + annotations | **Exact match to manifest SHA-256** |
 | `meta.csv` vs baseline snapshot | **Byte-identical** |
 | Athlete-level split validation | **PASS** |
-| Original checkpoint evaluation | **Not performed** (LFS pointer) |
-| LSTM retraining (original hyperparameters) | **Approximate reproduction** |
+| Original checkpoint evaluation | **VERIFIED** (all metrics EXACT) |
+| LSTM retraining (original hyperparameters) | **Approximate reproduction** (reference only) |
 
-**Overall:** **Partial reproduction.** The data pipeline is verified exact; model metrics are approximate via retraining on CPU.
+**Overall:** **Full reproduction** of thesis window-level metrics via frozen checkpoint. Retrain path remains approximate.
+
+See [`CHECKPOINT_VALIDATION.md`](CHECKPOINT_VALIDATION.md) and [`CHECKPOINT_PROVENANCE.md`](CHECKPOINT_PROVENANCE.md).
 
 ---
 
@@ -55,45 +57,57 @@ This is **retraining reproduction**, not checkpoint evaluation. README of the st
 
 ---
 
-## 4. What could not be reproduced
+## 4. Checkpoint evaluation (verified)
 
-1. **Exact checkpoint evaluation** — `best_model.pt` is a Git LFS pointer (131 bytes) in the snapshot.
-2. **Byte comparison to snapshot `X.npy`/`y.npy`** — same LFS issue locally; manifest hash comparison used instead.
-3. **MediaPipe pose re-extraction** — `pose_landmarker_full.task` is an LFS pointer; not required for keypoint-based path.
+Recovered binary: `Paper_TFM-main/best_model.pt` (478,137 B; SHA-256 `ea5ff9ca…b7fb`).  
+Canonical copy: `outputs/baseline/best_model.pt`.
+
+| Metric | Thesis | Checkpoint eval | Δ | Status |
+|--------|--------|-----------------|---|--------|
+| Accuracy | 0.9518 | 0.9518 | 0 | EXACT |
+| Macro precision | 0.9132 | 0.9132 | 0 | EXACT |
+| Macro recall | 0.9250 | 0.9250 | 0 | EXACT |
+| Macro F1 | 0.9186 | 0.9186 | 0 | EXACT |
+| Weighted F1 | 0.9524 | 0.9524 | 0 | EXACT |
+| Test samples | 3877 | 3877 | 0 | EXACT |
+
+`matches_saved_report: true`. Full tables: [`CHECKPOINT_VALIDATION.md`](CHECKPOINT_VALIDATION.md).
 
 ---
 
-## 5. Remaining blockers
+## 5. What could not be reproduced (unchanged)
 
-| Blocker | Impact | Mitigation |
-|---------|--------|------------|
-| Missing `best_model.pt` binary | Cannot claim exact 0.9518 / 0.9186 reproduction | Obtain LFS object from student; run checkpoint eval |
-| Retrain vs checkpoint gap | ~2% macro F1 lower on CPU retrain | Evaluate frozen checkpoint when available |
-| `meta.csv` manifest byte-size mismatch | Documented; row count and hash match baseline file | Clarify with student if manifest from different export |
+1. **Byte comparison to snapshot `X.npy`/`y.npy`** — LFS pointers in export; manifest hash comparison used instead (rebuild matches manifest).
+2. **MediaPipe pose re-extraction** — `pose_landmarker_full.task` is an LFS pointer; not required for keypoint-based path.
 
 ---
 
-## 6. Confidence in the baseline
+## 6. Remaining blockers
+
+See [`REMAINING_BLOCKERS.md`](REMAINING_BLOCKERS.md). Checkpoint validation is **not** a blocker.
+
+---
+
+## 7. Confidence in the baseline
 
 | Aspect | Confidence |
 |--------|------------|
 | Dataset construction pipeline | **High** — manifest hash match |
 | Split protocol | **High** — automated validation PASS |
-| Reported thesis metrics (saved JSON) | **Medium** — consistent with snapshot artifacts, not re-run on checkpoint |
-| Retrained LSTM as proxy for checkpoint | **Medium-low** — close but not within 1e-12 tolerance |
+| Reported thesis metrics (checkpoint eval) | **High** — EXACT match on rebuilt data |
+| Retrained LSTM as proxy for checkpoint | **Medium-low** — use checkpoint only for official numbers |
 
 ---
 
-## 7. Ready for benchmark development?
+## 8. Ready for benchmark development?
 
-**Conditional yes** for dataset and split infrastructure.  
-**No** for claiming exact model baseline until checkpoint evaluation passes.
+**Yes** — checkpoint validation gate passed (2026-07-13).
 
-Recommended gate: obtain real `best_model.pt`, run `evaluate_checkpoint`, confirm `Matches saved report: YES`.
+Benchmark tier implementation (B0–B3) may proceed per [`../benchmark/BENCHMARK_PLAN.md`](../benchmark/BENCHMARK_PLAN.md). Do not overwrite the frozen thesis checkpoint or conflate retrain metrics with official baseline numbers.
 
 ---
 
-## 8. Environment
+## 9. Environment
 
 See `docs/reproduction/reports/environment.json`:
 
@@ -103,7 +117,7 @@ See `docs/reproduction/reports/environment.json`:
 
 ---
 
-## 9. Commands executed
+## 10. Commands executed
 
 ```bash
 cd ~/papers/snatch-phase-bench/snatch-phase-bench
@@ -117,9 +131,12 @@ Dataset rebuild runtime: **~7.9 s**. LSTM retraining runtime: **~40 s** (CPU, ea
 
 ---
 
-## 10. Related reports
+## 11. Related reports
 
-- `docs/reproduction/artifact_inventory.md`
+- `docs/reproduction/CHECKPOINT_PROVENANCE.md`
+- `docs/reproduction/CHECKPOINT_VALIDATION.md`
+- `docs/benchmark/BASELINE_SPECIFICATION.md`
+- `docs/reproduction/REMAINING_BLOCKERS.md`
 - `docs/reproduction/code_provenance.md`
 - `docs/reproduction/temporal_autocorrelation.md`
 - `docs/reproduction/reports/dataset_audit.md`
