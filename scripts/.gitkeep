@@ -1,0 +1,6 @@
+# CLI scripts will be added after baseline porting.
+# Planned:
+#   scripts/reproduce_baseline.sh
+#   scripts/build_dataset.py
+#   scripts/train.py
+#   scripts/evaluate.py

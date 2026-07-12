@@ -1,0 +1,23 @@
+TODO: LICENSE NOT YET DETERMINED
+
+SnatchPhaseBench — Licensing Status (Phase 1 Audit)
+
+A final open-source license has NOT been selected because the legal status of the
+underlying data and the original thesis code remains unclear.
+
+Before choosing a license, the following must be confirmed with the dataset authors
+and/or institution:
+
+1. Redistribution rights for competition video-derived keypoints and annotations.
+2. Copyright and privacy constraints related to athlete-identifying filenames.
+3. Terms governing the MediaPipe model file (pose_landmarker_full.task).
+4. Whether the original student repository code may be relicensed or must remain
+   separately attributed.
+
+Do not publicly release dataset files or trained weights until these items are resolved.
+
+Provisional plan:
+- Source code: permissive license (likely MIT or Apache-2.0) AFTER legal review.
+- Dataset: custom academic/data license or CC-BY-NC if non-commercial restrictions apply.
+
+Contact: TODO (maintainer email)

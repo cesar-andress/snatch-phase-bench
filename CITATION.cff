@@ -1,0 +1,22 @@
+cff-version: 1.2.0
+message: "If you use SnatchPhaseBench, please cite:"
+title: "SnatchPhaseBench: A Dataset and Benchmark for Temporal Phase Segmentation in Olympic Weightlifting"
+version: 0.1.0
+date-released: 2026-07-12
+authors:
+  - family-names: "TODO"
+    given-names: "TODO"
+    affiliation: "TODO"
+repository-code: "TODO: add public repository URL after release"
+license: "TODO"
+keywords:
+  - temporal action segmentation
+  - Olympic weightlifting
+  - pose estimation
+  - snatch
+  - benchmark
+abstract: >
+  SnatchPhaseBench is a reproducible dataset and evaluation framework for temporal
+  phase segmentation of the Olympic snatch from markerless pose sequences.
+  This CITATION.cff describes a provisional pre-release; DOI and final metadata
+  will be updated upon Zenodo archival.

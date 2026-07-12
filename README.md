@@ -1,0 +1,53 @@
+# SnatchPhaseBench
+
+Reproducible research artifact for temporal phase segmentation of the Olympic snatch from markerless pose sequences.
+
+**Status:** Phase 1 (audit and scaffolding). No experimental results are claimed in this repository yet.
+
+## Relationship to the original MSc thesis
+
+This project is derived from Adrián Cardona's MSc thesis repository (`Paper_TFM-main`), which is treated as **read-only source material**. SnatchPhaseBench will:
+
+1. Reproduce and audit the original LSTM baseline.
+2. Redesign evaluation as a proper temporal segmentation benchmark.
+3. Compare multiple baseline and stronger temporal models.
+
+See the parent directory for audit documents:
+
+- [`../PROJECT_AUDIT.md`](../PROJECT_AUDIT.md)
+- [`../REPRODUCTION_PLAN.md`](../REPRODUCTION_PLAN.md)
+- [`../RESEARCH_ROADMAP.md`](../RESEARCH_ROADMAP.md)
+- [`../QUESTIONS_FOR_STUDENT.md`](../QUESTIONS_FOR_STUDENT.md)
+
+## Repository layout
+
+```text
+configs/          Experiment YAML configurations
+data/             Data staging (raw/interim/processed) — not populated in phase 1
+docs/             Additional documentation
+outputs/          Generated experiment outputs (gitignored)
+scripts/          CLI entry points (to be populated)
+src/              Python package (src layout)
+tests/            Unit tests for splits, dataset logic, metrics
+```
+
+## Quick start (future)
+
+```bash
+python -m venv .venv
+source .venv/bin/activate
+pip install -e ".[dev]"
+# TODO: add reproduce command after porting baseline pipeline
+```
+
+## Data policy
+
+Raw competition videos are **not** included in phase 1. Do not commit large binaries, checkpoints, or personal local paths. See `data/README.md`.
+
+## Citation
+
+See [`CITATION.cff`](CITATION.cff). DOI will be added after Zenodo release.
+
+## License
+
+**TODO — legal review pending.** See [`LICENSE`](LICENSE).
