@@ -50,7 +50,7 @@ def test_ms_tcn_training_protocol() -> None:
     assert training["batch_size"] == 1
     assert training["epochs"] == 50
     assert training["trainer"] == "ms_tcn_trainer"
-    assert training["early_stopping"]["monitor"] == "val_macro_f1"
+    assert training["early_stopping"]["monitor"] == "val_segmental_f1_at_50"
 
 
 def test_ms_tcn_dataset_adapter() -> None:
