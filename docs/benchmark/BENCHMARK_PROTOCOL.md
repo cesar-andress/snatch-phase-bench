@@ -27,7 +27,7 @@ SnatchPhaseBench evaluates **temporal phase segmentation of the Olympic snatch**
 
 | # | Objective | Journal defensibility |
 |---|-----------|----------------------|
-| O1 | Provide the first reproducible benchmark comparing learned segmenters against a **biomechanical rule-based baseline** on identical inputs and splits | Answers Reviewer #1 (“why not knee-angle rules?”) |
+| O1 | Provide the first reproducible benchmark comparing learned temporal segmenters on identical inputs and splits, with documented biomechanical context | Answers Reviewer #1 (“why not knee-angle rules?”) via audit + exploratory B0 reference |
 | O2 | Quantify performance with **boundary-level, millisecond-scale** metrics—not window accuracy alone | Mitigates metric saturation (Reviewer #7) |
 | O3 | Report where learning **does and does not** improve over heuristics (occlusion, short phases, cross-athlete) | Honest benchmark positioning |
 | O4 | Ship splits, preprocessing, metrics, and configs so independent groups can reproduce rankings | Reproducibility claim |
@@ -57,9 +57,9 @@ Defensible contributions (ranked; do not reorder):
 
 ### 2.2 Core scientific question
 
-> Where do learned temporal segmenters improve over the knee-angle heuristic the biomechanics community already uses—and where do they not?
+> Where do learned temporal segmenters improve over expert visual phase annotation on boundary timing—and how does that relate to biomechanical event vocabulary in the literature?
 
-A result where learning **ties** B0 on clean sagittal video is **publishable** if boundary-level analysis is reported honestly.
+A negative result (learning does not beat expert labels on boundary timing) is **publishable** if boundary-level analysis is reported honestly.
 
 ### 2.3 Three-stage pipeline (roles must not blur)
 
@@ -86,7 +86,7 @@ A result where learning **ties** B0 on clean sagittal video is **publishable** i
 | **Train-only normalization** | Standardization statistics computed on training athletes only |
 | **Documented training budget** | Max epochs, early-stopping criterion, and hyperparameter search budget per model family |
 | **No test tuning** | Hyperparameters selected on validation split only |
-| **Report failures** | If B2 does not beat B0, report it; do not hide rule-based results |
+| **Report failures** | If B2 underperforms on specific transitions, report it; do not hide per-transition boundary analysis |
 
 ---
 
@@ -175,14 +175,16 @@ Purpose: prove learned models exceed trivial predictors.
 
 | Tier | Name | Role | Status |
 |------|------|------|--------|
-| **B0** | Rule-based knee-angle segmenter | **Primary scientific competitor** — biomechanics heuristic | Not implemented |
+| **B0** | Knee-angle exploratory reference | **Exploratory only** — documents biomechanical event vocabulary; audit concluded knee-only implementation unsupported | **FROZEN** (no code) |
 | **B1** | Frozen thesis LSTM (window classifier) | **Historical reference** — reproduction verified | **VERIFIED** |
-| **B2** | Modern temporal segmentation architectures | Standard learned baselines (MS-TCN family, ASFormer, DiffAct) | Not implemented |
+| **B2** | Modern temporal segmentation architectures | **Primary learned comparators** (MS-TCN family, ASFormer, DiffAct) | Infrastructure ready (MS-TCN stub) |
 | **B3** | Foundation-model / representation approaches | Optional reach (MotionBERT, PoseFormer, encoder+TAS) | Future / appendix |
 
-### 7.1 Why B0 exists
+### 7.1 B0 status (2026-07-14)
 
-Weightlifting phase definitions in biomechanics literature are grounded in **knee-extension angle** events. Reviewers will ask why a neural model is needed. B0 is the honest comparator—not a strawman.
+The biomechanical evidence audit ([`B0_EVIDENCE_MATRIX.md`](B0_EVIDENCE_MATRIX.md)) concluded that a knee-angle-only rule segmenter cannot be implemented without unsupported assumptions. **B0 is frozen as an exploratory reference**, not a primary benchmark row. See [`B0_EXPLORATORY_REFERENCE.md`](B0_EXPLORATORY_REFERENCE.md).
+
+Reviewers asking “why not knee-angle rules?” are answered by the audit (what literature names vs what fixed pose inputs observe) and by comparing learned segmenters to **expert labels** on boundary timing—not by a fabricated rule baseline.
 
 ### 7.2 Why B1 exists
 
@@ -212,7 +214,7 @@ MS-TCN, ASFormer, and successors are the **standard TAS baselines** in the compu
 
 Foundation pose models (MotionBERT, PoseFormer) and VLMs represent a **future compatibility lane**. They are **not** required for a Q1 benchmark submission but document upgrade path and reviewer-proof breadth if included as appendix.
 
-**B3 policy:** Include only after B0+B2 mandatory set complete; never mix unfixed upstream representations into the primary table without ablation.
+**B3 policy:** Include only after B2 mandatory set complete; never mix unfixed upstream representations into the primary table without ablation.
 
 ---
 
@@ -222,17 +224,14 @@ Each experiment follows: **Question → Hypothesis → Evidence → Success crit
 
 Full matrix with priorities and estimates: [`EXPERIMENT_MATRIX.md`](EXPERIMENT_MATRIX.md).
 
-### EXP-B0 — Rule-based baseline credibility
+### EXP-B0 — Knee-angle exploratory reference (frozen)
 
 | Field | Specification |
 |-------|---------------|
-| **Question** | Does a knee-angle heuristic achieve non-trivial segmentation, and where does it fail? |
-| **Hypothesis** | B0 will perform well on sagittal, unobstructed pulls but degrade at catch/turnover and oblique views. |
-| **Evidence required** | Per-frame predictions; boundary-ms; segment-F1; comparison vs B1/B2 on identical test athletes. |
-| **Success criterion** | B0 implemented, documented thresholds, reproducible from config; metrics logged for all primary endpoints. |
-| **Statistics** | Descriptive + paired tests vs each B2 model on per-video boundary MAE (see statistical protocol). |
-| **Figures** | Qualitative timeline overlay B0 vs GT; boundary error per transition. |
-| **Tables** | `tab:benchmark_comparison`, `tab:boundary_per_transition`, `tab:segment_metrics` |
+| **Question** | What biomechanical events does validation literature use to name pull phases, and which are observable from fixed MediaPipe pose alone? |
+| **Outcome (2026-07-14)** | Audit accepted; **no rule-based implementation**. Middle-pull knee events partially named in literature; setup and overhead transitions require non-pose cues. |
+| **Artifacts** | [`B0_EVIDENCE_MATRIX.md`](B0_EVIDENCE_MATRIX.md), [`B0_EXPLORATORY_REFERENCE.md`](B0_EXPLORATORY_REFERENCE.md) |
+| **Manuscript role** | Methods/Discussion cite audit; **not** a competitive benchmark row |
 
 ### EXP-B1 — Thesis reference (complete)
 
@@ -506,17 +505,16 @@ Reference hardware document: single NVIDIA GPU (model TBD at implementation) + A
 
 | Step | Work | Rationale |
 |------|------|-----------|
-| **1** | EXP-ONT (ontology) | Blocks B0 threshold semantics and Methods text |
-| **2** | EXP-MET (`boundary.py` + tests) | Primary endpoint; unblocks all models |
-| **3** | EXP-B0 (rule-based) | Highest reviewer risk if missing |
-| **4** | Frame/segment export pipeline | Converts predictions → unified metrics |
+| **1** | EXP-ONT (ontology) | **Done** |
+| **2** | EXP-MET (`boundary.py` + tests) | **Done** — primary endpoint |
+| **3** | EXP-B0 audit | **Done** — frozen exploratory reference |
+| **4** | MS-TCN infrastructure | **Done** — adapters, hooks, config stub |
 | **5** | EXP-B2-CORE (MS-TCN → MS-TCN++ → ASFormer) | Main scientific comparison |
-| **6** | EXP-SPLIT (LOAO) | Uncertainty for claims |
-| **7** | Manuscript population §6 + Discussion DIS-01–03 | Publication path |
-| **8** | EXP-RT (runtime) | Low risk, fills `tab:runtime` |
-| **9** | EXP-ABL (ablations) | Strengthens paper |
-| **10** | EXP-IAA | Mitigates annotation criticism |
-| **11** | EXP-ROB-* / EXP-B2-EXT / EXP-B3 | Optional enrichment |
+| **6** | Experiment runner + prediction archives | Unblocks benchmark runs |
+| **7** | EXP-SPLIT (LOAO) | Uncertainty for claims |
+| **8** | Manuscript population §6 + Discussion | Publication path |
+| **9** | EXP-RT (runtime) | Low risk, fills `tab:runtime` |
+| **10** | EXP-ABL / EXP-IAA / robustness | Optional enrichment |
 
 B1 evaluation and figures can proceed in **parallel with step 1** (no implementation).
 
@@ -526,7 +524,7 @@ B1 evaluation and figures can proceed in **parallel with step 1** (no implementa
 
 | Criticism | Severity | Mitigation in this protocol |
 |-----------|----------|----------------------------|
-| “Why not knee-angle rules?” | **Fatal if ignored** | B0 as first-class tier; lead comparison vs B0 |
+| “Why not knee-angle rules?” | **Addressed by audit** | B0 frozen as exploratory reference; compare B2 to expert labels + cite literature event vocabulary |
 | “Applied TAS, no novelty” | High | Benchmark framing; boundary-ms formalization |
 | “Dataset too small” | Medium | Athlete-disjoint eval; honest N; LOAO uncertainty |
 | “Pose bad at catch” | Medium | Per-transition boundary table; occlusion discussion |

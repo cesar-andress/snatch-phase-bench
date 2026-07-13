@@ -1,7 +1,7 @@
-# Remaining blockers — post Phase 3 benchmark design
+# Remaining blockers — post B0 freeze / MS-TCN infrastructure
 
-**Updated:** 2026-07-13  
-**Context:** Baseline reproduction **closed**. Phase 3 benchmark **design complete**; implementation **not** started. Author clarifications integrated in [`AUTHOR_CLARIFICATIONS.md`](AUTHOR_CLARIFICATIONS.md).
+**Updated:** 2026-07-14  
+**Context:** B0 **frozen as exploratory reference** (accepted audit outcome). MS-TCN **infrastructure ready**; architecture **not implemented**.
 
 ---
 
@@ -9,17 +9,14 @@
 
 | Item | Resolution |
 |------|------------|
-| Checkpoint validation | **VERIFIED** (B1-repro-v1) |
-| Benchmark scientific design | [`BENCHMARK_PROTOCOL.md`](../benchmark/BENCHMARK_PROTOCOL.md) |
-| Statistical protocol | [`STATISTICAL_PROTOCOL.md`](../benchmark/STATISTICAL_PROTOCOL.md) |
-| Governance / versioning | [`BENCHMARK_GOVERNANCE.md`](../benchmark/BENCHMARK_GOVERNANCE.md) |
-| Experiment matrix | [`EXPERIMENT_MATRIX.md`](../benchmark/EXPERIMENT_MATRIX.md) |
-| Phase definitions | [`AUTHOR_CLARIFICATIONS.md`](AUTHOR_CLARIFICATIONS.md) — seven-phase taxonomy documented |
-| Phase ontology code (EXP-ONT) | **`configs/ontology/` + `snatch_phase_bench.ontology`** — mapping layer implemented |
-| Annotation protocol | [`AUTHOR_CLARIFICATIONS.md`](AUTHOR_CLARIFICATIONS.md) — single expert, frame-by-frame |
-| Frame count discrepancy (37,125 vs 35,825) | **RESOLVED** — 35,825 canonical; duplicates/errors in larger export |
-| MediaPipe version | **0.10.30 Full** — documented in [`AUTHOR_CLARIFICATIONS.md`](AUTHOR_CLARIFICATIONS.md) |
-| Dataset provenance | **208 clips**, Weightlifting House YouTube, manual trim — documented |
+| B0 evidence audit | [`B0_EVIDENCE_MATRIX.md`](../benchmark/B0_EVIDENCE_MATRIX.md) |
+| B0 scope decision | **Frozen exploratory reference** — [`B0_EXPLORATORY_REFERENCE.md`](../benchmark/B0_EXPLORATORY_REFERENCE.md) |
+| Boundary metric implementation | **IMPLEMENTED** (`evaluation/metrics/boundary.py`) |
+| Phase ontology (EXP-ONT) | **`configs/ontology/` + `snatch_phase_bench.ontology`** |
+| MS-TCN integration scaffolding | [`MS_TCN_INTEGRATION.md`](../benchmark/MS_TCN_INTEGRATION.md) |
+| Frame-sequence dataset adapter | `snatch_phase_bench.data.frame_sequence` |
+| TAS evaluation hooks | `snatch_phase_bench.evaluation.tas_hooks` |
+| Benchmark model registry | `snatch_phase_bench.benchmark.registry` |
 
 ---
 
@@ -27,34 +24,42 @@
 
 Ranked by scientific importance:
 
-1. **Benchmark implementation** — B0, B2-core TAS models, boundary evaluator (`boundary.py`), experiment runner
-2. **Boundary metric implementation (`boundary.py`)** — **IMPLEMENTED** (frame-canonical; ms requires explicit FPS)
-3. **B0 rule-based baseline** — **BLOCKED** pending OD-2 / B0 audit ([`B0_EVIDENCE_MATRIX.md`](../benchmark/B0_EVIDENCE_MATRIX.md)); middle-pull knee events partially supported; setup and late phases not observable knee-only
-4. **B2-core TAS models** — main benchmark table
-5. **LOAO / multi-seed uncertainty** — required for inferential claims
-6. **Public release policy** — legal / Zenodo clearance; video redistribution rights under evaluation
-7. **Inter-annotator agreement** — EXP-IAA (future work; single annotator documented)
-8. **Statistical evaluation after benchmark models** — inferential claims pending benchmark runs
-9. Camera metadata and robustness studies
-
-See prior detail in [`CHECKPOINT_VALIDATION.md`](CHECKPOINT_VALIDATION.md) companion; implementation order in [`BENCHMARK_PROTOCOL.md`](../benchmark/BENCHMARK_PROTOCOL.md) §11.
+1. **MS-TCN architecture + trainer** — primary B2 comparator (config stub only)
+2. **MS-TCN++ and ASFormer** — extended B2 family
+3. **Experiment runner** — wire config → train → evaluate → JSON output
+4. **LOAO / multi-seed uncertainty** — required for inferential claims
+5. **Public release policy** — legal / Zenodo clearance
+6. **Inter-annotator agreement** — EXP-IAA (future work)
+7. **Native FPS verification** — required before reporting boundary ms
+8. Camera metadata and robustness studies
 
 ---
 
-## Open decisions (require sign-off before coding)
+## Closed decisions
+
+| ID | Decision | Outcome |
+|----|----------|---------|
+| OD-1 | B0 competitive scope | **Closed** — exploratory reference only |
+| OD-2 | B0 knee-angle operational definition | **Closed** — insufficient evidence; no implementation |
+
+---
+
+## Open decisions (require sign-off before B2 training runs)
 
 | ID | Decision | Doc reference |
 |----|----------|---------------|
-| OD-1 | Seven-phase vs mapped five-phase for B0 | BENCHMARK_PROTOCOL §13 |
-| OD-2 | B0 knee-angle operational definition | BENCHMARK_PROTOCOL §13 |
-| OD-3 | LOAO vs k-fold | STATISTICAL_PROTOCOL §3.3 |
-| OD-4 | Seed count (3 vs 5) | STATISTICAL_PROTOCOL §3.1 |
 | OD-5 | Early-stop metric for B2 | BENCHMARK_PROTOCOL §13 |
 | OD-6 | Reference GPU for runtime | BENCHMARK_PROTOCOL §13 |
+| OD-3 | LOAO vs k-fold | STATISTICAL_PROTOCOL §3.3 |
+| OD-4 | Seed count (3 vs 5) | STATISTICAL_PROTOCOL §3.1 |
 | OD-7 | Video public release scope | BENCHMARK_GOVERNANCE §9 |
 
 ---
 
-## Recommended first implementation step
+## Recommended next implementation step
 
-**EXP-ONT** (ontology mapping for B0) in parallel with **EXP-MET** (boundary evaluator) — then **EXP-B0**.
+1. Implement **MS-TCN** (`models/ms_tcn.py`, trainer, registry entry).
+2. Enable **experiment runner** for B2 configs (`configs/benchmark/ms_tcn.yaml`).
+3. Run **test-split evaluation** → canonical JSON via `evaluate_frame_predictions()`.
+
+Do **not** reopen B0 unless new evidence resolves audit gaps with documented provenance.

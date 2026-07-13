@@ -10,8 +10,10 @@
 ## Research and benchmark
 
 - [`research_design.md`](research_design.md) — scientific goals and contribution framing
-- [`benchmark/B0_EVIDENCE_MATRIX.md`](benchmark/B0_EVIDENCE_MATRIX.md) — B0 biomechanical evidence audit (pre-implementation)
-- [`benchmark/B0_IMPLEMENTATION_SPECIFICATION.md`](benchmark/B0_IMPLEMENTATION_SPECIFICATION.md) — blocked B0 spec (no thresholds)
+- [`benchmark/B0_EXPLORATORY_REFERENCE.md`](benchmark/B0_EXPLORATORY_REFERENCE.md) — B0 frozen as exploratory reference
+- [`benchmark/B0_EVIDENCE_MATRIX.md`](benchmark/B0_EVIDENCE_MATRIX.md) — B0 biomechanical evidence audit
+- [`benchmark/B0_IMPLEMENTATION_SPECIFICATION.md`](benchmark/B0_IMPLEMENTATION_SPECIFICATION.md) — archived blocked spec
+- [`benchmark/MS_TCN_INTEGRATION.md`](benchmark/MS_TCN_INTEGRATION.md) — MS-TCN infrastructure guide
 - [`benchmark/BENCHMARK_PROTOCOL.md`](benchmark/BENCHMARK_PROTOCOL.md) — **canonical** Phase 3 benchmark specification
 - [`benchmark/EXPERIMENT_MATRIX.md`](benchmark/EXPERIMENT_MATRIX.md) — planned experiments
 - [`benchmark/STATISTICAL_PROTOCOL.md`](benchmark/STATISTICAL_PROTOCOL.md) — inferential analysis rules

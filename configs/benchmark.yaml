@@ -41,9 +41,12 @@ preprocessing:
 
 baselines:
   B0:
-    status: planned
-    config: configs/benchmark/rule_knee_angle.yaml
+    status: frozen_exploratory_reference
+    role: exploratory_only
+    config: null
     ontology: five_phase_knee_angle_v1
+    policy: docs/benchmark/B0_EXPLORATORY_REFERENCE.md
+    implementation: none
   B1:
     status: verified
     version: B1-repro-v1
@@ -76,12 +79,36 @@ evaluation:
 
 seeds: [42, 123, 456]
 
+learned_models:
+  ms_tcn:
+    status: infrastructure_ready
+    config: configs/benchmark/ms_tcn.yaml
+    registry_name: ms_tcn
+    ontology: seven_phase_v1
+    input_layout: frame_sequence
+  ms_tcn_pp:
+    status: planned
+    config: configs/benchmark/ms_tcn_pp.yaml
+    registry_name: ms_tcn_pp
+    ontology: seven_phase_v1
+    input_layout: frame_sequence
+  asformer:
+    status: planned
+    config: configs/benchmark/asformer.yaml
+    registry_name: asformer
+    ontology: seven_phase_v1
+    input_layout: frame_sequence
+
 tiers:
   - id: B0
-    description: Rule-based knee-angle segmenter
+    role: exploratory_reference
+    description: Knee-angle event vocabulary (frozen; not implemented)
   - id: B1
-    description: Frozen thesis LSTM (reproduction reference)
+    role: reproduction_reference
+    description: Frozen thesis LSTM (verified)
   - id: B2
-    description: MS-TCN, MS-TCN++, ASFormer
+    role: primary_comparator
+    description: MS-TCN, MS-TCN++, ASFormer (learned TAS)
   - id: B3
+    role: optional_extension
     description: Optional foundation-model encoders

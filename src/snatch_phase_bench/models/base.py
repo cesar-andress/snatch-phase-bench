@@ -15,7 +15,12 @@ class ModelOutput:
     """Standard forward pass output."""
 
     logits: torch.Tensor
-    """Shape ``(batch, num_classes)`` for window classifiers."""
+    """
+    Class logits.
+
+    - ``window_sequence`` models: ``(batch, num_classes)``
+    - ``frame_sequence`` models: ``(batch, time, num_classes)``
+    """
 
     extras: dict[str, Any] | None = None
 
@@ -24,8 +29,9 @@ class TemporalSegmentationModel(ABC, nn.Module):
     """
     Pluggable interface for temporal segmentation models.
 
-    Window-based models (LSTM, GRU) consume ``(batch, time, features)``.
-    Future frame-wise or graph models may override ``input_layout`` and ``forward``.
+    Window-based models (LSTM, GRU) consume ``(batch, time, features)`` and emit
+    one label per window. Frame-wise TAS models consume the same input layout but
+    emit one label per input frame via ``output_layout='frame_sequence'``.
     """
 
     @property
@@ -38,6 +44,13 @@ class TemporalSegmentationModel(ABC, nn.Module):
         """One of ``window_sequence``, ``frame_sequence``, ``graph_sequence``."""
         return "window_sequence"
 
+    @property
+    def output_layout(self) -> str:
+        """One of ``window_label``, ``frame_sequence``."""
+        if self.input_layout == "frame_sequence":
+            return "frame_sequence"
+        return "window_label"
+
     @abstractmethod
     def forward(self, x: torch.Tensor) -> ModelOutput:
         """Run forward pass and return logits."""
@@ -48,4 +61,7 @@ class TemporalSegmentationModel(ABC, nn.Module):
 
     def predict_classes(self, x: torch.Tensor) -> torch.Tensor:
         """Argmax over class dimension."""
-        return torch.argmax(self.forward(x).logits, dim=-1)
+        logits = self.forward(x).logits
+        if self.output_layout == "frame_sequence":
+            return torch.argmax(logits, dim=-1)
+        return torch.argmax(logits, dim=-1)

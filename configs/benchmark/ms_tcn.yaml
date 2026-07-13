@@ -1,0 +1,74 @@
+# MS-TCN benchmark experiment config (infrastructure stub — model not implemented).
+# See docs/benchmark/MS_TCN_INTEGRATION.md
+
+experiment:
+  name: ms_tcn_benchmark
+  tier: B2
+  registry_name: ms_tcn
+  status: infrastructure_ready
+  seeds: [42, 123, 456]
+
+paths:
+  use_reproduction_paths: true
+
+dataset:
+  adapter: frame_sequence
+  labels_csv: master_frame_labels.csv
+  keypoints_dir: keypoints
+  use_z: true
+  use_visibility: false
+  features_per_frame: 99
+  num_landmarks: 33
+
+split:
+  strategy: athlete_level
+  source: athlete_split.json
+
+ontology:
+  id: seven_phase_v1
+  num_supervised_classes: 7
+  ignore_label_id: 0
+
+model:
+  name: ms_tcn
+  input_layout: frame_sequence
+  output_layout: frame_sequence
+  # Architecture hyperparameters — to be filled when MS-TCN is implemented:
+  num_stages: null
+  num_layers: null
+  num_f_maps: null
+  dropout: null
+
+optimizer:
+  name: adam
+  learning_rate: 0.0005
+  weight_decay: 0.00001
+
+training:
+  batch_size: 1
+  epochs: 120
+  early_stopping:
+    monitor: val_macro_f1
+    patience: 15
+  class_weighting: true
+  standardize: train_only
+  trainer: tas_trainer
+
+evaluation:
+  levels:
+    - frame
+    - segment
+    - boundary
+  primary_metrics:
+    - boundary_mae_frames
+    - segmental_f1_at_50
+    - edit_score
+  use_b0_mapping: false
+
+output:
+  checkpoint_dir: outputs/benchmark/ms_tcn
+  predictions_dir: outputs/benchmark/ms_tcn/predictions
+  reports_dir: outputs/benchmark/ms_tcn/reports
+
+expected:
+  implementation_status: not_implemented

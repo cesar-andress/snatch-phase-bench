@@ -1,8 +1,9 @@
 # B0 evidence matrix — biomechanical audit
 
-**Date:** 2026-07-13  
-**Status:** Pre-implementation audit (no code)  
-**Purpose:** Determine whether a knee-angle rule-based baseline (B0) can be implemented without arbitrary decisions.
+**Date:** 2026-07-13 (outcome accepted 2026-07-14)  
+**Status:** **Accepted audit outcome — B0 frozen as exploratory reference**  
+**Policy:** [`B0_EXPLORATORY_REFERENCE.md`](B0_EXPLORATORY_REFERENCE.md)  
+**Purpose:** Document evidence reviewed before freezing B0 (no implementation).
 
 **Authoritative sources used (project only):**
 

@@ -1,10 +1,13 @@
-# B0 implementation specification (blocked)
+# B0 implementation specification (frozen — exploratory reference)
 
-**Date:** 2026-07-13  
-**Status:** **BLOCKED — do not implement until open decisions resolved**  
-**Evidence audit:** [`B0_EVIDENCE_MATRIX.md`](B0_EVIDENCE_MATRIX.md)
+**Date:** 2026-07-13 (frozen 2026-07-14)  
+**Status:** **FROZEN — exploratory reference only; do not implement**  
+**Evidence audit:** [`B0_EVIDENCE_MATRIX.md`](B0_EVIDENCE_MATRIX.md)  
+**Policy:** [`B0_EXPLORATORY_REFERENCE.md`](B0_EXPLORATORY_REFERENCE.md)
 
-This document specifies the **intended** rule-based baseline architecture. It intentionally **excludes numeric thresholds** and other unsupported parameters.
+The evidence audit concluded that knee-angle-only B0 cannot be implemented without unsupported assumptions. This document is **archived** for traceability. Primary benchmark work proceeds via learned TAS models (B2).
+
+This document specifies the **intended** rule-based reference architecture. It intentionally **excludes numeric thresholds** and other unsupported parameters.
 
 ---
 
@@ -24,8 +27,8 @@ Until then, the repository contains:
 
 | Item | Specification |
 |------|---------------|
-| Tier | B0 — primary non-learned comparator |
-| Scientific role | Test whether learned segmenters improve over knee-angle **event heuristics** used in biomechanics literature |
+| Tier | B0 — **exploratory reference** (not a primary comparator) |
+| Scientific role | Document knee-angle **event vocabulary** from biomechanics literature; **not** a verified benchmark row until operational rules are evidence-backed |
 | Output ontology | `five_phase_knee_angle_v1` (six supervised labels including setup) |
 | Comparison to dataset | Mapped evaluation via `seven_to_five_knee_angle_v1`; seven-class labels **never modified** |
 | Inputs | Precomputed MediaPipe 0.10.30 Full CSVs (same as B1/B2) |
