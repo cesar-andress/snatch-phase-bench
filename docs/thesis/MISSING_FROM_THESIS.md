@@ -10,7 +10,7 @@ Each row is an important idea **not yet fully present** in the manuscript or can
 | M02 | Cap. 5 | 14–15 | Filename encodes modality, weight class, athlete, attempt, ok/fail, global id | §3 Dataset + App. A | Yes — table |
 | M03 | Cap. 5 | 14–15 | Four-level data layout: raw / annotations / keypoints / processed | §3 + `fig:pipeline` | Yes — remove wl_clips paths |
 | M04 | Cap. 5 | 15 | Segment labels: 1,766 segments in master (verify vs repo) | §3 Annotations + segment eval | Yes |
-| M05 | Cap. 5 | 15 | Frame labels: thesis claims 37,125 rows (**conflicts with audit 35,825**) | §3 + App. A | Yes — resolve first |
+| M05 | Cap. 5 | 15 | Frame labels: thesis claims 37,125 rows (**resolved:** 35,825 canonical) | §3 + App. A | Done — see `AUTHOR_CLARIFICATIONS.md` |
 | M06 | Cap. 6.2 | 17 | Interactive OpenCV annotation: frame navigation, dual export | §3 Annotations + future `ANNOTATION_PROTOCOL.md` | Yes |
 | M07 | Cap. 6.2 | 17 | Canonical script name drift (`annotate_phases_final2.py`) | App. B reproducibility note | Yes — factual |
 | M08 | Cap. 6.3 | 18 | Pose extraction: skip existing, restrict to master CSV list | §4 Methods preprocessing / App. B | Yes |

@@ -99,7 +99,7 @@ Known **non-metric** gaps (unchanged by this validation):
 |-------|----------|--------------------------|
 | Snapshot `outputs/lstm_phases/best_model.pt` is LFS pointer | 131-byte stub | **No** — canonical copy used |
 | CPU retrain ≠ checkpoint | `phase2_results.json` retraining block | **No** — separate approximate path |
-| Frame count thesis vs audit (37,125 vs 35,825) | Phase 1 audit | **No** — window tensors match manifest |
+| Frame count thesis vs audit (37,125 vs 35,825) | Phase 1 audit | **No** — **RESOLVED:** 35,825 canonical; duplicates/errors in larger export ([`AUTHOR_CLARIFICATIONS.md`](AUTHOR_CLARIFICATIONS.md)) |
 
 ---
 

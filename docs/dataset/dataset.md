@@ -4,7 +4,7 @@
 
 The dataset comprises **208 snatch attempts** from **70 athletes**, annotated into **seven biomechanical phases** plus an `unlabeled` class used during annotation but excluded from training windows.
 
-**Status:** Structure verified during Phase 2 reproduction. Public release pending legal review.
+**Status:** Structure verified during Phase 2 reproduction. Author clarifications integrated 2026-07-13 ([`reproduction/AUTHOR_CLARIFICATIONS.md`](../reproduction/AUTHOR_CLARIFICATIONS.md)). Public release pending legal review.
 
 ---
 
@@ -41,7 +41,7 @@ data/processed/rebuilt/
 | `phase_id` | Integer class ID |
 | `phase_name` | Human-readable phase |
 
-**Verified:** 35,825 frame rows; 208 videos; no duplicate (video, frame) conflicts.
+**Verified:** 35,825 frame rows (canonical corrected `master_frame_labels.csv`); 208 videos; no duplicate (video, frame) conflicts. An earlier 37,125-row export contained duplicates and filename errors (see [`AUTHOR_CLARIFICATIONS.md`](../reproduction/AUTHOR_CLARIFICATIONS.md)).
 
 ### Segment labels (`master_segment_labels.csv`)
 
@@ -60,9 +60,7 @@ Contiguous intervals per phase. **Verified:** 856 per-video segment CSV files pr
 | 6 | catch | Yes |
 | 7 | recovery | Yes |
 
-**Phase ontology note (literature integration):** Biomechanics literature often defines a **five-phase** snatch decomposition from knee-extension-angle events (First Pull, Transition, Second Pull, Turnover/Catch, Recovery), while this dataset uses **seven** supervised labels including separate `setup`, `turnover`, and `catch`. Reconciliation with the community standard is **pending** — see [`literature/GAP_ANALYSIS.md`](../literature/GAP_ANALYSIS.md) §5.1. Do not claim “standard five-phase ontology” in publications until mapped or relabeled.
-
-**Future work:** Operational biomechanical definitions with citations (Theia3D IJES 2025, Harbili & Alptekin); see [`paper/PAPER_TODO.md`](../paper/PAPER_TODO.md) EXP-12.
+**Phase ontology (documented):** Coaching literature uses three--four pulling phases; computer-vision work commonly uses six phases from barbell and joint-angle events (Cao et al., 2022; Chen et al., 2022). This dataset adds **Setup** to that six-phase CV model, yielding **seven** supervised labels with separate `turnover` and `catch`. Full rationale: [`reproduction/AUTHOR_CLARIFICATIONS.md`](../reproduction/AUTHOR_CLARIFICATIONS.md). Mapping to the five-phase knee-angle standard (Thiele et al., 2024) informs B0 only.
 
 ---
 
@@ -84,6 +82,7 @@ Athlete-level split in `outputs/lstm_phases/athlete_split.json` (read-only snaps
 
 Each CSV row = one video frame.
 
+- Extracted with **MediaPipe 0.10.30**, **Full** Pose Landmarker model
 - 33 MediaPipe landmarks × (x, y, z) = **99 numeric columns**
 - Optional visibility columns (`v0`…`v32`) — **not used** by frozen baseline
 - Interpolation + forward/backward fill for missing values (frozen preprocessing)

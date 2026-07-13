@@ -1,7 +1,7 @@
 # Remaining blockers — post Phase 3 benchmark design
 
 **Updated:** 2026-07-13  
-**Context:** Baseline reproduction **closed**. Phase 3 benchmark **design complete**; implementation **not** started.
+**Context:** Baseline reproduction **closed**. Phase 3 benchmark **design complete**; implementation **not** started. Author clarifications integrated in [`AUTHOR_CLARIFICATIONS.md`](AUTHOR_CLARIFICATIONS.md).
 
 ---
 
@@ -14,6 +14,11 @@
 | Statistical protocol | [`STATISTICAL_PROTOCOL.md`](../benchmark/STATISTICAL_PROTOCOL.md) |
 | Governance / versioning | [`BENCHMARK_GOVERNANCE.md`](../benchmark/BENCHMARK_GOVERNANCE.md) |
 | Experiment matrix | [`EXPERIMENT_MATRIX.md`](../benchmark/EXPERIMENT_MATRIX.md) |
+| Phase definitions | [`AUTHOR_CLARIFICATIONS.md`](AUTHOR_CLARIFICATIONS.md) — seven-phase taxonomy documented |
+| Annotation protocol | [`AUTHOR_CLARIFICATIONS.md`](AUTHOR_CLARIFICATIONS.md) — single expert, frame-by-frame |
+| Frame count discrepancy (37,125 vs 35,825) | **RESOLVED** — 35,825 canonical; duplicates/errors in larger export |
+| MediaPipe version | **0.10.30 Full** — documented in [`AUTHOR_CLARIFICATIONS.md`](AUTHOR_CLARIFICATIONS.md) |
+| Dataset provenance | **208 clips**, Weightlifting House YouTube, manual trim — documented |
 
 ---
 
@@ -21,15 +26,15 @@
 
 Ranked by scientific importance:
 
-1. **Phase ontology reconciliation (EXP-ONT / EXP-12)** — blocks B0 threshold semantics  
-2. **Boundary metric implementation (`boundary.py`)** — blocks all primary endpoints  
-3. **B0 rule-based baseline** — highest reviewer risk  
-4. **B2-core TAS models** — main benchmark table  
-5. **LOAO / multi-seed uncertainty** — required for inferential claims  
-6. Frame count discrepancy (37,125 vs 35,825) — documentation trust  
-7. Inter-annotator agreement — EXP-IAA  
-8. Legal / Zenodo release  
-9. Camera metadata and robustness studies  
+1. **Benchmark implementation** — B0, B2-core TAS models, boundary evaluator (`boundary.py`), experiment runner
+2. **Boundary metric implementation (`boundary.py`)** — blocks all primary endpoints
+3. **B0 rule-based baseline** — highest reviewer risk; ontology mapping from seven to five phases
+4. **B2-core TAS models** — main benchmark table
+5. **LOAO / multi-seed uncertainty** — required for inferential claims
+6. **Public release policy** — legal / Zenodo clearance; video redistribution rights under evaluation
+7. **Inter-annotator agreement** — EXP-IAA (future work; single annotator documented)
+8. **Statistical evaluation after benchmark models** — inferential claims pending benchmark runs
+9. Camera metadata and robustness studies
 
 See prior detail in [`CHECKPOINT_VALIDATION.md`](CHECKPOINT_VALIDATION.md) companion; implementation order in [`BENCHMARK_PROTOCOL.md`](../benchmark/BENCHMARK_PROTOCOL.md) §11.
 
@@ -51,4 +56,4 @@ See prior detail in [`CHECKPOINT_VALIDATION.md`](CHECKPOINT_VALIDATION.md) compa
 
 ## Recommended first implementation step
 
-**EXP-ONT** (ontology) in parallel with **EXP-MET** (boundary evaluator) — then **EXP-B0**.
+**EXP-ONT** (ontology mapping for B0) in parallel with **EXP-MET** (boundary evaluator) — then **EXP-B0**.

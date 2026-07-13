@@ -14,6 +14,24 @@ Core question:
 
 > Where do learned temporal segmenters improve over the knee-angle heuristic the biomechanics community already uses?
 
+## Dataset (canonical construction)
+
+**Full author clarifications:** [`reproduction/AUTHOR_CLARIFICATIONS.md`](reproduction/AUTHOR_CLARIFICATIONS.md)
+
+The table below separates what is grounded in published literature, what was decided during dataset construction, and what was confirmed after reproduction began.
+
+| Topic | Published literature | Dataset construction (author) | Post-reproduction clarification |
+|-------|---------------------|------------------------------|--------------------------------|
+| Phase count | Coaching: 3–4 pulls; CV: six phases (Cao et al., 2022); five-phase knee-angle model (Thiele et al., 2024) | Seven labels = six CV phases + Setup | Mapping to five-phase B0 ontology documented; labels released as-is |
+| Phase names | M1–M6 barbell/joint events (Cao et al., 2022) | Setup, First Pull, Transition, Second Pull, Turnover, Catch, Recovery | Turnover/Catch split intentional |
+| Boundaries | Knee-angle and bar-velocity events in biomechanics | Frame-by-frame visual biomechanical events | Recovery ends at full hip/knee extension with bar stable overhead |
+| Annotations | IAA recommended in sports labelling | Single expert; consistency across athletes | IAA deferred to future work |
+| Frame labels | — | Corrected `master_frame_labels.csv` | 35,825 rows canonical (37,125 export had duplicates/errors) |
+| Videos | Competition snatch kinematics literature | 208 clips from Weightlifting House YouTube; manual trim | Redistribution rights under evaluation |
+| Pose | MediaPipe widely used in sports CV | MediaPipe **0.10.30**, **Full** model | Fixed Stage-1 input for benchmark v1 |
+
+**Verified benchmark facts (unchanged):** 208 videos, 70 athletes, 35,825 frame labels, 21,249 training windows, frozen LSTM baseline (B1-repro-v1), corrected canonical dataset.
+
 ## Intended contributions (ranked)
 
 | Rank | Contribution | Status |
@@ -82,7 +100,7 @@ Definitions: [`evaluation_metrics.md`](evaluation_metrics.md)
 
 | Gap | Document |
 |-----|----------|
-| Phase ontology: 7 thesis labels vs 5-phase biomechanics standard | [`literature/GAP_ANALYSIS.md`](literature/GAP_ANALYSIS.md) §5.1 |
+| Phase ontology: 7 thesis labels vs 5-phase biomechanics standard | [`literature/GAP_ANALYSIS.md`](literature/GAP_ANALYSIS.md) §5.1; [`reproduction/AUTHOR_CLARIFICATIONS.md`](reproduction/AUTHOR_CLARIFICATIONS.md) |
 | No rule-based B0 baseline | [`paper/REVIEWER_CHECKLIST.md`](paper/REVIEWER_CHECKLIST.md) #1 |
 | Boundary-ms metrics not implemented | `evaluation/metrics/boundary.py` |
 | Prior-art table for weightlifting CV | [`paper/PAPER_TODO.md`](paper/PAPER_TODO.md) LIT-06 |
@@ -100,7 +118,7 @@ Definitions: [`evaluation_metrics.md`](evaluation_metrics.md)
 | Limitation | Evidence |
 |------------|----------|
 | Window overlap (stride 1) | 96.77% frame sharing; autocorrelation analysis |
-| Single annotator / no IAA | Not documented in repository |
+| Single annotator / no IAA | Documented in [`reproduction/AUTHOR_CLARIFICATIONS.md`](reproduction/AUTHOR_CLARIFICATIONS.md); IAA planned |
 | No public video license | Videos absent from snapshot |
 | Window metrics ≠ segment quality | Baseline protocol is window classification |
 | Class imbalance | `transition` smallest class |
@@ -111,7 +129,7 @@ Definitions: [`evaluation_metrics.md`](evaluation_metrics.md)
 
 1. ~~**Original `best_model.pt` must evaluate to thesis metrics**~~ — **DONE**
 2. **Phase 3 benchmark design reviewed** — **DONE** ([`benchmark/BENCHMARK_PROTOCOL.md`](benchmark/BENCHMARK_PROTOCOL.md))
-3. **Phase ontology reconciliation** with biomechanics standard — **OPEN**
+3. **Phase ontology reconciliation** with biomechanics standard — **DOCUMENTED** ([`reproduction/AUTHOR_CLARIFICATIONS.md`](reproduction/AUTHOR_CLARIFICATIONS.md); B0 mapping still implementation work)
 4. **B0 + boundary metrics** before claiming benchmark completeness — **OPEN**
 
 ## Related documents
@@ -119,4 +137,5 @@ Definitions: [`evaluation_metrics.md`](evaluation_metrics.md)
 - [`literature/GAP_ANALYSIS.md`](literature/GAP_ANALYSIS.md)
 - [`paper/REVIEWER_CHECKLIST.md`](paper/REVIEWER_CHECKLIST.md)
 - [`paper/PAPER_TODO.md`](paper/PAPER_TODO.md)
+- [`reproduction/AUTHOR_CLARIFICATIONS.md`](reproduction/AUTHOR_CLARIFICATIONS.md)
 - [`reproduction/REPRODUCTION_SUMMARY.md`](reproduction/REPRODUCTION_SUMMARY.md)

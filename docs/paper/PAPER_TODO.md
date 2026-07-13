@@ -49,7 +49,7 @@ Extracted from the literature foundation, gap analysis, benchmark plan, and curr
 | EXP-09 | DiffAct + CTR-GCN/PoseC3D encoders (A1–A3) | Extended benchmark table | P2 |
 | EXP-10 | Runtime analysis (params, FPS) | `tab:runtime` | P2 |
 | EXP-11 | Inter-annotator agreement on boundary subset | Dataset §, Limitations | P1 |
-| EXP-12 | Phase ontology reconciliation (5 vs 7 phases) | `tab:phase_taxonomy`, Methods | **P0** |
+| EXP-12 | Phase ontology documentation (5 vs 7 phases) | `tab:phase_taxonomy`, §3 | **Done** — [`AUTHOR_CLARIFICATIONS.md`](../reproduction/AUTHOR_CLARIFICATIONS.md); B0 mapping still P0 |
 
 **Phase 3 design (2026-07-13):** Canonical specs in [`../benchmark/BENCHMARK_PROTOCOL.md`](../benchmark/BENCHMARK_PROTOCOL.md), [`EXPERIMENT_MATRIX.md`](../benchmark/EXPERIMENT_MATRIX.md), [`STATISTICAL_PROTOCOL.md`](../benchmark/STATISTICAL_PROTOCOL.md), [`BENCHMARK_GOVERNANCE.md`](../benchmark/BENCHMARK_GOVERNANCE.md). **No model implementation until design review sign-off.**
 

@@ -15,7 +15,7 @@ The repository has strong **reproducibility infrastructure** and a **verified da
 2. **Evaluation emphasis** — literature prioritizes boundary timing in milliseconds and segment-level F1; repo implements segment metrics in software but baseline protocol remains window-level only.
 3. **Contribution framing** — literature rejects “novel LSTM” framing; some legacy docs still list GRU/LSTM comparisons as primary benchmark goals.
 
-The largest **ontology inconsistency**: literature recommends the community **five-phase** snatch decomposition (knee-angle defined); the thesis dataset uses **seven** labeled phases including `setup` and separate `catch` / `turnover`. This must be reconciled before publication.
+The largest **ontology documentation gap** is **closed** as of 2026-07-13: author clarifications in [`reproduction/AUTHOR_CLARIFICATIONS.md`](../reproduction/AUTHOR_CLARIFICATIONS.md) document the seven-class taxonomy and its relation to six-phase CV literature and the five-phase knee-angle standard. **B0 mapping** to five phases remains implementation work.
 
 ---
 
@@ -126,7 +126,7 @@ The largest **ontology inconsistency**: literature recommends the community **fi
 | Missing item | Priority | Target location |
 |--------------|----------|-----------------|
 | Rule-based kinematic baseline spec | P0 | `docs/benchmark/BENCHMARK_PLAN.md` + future `models/` |
-| Phase ontology reconciliation (5 vs 7 phases) | P0 | `docs/dataset/dataset.md`, student Q&A |
+| Phase ontology reconciliation (5 vs 7 phases) | P0 | **Documented** — [`reproduction/AUTHOR_CLARIFICATIONS.md`](../reproduction/AUTHOR_CLARIFICATIONS.md); B0 mapping still open |
 | Boundary timing metric specification | P0 | `docs/evaluation_metrics.md` |
 | Prior-art comparison table (weightlifting CV) | P1 | `docs/literature/PRIOR_ART_WEIGHTLIFTING.md` or paper |
 | Verified bibliography workflow | P1 | `docs/paper/PAPER_TODO.md` |
@@ -145,9 +145,9 @@ The largest **ontology inconsistency**: literature recommends the community **fi
 |--------|-------------|-------|
 | Literature foundation (Part 5.1) | **5 phases** (+ setup position) | Knee-angle ontology from Theia3D IJES 2025, Harbili & Alptekin |
 | Thesis / current dataset | **7 classes** (+ unlabeled) | setup, first_pull, transition, second_pull, turnover, catch, recovery |
-| Manuscript `tab:phase_taxonomy` | 7 + unlabeled | Matches thesis, not literature recommendation |
+| Author clarifications (2026-07-13) | **7 classes** documented | Six-phase CV model (Cao et al., 2022; Chen et al., 2022) + Setup; see [`AUTHOR_CLARIFICATIONS.md`](../reproduction/AUTHOR_CLARIFICATIONS.md) |
 
-**Action:** Confirm with domain expert whether `catch` and `turnover` should remain separate for the benchmark, or map to the five-phase biomechanics standard. Until resolved, manuscript must not claim “community-standard five-phase ontology” without mapping table.
+**Status:** Definitions **documented**; benchmark releases seven-class labels transparently. Manuscript must not claim full equivalence to the five-phase knee-angle standard without B0 mapping table. **Remaining:** implement B0 seven→five mapping (EXP-ONT).
 
 ### 5.2 Baseline model identity
 

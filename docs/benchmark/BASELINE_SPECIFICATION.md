@@ -117,7 +117,7 @@ Inference is deterministic on CPU for this checkpoint; GPU is not required for e
 ## 8. Known limitations
 
 1. **Window-level protocol** — stride-1 overlap inflates apparent independence; segment-level metrics remain primary for benchmark comparison.
-2. **Seven-phase ontology** — thesis labels; literature and some coaching frameworks use five phases (reconciliation pending).
+2. **Seven-phase ontology** — documented in [`reproduction/AUTHOR_CLARIFICATIONS.md`](../reproduction/AUTHOR_CLARIFICATIONS.md); B0 mapping to five-phase knee-angle standard remains implementation work.
 3. **Single split** — one 49/10/11 partition; cross-validation not yet run.
 4. **Monocular MediaPipe inputs** — no multi-view or MOCAP ground truth.
 5. **Class imbalance** — transition and second_pull are minority classes.

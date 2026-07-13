@@ -37,6 +37,7 @@
 
 - [`WORKSPACE_POLICY.md`](WORKSPACE_POLICY.md) — read-only `Paper_TFM-main`, canonical workspace rules
 - [`REPRODUCTION_PLAN.md`](REPRODUCTION_PLAN.md) — reproduce baseline without touching the snapshot
+- [`reproduction/AUTHOR_CLARIFICATIONS.md`](reproduction/AUTHOR_CLARIFICATIONS.md) — phase taxonomy, annotation, provenance (author-confirmed)
 - [`reproduction/REPRODUCTION_SUMMARY.md`](reproduction/REPRODUCTION_SUMMARY.md) — Phase 2 results (frozen)
 - [`reproduction/CHECKPOINT_PROVENANCE.md`](reproduction/CHECKPOINT_PROVENANCE.md) — recovered `best_model.pt` provenance
 - [`reproduction/CHECKPOINT_VALIDATION.md`](reproduction/CHECKPOINT_VALIDATION.md) — thesis metric reproduction (VERIFIED)
