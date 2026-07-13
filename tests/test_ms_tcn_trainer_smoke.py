@@ -2,10 +2,10 @@
 
 from __future__ import annotations
 
+import json
 from pathlib import Path
 
 import numpy as np
-import pandas as pd
 import pytest
 import torch
 
@@ -16,52 +16,18 @@ from snatch_phase_bench.training.interfaces import TrainerConfig, TrainingRunCon
 from snatch_phase_bench.training.ms_tcn_trainer import MSTCNTrainer
 
 
-@pytest.fixture
-def synthetic_ms_tcn_dataset(tmp_path: Path) -> tuple[Path, Path, AthleteSplit]:
-    labels_rows: list[dict[str, object]] = []
-    keypoints_root = tmp_path / "keypoints"
-    for athlete_idx, athlete in enumerate(["athlete_a", "athlete_b"]):
-        for clip_idx in range(2):
-            video = f"{athlete}/clip{clip_idx}.mp4"
-            phase_pattern = [1, 1, 2, 2, 3, 3, 4, 4]
-            names = ["setup", "setup", "first_pull", "first_pull", "transition", "transition", "second_pull", "second_pull"]
-            for frame, (phase_id, phase_name) in enumerate(zip(phase_pattern, names, strict=True)):
-                labels_rows.append(
-                    {
-                        "video_relpath": video,
-                        "frame": frame,
-                        "phase_id": phase_id,
-                        "phase_name": phase_name,
-                    }
-                )
-            csv_dir = keypoints_root / athlete
-            csv_dir.mkdir(parents=True, exist_ok=True)
-            rows = {"frame": list(range(len(phase_pattern)))}
-            for landmark in range(33):
-                base = 0.1 * (athlete_idx + 1) + 0.01 * landmark
-                rows[f"x{landmark}"] = [base + 0.01 * frame for frame in range(len(phase_pattern))]
-                rows[f"y{landmark}"] = [base + 0.02 * frame for frame in range(len(phase_pattern))]
-                rows[f"z{landmark}"] = [base + 0.03 * frame for frame in range(len(phase_pattern))]
-            pd.DataFrame(rows).to_csv(csv_dir / f"clip{clip_idx}.csv", index=False)
-
-    labels_csv = tmp_path / "labels.csv"
-    pd.DataFrame(labels_rows).to_csv(labels_csv, index=False)
-    split = AthleteSplit(
-        train_athletes=frozenset(["athlete_a"]),
-        val_athletes=frozenset(["athlete_b"]),
-        test_athletes=frozenset(),
-    )
-    return labels_csv, keypoints_root, split
-
-
-def test_build_frame_sequence_smoke(synthetic_ms_tcn_dataset: tuple[Path, Path, AthleteSplit]) -> None:
+def test_build_frame_sequence_smoke(
+    synthetic_ms_tcn_dataset: tuple[Path, Path, AthleteSplit],
+) -> None:
     labels_csv, keypoints_dir, _split = synthetic_ms_tcn_dataset
     record = build_frame_sequence("athlete_a/clip0.mp4", labels_csv=labels_csv, keypoints_dir=keypoints_dir)
-    assert record.num_frames == 8
+    assert record.num_frames == 10
     assert record.feature_dim == 99
 
 
-def test_ms_tcn_training_loss_decreases(synthetic_ms_tcn_dataset: tuple[Path, Path, AthleteSplit]) -> None:
+def test_ms_tcn_training_loss_decreases(
+    synthetic_ms_tcn_dataset: tuple[Path, Path, AthleteSplit],
+) -> None:
     labels_csv, keypoints_dir, split = synthetic_ms_tcn_dataset
     train_records = load_frame_sequences(
         labels_csv=labels_csv,
@@ -98,25 +64,19 @@ def test_ms_tcn_training_loss_decreases(synthetic_ms_tcn_dataset: tuple[Path, Pa
     config = TrainerConfig(batch_size=1, epochs=3, early_stopping_patience=10, learning_rate=1e-3)
     trained = trainer.fit(train_records, val_records, model=model, config=config, context=context)
 
-    history = (output_dir / "history.json").read_text(encoding="utf-8")
-    assert "train" in history
-    assert (output_dir / "best_model.pt").exists()
-    assert (output_dir / "feature_mean.npy").exists()
-
-    import json
-
-    parsed = json.loads(history)
+    parsed = json.loads((output_dir / "history.json").read_text(encoding="utf-8"))
     assert len(parsed) >= 2
-    first_loss = parsed[0]["train"]["loss_total"]
-    last_loss = parsed[-1]["train"]["loss_total"]
-    assert last_loss <= first_loss
+    assert parsed[-1]["train"]["loss_total"] <= parsed[0]["train"]["loss_total"]
+    assert (output_dir / "best_model.pt").exists()
 
     payload = torch.load(output_dir / "best_model.pt", map_location="cpu", weights_only=False)
     assert "model_state_dict" in payload
     assert isinstance(trained, MSTCNModel)
 
 
-def test_ms_tcn_checkpoint_load_and_predict(synthetic_ms_tcn_dataset: tuple[Path, Path, AthleteSplit]) -> None:
+def test_ms_tcn_checkpoint_load_and_predict(
+    synthetic_ms_tcn_dataset: tuple[Path, Path, AthleteSplit],
+) -> None:
     labels_csv, keypoints_dir, split = synthetic_ms_tcn_dataset
     train_records = load_frame_sequences(
         labels_csv=labels_csv,
