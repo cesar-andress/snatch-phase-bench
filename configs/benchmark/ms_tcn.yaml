@@ -59,8 +59,12 @@ training:
   standardize: train_only    # SnatchPhaseBench deviation D2
   use_amp: false
   early_stopping:
-    monitor: val_macro_f1
+    monitor: val_segmental_f1_at_50
     patience: 15
+    rationale: >
+      Validation segment F1@IoU=0.50 is computed each epoch via the canonical
+      segment evaluator on dense val predictions (see MS_TCN_M3_PROTOCOL.md).
+      Frame macro-F1 remains logged but is not used for checkpoint selection.
   trainer: ms_tcn_trainer
 
 evaluation:

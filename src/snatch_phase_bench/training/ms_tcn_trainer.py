@@ -15,6 +15,7 @@ from sklearn.metrics import f1_score
 from torch.utils.data import DataLoader, Dataset
 
 from snatch_phase_bench.data.frame_sequence import FrameSequenceRecord
+from snatch_phase_bench.evaluation.tas_hooks import evaluate_frame_predictions
 from snatch_phase_bench.models.base import TemporalSegmentationModel
 from snatch_phase_bench.models.ms_tcn.loss import compute_mstcn_loss
 from snatch_phase_bench.models.ms_tcn.model import MSTCNModel
@@ -156,6 +157,11 @@ class MSTCNTrainer(TemporalSegmentationTrainer):
             collate_fn=_collate_single,
         )
 
+        compute_segment_val = config.early_stopping_monitor in {
+            "val_segmental_f1_at_50",
+            "segmental_f1_at_50",
+        }
+
         model = model.to(device)
         train_labels = np.concatenate([record.phase_ids for record in train_records], axis=0)
         weights = None
@@ -172,6 +178,7 @@ class MSTCNTrainer(TemporalSegmentationTrainer):
         writer = self._get_writer(self.log_dir or output_dir / "tensorboard")
 
         best_metric = float("-inf")
+        best_epoch = 0
         best_state: dict[str, Any] | None = None
         patience_counter = 0
         history: list[dict[str, Any]] = []
@@ -206,7 +213,20 @@ class MSTCNTrainer(TemporalSegmentationTrainer):
                 ce_loss,
                 ignore_label_id=config.ignore_label_id,
             )
-            monitor_value = val_metrics.get(config.early_stopping_monitor, val_metrics["macro_f1"])
+            if compute_segment_val and val_records:
+                segment_metrics = self._compute_segment_validation_metrics(
+                    model,
+                    val_records,
+                    device=device,
+                    mean=mean,
+                    std=std,
+                    ignore_label_id=config.ignore_label_id,
+                )
+                val_metrics.update(segment_metrics)
+            monitor_key = config.early_stopping_monitor
+            if monitor_key.startswith("val_"):
+                monitor_key = monitor_key[4:]
+            monitor_value = val_metrics.get(monitor_key, val_metrics["macro_f1"])
             history.append(
                 {
                     "epoch": epoch,
@@ -223,17 +243,20 @@ class MSTCNTrainer(TemporalSegmentationTrainer):
                 writer.add_scalar("macro_f1/val", val_metrics["macro_f1"], epoch)
 
             logger.info(
-                "Epoch %s/%s train_loss=%.4f val_loss=%.4f val_macro_f1=%.4f",
+                "Epoch %s/%s train_loss=%.4f val_loss=%.4f val_macro_f1=%.4f monitor=%s=%.4f",
                 epoch,
                 config.epochs,
                 train_metrics["loss_total"],
                 val_metrics["loss_total"],
                 val_metrics["macro_f1"],
+                config.early_stopping_monitor,
+                monitor_value,
             )
 
             improved = monitor_value > best_metric
             if improved:
                 best_metric = monitor_value
+                best_epoch = epoch
                 best_state = {key: value.detach().cpu().clone() for key, value in model.state_dict().items()}
                 patience_counter = 0
                 self.save_checkpoint(
@@ -261,8 +284,30 @@ class MSTCNTrainer(TemporalSegmentationTrainer):
             )
 
             if patience_counter >= config.early_stopping_patience:
-                logger.info("Early stopping at epoch %s (monitor=%s)", epoch, config.early_stopping_monitor)
+                logger.info(
+                    "Early stopping at epoch %s (monitor=%s, best=%.4f)",
+                    epoch,
+                    config.early_stopping_monitor,
+                    best_metric,
+                )
                 break
+
+        early_stop_reason = "max_epochs"
+        if history and patience_counter >= config.early_stopping_patience:
+            early_stop_reason = "patience_exhausted"
+        (output_dir / "early_stopping.json").write_text(
+            json.dumps(
+                {
+                    "monitor": config.early_stopping_monitor,
+                    "best_metric": best_metric,
+                    "best_epoch": best_epoch,
+                    "reason": early_stop_reason,
+                    "total_epochs": history[-1]["epoch"] if history else 0,
+                },
+                indent=2,
+            ),
+            encoding="utf-8",
+        )
 
         (output_dir / "history.json").write_text(json.dumps(history, indent=2), encoding="utf-8")
         if best_state is not None:
@@ -339,6 +384,55 @@ class MSTCNTrainer(TemporalSegmentationTrainer):
             "loss_total": float(np.mean(loss_totals)) if loss_totals else 0.0,
             "macro_f1": _macro_f1_supervised(y_true, y_pred, ignore_label_id),
         }
+
+    def _compute_segment_validation_metrics(
+        self,
+        model: MSTCNModel,
+        val_records: list[FrameSequenceRecord],
+        *,
+        device: torch.device,
+        mean: np.ndarray,
+        std: np.ndarray,
+        ignore_label_id: int,
+    ) -> dict[str, float]:
+        """Canonical segment metrics on validation predictions (for model selection)."""
+        predictions = self.predict_records(
+            val_records,
+            model=model,
+            device=device,
+            mean=mean,
+            std=std,
+        )
+        result = evaluate_frame_predictions(
+            val_records,
+            predictions,
+            model_identifier="ms_tcn_val_selection",
+        )
+        segment_agg = result.aggregate.get("segment_macro_over_videos", {})
+        boundary_micro = result.aggregate.get("boundary_mae_frames_micro_over_videos")
+        metrics = {
+            "segmental_f1_at_50": float(segment_agg.get("segmental_f1_at_50", 0.0)),
+            "segmental_f1_at_25": float(segment_agg.get("segmental_f1_at_25", 0.0)),
+            "segmental_f1_at_10": float(segment_agg.get("segmental_f1_at_10", 0.0)),
+            "edit_score": float(segment_agg.get("edit_score", 0.0)),
+        }
+        if boundary_micro is not None:
+            metrics["boundary_mae_frames"] = float(boundary_micro)
+        # Frame macro-F1 for logging parity with test reports
+        y_true_all: list[int] = []
+        y_pred_all: list[int] = []
+        for record in val_records:
+            pred = predictions[record.video_relpath]
+            mask = record.phase_ids != ignore_label_id
+            y_true_all.extend(record.phase_ids[mask].tolist())
+            y_pred_all.extend(pred[mask].tolist())
+        if y_true_all:
+            metrics["macro_f1_frame"] = _macro_f1_supervised(
+                np.asarray(y_true_all, dtype=np.int64),
+                np.asarray(y_pred_all, dtype=np.int64),
+                ignore_label_id,
+            )
+        return metrics
 
     def predict_records(
         self,
