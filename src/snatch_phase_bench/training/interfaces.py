@@ -33,9 +33,9 @@ class TrainerConfig:
     """Common training hyperparameters for frame-wise TAS models."""
 
     batch_size: int = 1
-    epochs: int = 120
+    epochs: int = 50
     learning_rate: float = 5e-4
-    weight_decay: float = 1e-5
+    weight_decay: float = 0.0
     device: str = "auto"
     early_stopping_monitor: str = "val_macro_f1"
     early_stopping_patience: int = 15
