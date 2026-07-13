@@ -7,11 +7,13 @@ import argparse
 import json
 from pathlib import Path
 
+from snatch_phase_bench.benchmark.results_export import enrich_eval_result_with_frame_metrics, export_predictions_json
 from snatch_phase_bench.benchmark.registry import load_model_experiment_config
 from snatch_phase_bench.config import load_config, resolve_path
 from snatch_phase_bench.data.frame_sequence import iter_frame_sequences
 from snatch_phase_bench.data.splits import load_athlete_split
-from snatch_phase_bench.evaluation.tas_hooks import evaluate_and_write
+from snatch_phase_bench.evaluation.results import write_evaluation_result
+from snatch_phase_bench.evaluation.tas_hooks import evaluate_frame_predictions
 from snatch_phase_bench.experiments.config_loader import get_section
 from snatch_phase_bench.models.ms_tcn.inference import load_ms_tcn_from_checkpoint, predict_videos
 from snatch_phase_bench.training.ms_tcn_trainer import MSTCNTrainer
@@ -66,14 +68,36 @@ def main() -> None:
     mean, std = MSTCNTrainer.load_standardization(checkpoint_dir)
 
     predictions = predict_videos(records, model=model, mean=mean, std=std)
-    output_path = args.output or Path(str(output_cfg["reports_dir"])) / f"eval_{args.split}.json"
-    result = evaluate_and_write(
+    output_dir = args.checkpoint.parent
+    predictions_path = output_dir / f"predictions_{args.split}.json"
+    export_predictions_json(records, predictions, predictions_path)
+
+    output_path = args.output or output_dir / f"eval_{args.split}.json"
+    result = evaluate_frame_predictions(
         records,
         predictions,
-        output_path,
-        model_identifier=f"ms_tcn_{args.checkpoint.parent.name}",
+        model_identifier=f"ms_tcn_{checkpoint_dir.name}",
     )
-    print(json.dumps({"output": str(output_path), "videos": len(records), "aggregate": result.aggregate}, indent=2))
+    enriched = enrich_eval_result_with_frame_metrics(
+        result,
+        predictions_path,
+        ignore_label_id=int(ontology_cfg.get("ignore_label_id", 0)),
+    )
+    write_evaluation_result(output_path, result)
+    output_path.write_text(json.dumps(enriched, indent=2, sort_keys=True), encoding="utf-8")
+
+    print(
+        json.dumps(
+            {
+                "output": str(output_path),
+                "predictions": str(predictions_path),
+                "videos": len(records),
+                "aggregate": result.aggregate,
+                "frame_macro_f1": enriched.get("frame_macro_f1"),
+            },
+            indent=2,
+        )
+    )
 
 
 if __name__ == "__main__":
