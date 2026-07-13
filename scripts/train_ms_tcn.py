@@ -10,7 +10,8 @@ from pathlib import Path
 
 import yaml
 
-from snatch_phase_bench.benchmark.experiment_metadata import build_protocol_freeze, capture_environment, write_json
+from snatch_phase_bench.benchmark.experiment_metadata import capture_environment, git_commit_hash, write_json
+from snatch_phase_bench.benchmark.gpu_runtime import GpuMemoryTracker, capture_cuda_determinism_settings
 from snatch_phase_bench.benchmark.registry import load_model_experiment_config
 from snatch_phase_bench.config import load_config, resolve_path
 from snatch_phase_bench.data.frame_sequence import iter_frame_sequences, summarize_frame_sequences
@@ -128,7 +129,18 @@ def main() -> None:
         yaml.safe_dump(config, sort_keys=False),
         encoding="utf-8",
     )
-    write_json(output_dir / "environment.json", capture_environment())
+    reference_hw = config.get("reference_hardware", {})
+    write_json(
+        output_dir / "environment.json",
+        {
+            **capture_environment(),
+            "reference_hardware": reference_hw,
+            "training_device": str(train_cfg.get("device", "cuda")),
+            "use_amp": bool(train_cfg.get("use_amp", False)),
+            "batch_size": int(train_cfg.get("batch_size", 1)),
+            "git_commit": git_commit_hash(Path.cwd()),
+        },
+    )
 
     start = time.perf_counter()
     model = trainer.fit(train_records, val_records, model=model, config=trainer_config, context=context)
@@ -148,11 +160,18 @@ def main() -> None:
         "val_stats": summarize_frame_sequences(val_records),
         "parameter_count": count_parameters(model),
         "runtime_seconds": runtime_seconds,
+        "batch_size": int(train_cfg.get("batch_size", 1)),
+        "device": str(train_cfg.get("device", "cuda")),
+        "use_amp": bool(train_cfg.get("use_amp", False)),
         "early_stopping": early_stop,
         "output_dir": str(output_dir),
         "evaluator_version": manifest["evaluation"]["version"],
         "ontology_version": manifest["ontology"]["canonical"],
+        "reference_hardware": reference_hw,
     }
+    gpu_runtime_path = output_dir / "gpu_runtime.json"
+    if gpu_runtime_path.exists():
+        summary["gpu_runtime"] = json.loads(gpu_runtime_path.read_text(encoding="utf-8"))
     (output_dir / "train_summary.json").write_text(json.dumps(summary, indent=2), encoding="utf-8")
     print(json.dumps(summary, indent=2))
 

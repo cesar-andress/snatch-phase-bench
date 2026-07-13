@@ -45,6 +45,61 @@ No additional seeds after viewing test results.
 
 ---
 
+## Reference hardware (canonical benchmark)
+
+All three seeds **must** run on the **same machine** with identical drivers, CUDA, precision, and batch size.
+
+| Item | Frozen value |
+|------|----------------|
+| GPU | NVIDIA GeForce RTX 4090 |
+| Device | `cuda` |
+| Precision | FP32 (`use_amp: false`) |
+| Batch size | 1 (fixed before all seeds) |
+
+### Record before training (`hardware_report.json`)
+
+- GPU name (`nvidia-smi` + PyTorch)
+- Total VRAM
+- NVIDIA driver version
+- CUDA runtime (PyTorch)
+- PyTorch version
+- cuDNN version
+- CPU model
+- System RAM
+- Operating system
+- cuDNN deterministic / benchmark flags
+- `torch.use_deterministic_algorithms` state
+
+### Record per seed (`gpu_runtime.json`, `train_summary.json`, `inference_test.json`)
+
+- Peak allocated GPU memory
+- Peak reserved GPU memory
+- Training wall time
+- Inference wall time (test split)
+- Batch size
+- Trainable parameter count
+- CUDA warnings collected
+- Whether deterministic CUDA algorithms were enabled
+
+### OOM policy
+
+If batch size causes OOM:
+
+1. **Stop** (do not silently reduce batch size)
+2. Report the failure
+3. Select **one** new batch size
+4. **Restart all three seeds** with that batch size
+
+Do not keep results from seeds trained under different batch sizes or hardware profiles.
+
+### CPU runs
+
+CPU-only runs are **development/preliminary** only. They must **not** be reported as the canonical M3 benchmark or compared for runtime against GPU runs.
+
+The 2026-07-14 CPU pilot (no NVIDIA hardware on runner machine) is archived in `outputs/benchmark/ms_tcn/` but superseded pending RTX 4090 rerun.
+
+---
+
 ## Training hyperparameters (frozen)
 
 | Parameter | Value |
@@ -61,7 +116,8 @@ No additional seeds after viewing test results.
 | Dropout | 0.5 |
 | Class weighting | true |
 | Standardization | train-only |
-| AMP | false |
+| AMP | false (FP32 canonical) |
+| Device | cuda (RTX 4090 reference) |
 
 ---
 

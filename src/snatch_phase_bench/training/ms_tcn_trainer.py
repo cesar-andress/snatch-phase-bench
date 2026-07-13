@@ -14,6 +14,7 @@ import torch.nn as nn
 from sklearn.metrics import f1_score
 from torch.utils.data import DataLoader, Dataset
 
+from snatch_phase_bench.benchmark.gpu_runtime import GpuMemoryTracker, collect_cuda_warnings, capture_cuda_determinism_settings
 from snatch_phase_bench.data.frame_sequence import FrameSequenceRecord
 from snatch_phase_bench.evaluation.tas_hooks import evaluate_frame_predictions
 from snatch_phase_bench.models.base import TemporalSegmentationModel
@@ -24,7 +25,7 @@ from snatch_phase_bench.training.interfaces import (
     TrainerConfig,
     TrainingRunContext,
 )
-from snatch_phase_bench.training.lstm_trainer import class_weights, resolve_device, set_seed, standardize_by_train
+from snatch_phase_bench.training.lstm_trainer import class_weights, resolve_device, resolve_num_classes, set_seed, standardize_by_train
 
 logger = logging.getLogger(__name__)
 
@@ -176,6 +177,9 @@ class MSTCNTrainer(TemporalSegmentationTrainer):
 
         scaler = torch.amp.GradScaler("cuda", enabled=self.use_amp and device.type == "cuda")
         writer = self._get_writer(self.log_dir or output_dir / "tensorboard")
+        gpu_tracker = GpuMemoryTracker(device_index=device.index or 0 if device.type == "cuda" else 0)
+        if device.type == "cuda":
+            gpu_tracker.reset_peak()
 
         best_metric = float("-inf")
         best_epoch = 0
@@ -197,22 +201,34 @@ class MSTCNTrainer(TemporalSegmentationTrainer):
             logger.info("Resumed MS-TCN training from epoch %s", start_epoch)
 
         for epoch in range(start_epoch + 1, config.epochs + 1):
-            train_metrics = self._run_epoch(
-                model,
-                train_loader,
-                device,
-                ce_loss,
-                optimizer=optimizer,
-                scaler=scaler,
-                ignore_label_id=config.ignore_label_id,
-            )
-            val_metrics = self._run_epoch(
-                model,
-                val_loader,
-                device,
-                ce_loss,
-                ignore_label_id=config.ignore_label_id,
-            )
+            try:
+                train_metrics = self._run_epoch(
+                    model,
+                    train_loader,
+                    device,
+                    ce_loss,
+                    optimizer=optimizer,
+                    scaler=scaler,
+                    ignore_label_id=config.ignore_label_id,
+                )
+                val_metrics = self._run_epoch(
+                    model,
+                    val_loader,
+                    device,
+                    ce_loss,
+                    ignore_label_id=config.ignore_label_id,
+                )
+            except RuntimeError as exc:
+                if device.type == "cuda" and "out of memory" in str(exc).lower():
+                    raise RuntimeError(
+                        "CUDA out-of-memory during MS-TCN training. "
+                        "Stop, report the failure, choose one new batch size, "
+                        "and restart all seeds with the same frozen batch size. "
+                        "Do not keep partial seed results from a different batch size."
+                    ) from exc
+                raise
+            if device.type == "cuda":
+                gpu_tracker.update_peak()
             if compute_segment_val and val_records:
                 segment_metrics = self._compute_segment_validation_metrics(
                     model,
@@ -310,6 +326,16 @@ class MSTCNTrainer(TemporalSegmentationTrainer):
         )
 
         (output_dir / "history.json").write_text(json.dumps(history, indent=2), encoding="utf-8")
+        gpu_tracker.cuda_warnings.extend(collect_cuda_warnings())
+        gpu_runtime = {
+            **gpu_tracker.snapshot(),
+            "device": str(device),
+            "use_amp": self.use_amp,
+            "batch_size": config.batch_size,
+            "deterministic_cuda": capture_cuda_determinism_settings(),
+        }
+        (output_dir / "gpu_runtime.json").write_text(json.dumps(gpu_runtime, indent=2), encoding="utf-8")
+        self.last_gpu_runtime = gpu_runtime
         if best_state is not None:
             model.load_state_dict(best_state)
         if writer is not None:

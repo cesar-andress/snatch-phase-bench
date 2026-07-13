@@ -13,7 +13,7 @@ from pathlib import Path
 import yaml
 
 from snatch_phase_bench.benchmark.aggregate_results import aggregate_seed_results
-from snatch_phase_bench.benchmark.experiment_metadata import build_protocol_freeze, write_json
+from snatch_phase_bench.benchmark.experiment_metadata import build_protocol_freeze, validate_reference_hardware, write_json
 from snatch_phase_bench.benchmark.preflight import run_preflight, write_preflight_report
 from snatch_phase_bench.benchmark.registry import load_model_experiment_config
 from snatch_phase_bench.experiments.config_loader import get_section
@@ -39,6 +39,11 @@ def main() -> None:
     parser.add_argument("--skip-figures", action="store_true")
     parser.add_argument("--skip-failure-analysis", action="store_true")
     parser.add_argument("--seed", type=int, default=None, help="Run a single seed only.")
+    parser.add_argument(
+        "--allow-cpu-fallback",
+        action="store_true",
+        help="Skip reference-GPU validation (development only; not for canonical benchmark).",
+    )
     args = parser.parse_args()
 
     setup_logging()
@@ -46,12 +51,31 @@ def main() -> None:
     output_cfg = get_section(config, "output")
     train_cfg = get_section(config, "training")
     early_stop_cfg = train_cfg.get("early_stopping", {})
+    reference_hw = config.get("reference_hardware", {})
     base_output = Path(str(output_cfg["checkpoint_dir"]))
     aggregate_dir = base_output / "aggregate"
     aggregate_dir.mkdir(parents=True, exist_ok=True)
 
     seeds = [args.seed] if args.seed is not None else list(args.seeds)
     monitor = str(early_stop_cfg.get("monitor", "val_segmental_f1_at_50"))
+
+    required_device = str(reference_hw.get("device", train_cfg.get("device", "cuda")))
+    if not args.allow_cpu_fallback and required_device == "cuda":
+        hardware_report = validate_reference_hardware(
+            required_device="cuda",
+            expected_gpu_substring=str(reference_hw.get("gpu", "RTX 4090")),
+        )
+        write_json(aggregate_dir / "hardware_report.json", hardware_report)
+        print(json.dumps({"hardware_report": str(aggregate_dir / "hardware_report.json"), "passed": hardware_report["passed"]}, indent=2))
+        if not hardware_report["passed"]:
+            print(
+                "Reference hardware validation failed. Canonical M3 requires CUDA on "
+                f"{reference_hw.get('gpu', 'RTX 4090')}. "
+                "Install NVIDIA drivers, verify nvidia-smi, and use a PyTorch build with CUDA. "
+                "Do not compare GPU and CPU runs in the primary benchmark.",
+                file=sys.stderr,
+            )
+            sys.exit(1)
 
     if not args.skip_preflight:
         report = run_preflight()
@@ -68,6 +92,7 @@ def main() -> None:
         seeds=seeds,
         early_stopping_monitor=monitor,
         repo_root=REPO_ROOT,
+        reference_hardware=reference_hw,
     )
     write_json(aggregate_dir / "protocol_freeze.json", protocol)
 

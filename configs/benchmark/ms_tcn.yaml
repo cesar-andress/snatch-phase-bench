@@ -8,6 +8,15 @@ experiment:
   status: implemented
   seeds: [42, 123, 456]
 
+reference_hardware:
+  gpu: NVIDIA GeForce RTX 4090
+  device: cuda
+  precision: fp32
+  use_amp: false
+  batch_size_policy: >
+    Fixed before all seeds. On OOM: stop, report, choose one new batch size,
+    restart all three seeds. Do not mix results across batch sizes.
+
 paths:
   use_reproduction_paths: true
 
@@ -54,10 +63,10 @@ scheduler:
 training:
   batch_size: 1            # variable-length videos; author release convention
   epochs: 50               # paper Sec. 4.9 (50Salads training reference)
-  device: auto
+  device: cuda             # reference: RTX 4090; fails fast if CUDA unavailable
   class_weighting: true     # SnatchPhaseBench deviation D3
   standardize: train_only    # SnatchPhaseBench deviation D2
-  use_amp: false
+  use_amp: false            # fp32 canonical benchmark; AMP is a separate experiment
   early_stopping:
     monitor: val_segmental_f1_at_50
     patience: 15

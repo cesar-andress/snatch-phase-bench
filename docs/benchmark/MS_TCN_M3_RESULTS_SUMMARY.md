@@ -1,8 +1,7 @@
 # MS-TCN M3 benchmark results (summary)
 
-**Status:** Verified multi-seed test evaluation (M3 complete)  
-**Git commit at run time:** see `outputs/benchmark/ms_tcn/aggregate/protocol_freeze.json` (not committed)  
-**Full artifacts:** `outputs/benchmark/ms_tcn/` (gitignored)
+**Status:** CPU pilot complete; **canonical GPU rerun pending (RTX 4090)**  
+**Warning:** Metrics below are from a **CPU-only preliminary run** and must be superseded by CUDA runs on the reference GPU before manuscript finalization.
 
 ## Protocol
 
@@ -10,7 +9,7 @@
 |------|-------|
 | Seeds | 42, 123, 456 |
 | Checkpoint monitor | `val_segmental_f1_at_50` |
-| Hardware | CPU-only Linux x86_64 |
+| Hardware | **CPU-only (preliminary)** — canonical target: RTX 4090 + CUDA |
 | Parameters | 670,688 |
 | Test videos | 33 (11 athletes) |
 
@@ -72,6 +71,6 @@ Highest error: **catch → recovery**.
 
 Frozen LSTM (B1): window accuracy **0.9518**, macro-F1 **0.9186** — **not comparable** to dense MS-TCN segment/boundary metrics without a shared frame-level evaluation path.
 
-## Verdict
+## Verdict (preliminary CPU pilot)
 
-MS-TCN trains stably on short snatch sequences, yields consistent test metrics across three seeds (segment F1@50 std ≈ 0.011), and is **accepted as the first modern learned benchmark baseline (B2)** pending MS-TCN++/ASFormer comparisons in future milestones.
+MS-TCN trains stably and yields consistent test metrics on CPU, but **canonical M3 acceptance requires rerunning all three seeds on the reference RTX 4090** with recorded GPU memory and inference timings per `MS_TCN_M3_PROTOCOL.md`.
