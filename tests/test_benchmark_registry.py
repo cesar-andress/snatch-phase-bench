@@ -12,7 +12,7 @@ def test_benchmark_registry_includes_b0_and_ms_tcn() -> None:
 
     assert b0.status == "frozen_exploratory_reference"
     assert b0.role == "exploratory_only"
-    assert ms_tcn.status == "infrastructure_ready"
+    assert ms_tcn.status == "implemented"
     assert ms_tcn.registry_name == "ms_tcn"
     assert ms_tcn.input_layout == "frame_sequence"
 
@@ -32,4 +32,4 @@ def test_ms_tcn_config_stub_loads() -> None:
     config = load_model_experiment_config(ms_tcn.config_path)
     assert config["model"]["name"] == "ms_tcn"
     assert config["dataset"]["adapter"] == "frame_sequence"
-    assert config["expected"]["implementation_status"] == "not_implemented"
+    assert config["expected"]["implementation_status"] == "implemented"

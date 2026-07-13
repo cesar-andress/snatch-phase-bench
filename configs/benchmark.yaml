@@ -81,7 +81,7 @@ seeds: [42, 123, 456]
 
 learned_models:
   ms_tcn:
-    status: infrastructure_ready
+    status: implemented
     config: configs/benchmark/ms_tcn.yaml
     registry_name: ms_tcn
     ontology: seven_phase_v1

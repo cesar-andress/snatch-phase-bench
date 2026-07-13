@@ -1,11 +1,11 @@
-# MS-TCN benchmark experiment config (infrastructure stub — model not implemented).
-# See docs/benchmark/MS_TCN_INTEGRATION.md
+# MS-TCN benchmark experiment config (Farha & Gall, CVPR 2019).
+# Design reference: docs/benchmark/MS_TCN_DESIGN.md
 
 experiment:
   name: ms_tcn_benchmark
   tier: B2
   registry_name: ms_tcn
-  status: infrastructure_ready
+  status: implemented
   seeds: [42, 123, 456]
 
 paths:
@@ -33,26 +33,35 @@ model:
   name: ms_tcn
   input_layout: frame_sequence
   output_layout: frame_sequence
-  # Architecture hyperparameters — to be filled when MS-TCN is implemented:
-  num_stages: null
-  num_layers: null
-  num_f_maps: null
-  dropout: null
+  num_stages: 4          # paper Sec. 3.4
+  num_layers: 10         # paper Sec. 3.4 / Sec. 4.7
+  num_f_maps: 64         # paper Sec. 3.4
+  kernel_size: 3         # paper Sec. 3.1
+  dropout: 0.5           # author release default; rate not in paper (see MS_TCN_DESIGN.md D8)
+
+loss:
+  tmse_weight: 0.15      # paper lambda, Sec. 3.4
+  tmse_truncate_tau: 4   # paper tau, Sec. 3.4
 
 optimizer:
   name: adam
-  learning_rate: 0.0005
-  weight_decay: 0.00001
+  learning_rate: 0.0005  # paper Sec. 3.4
+  weight_decay: 0.0      # not in paper; author release Adam default
+
+scheduler:
+  name: none
 
 training:
-  batch_size: 1
-  epochs: 120
+  batch_size: 1            # variable-length videos; author release convention
+  epochs: 50               # paper Sec. 4.9 (50Salads training reference)
+  device: auto
+  class_weighting: true     # SnatchPhaseBench deviation D3
+  standardize: train_only    # SnatchPhaseBench deviation D2
+  use_amp: false
   early_stopping:
     monitor: val_macro_f1
     patience: 15
-  class_weighting: true
-  standardize: train_only
-  trainer: tas_trainer
+  trainer: ms_tcn_trainer
 
 evaluation:
   levels:
@@ -69,6 +78,7 @@ output:
   checkpoint_dir: outputs/benchmark/ms_tcn
   predictions_dir: outputs/benchmark/ms_tcn/predictions
   reports_dir: outputs/benchmark/ms_tcn/reports
+  tensorboard_dir: outputs/benchmark/ms_tcn/tensorboard
 
 expected:
-  implementation_status: not_implemented
+  implementation_status: implemented
