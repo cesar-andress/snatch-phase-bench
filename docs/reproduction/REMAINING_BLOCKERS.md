@@ -15,6 +15,7 @@
 | Governance / versioning | [`BENCHMARK_GOVERNANCE.md`](../benchmark/BENCHMARK_GOVERNANCE.md) |
 | Experiment matrix | [`EXPERIMENT_MATRIX.md`](../benchmark/EXPERIMENT_MATRIX.md) |
 | Phase definitions | [`AUTHOR_CLARIFICATIONS.md`](AUTHOR_CLARIFICATIONS.md) — seven-phase taxonomy documented |
+| Phase ontology code (EXP-ONT) | **`configs/ontology/` + `snatch_phase_bench.ontology`** — mapping layer implemented |
 | Annotation protocol | [`AUTHOR_CLARIFICATIONS.md`](AUTHOR_CLARIFICATIONS.md) — single expert, frame-by-frame |
 | Frame count discrepancy (37,125 vs 35,825) | **RESOLVED** — 35,825 canonical; duplicates/errors in larger export |
 | MediaPipe version | **0.10.30 Full** — documented in [`AUTHOR_CLARIFICATIONS.md`](AUTHOR_CLARIFICATIONS.md) |

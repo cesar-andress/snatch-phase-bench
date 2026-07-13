@@ -1,0 +1,52 @@
+# Five-phase knee-angle snatch ontology for B0 comparison.
+# Phases follow biomechanics literature (Thiele et al., 2024; Harbili & Alptekin, 2014).
+# Setup is retained as a supervised start position ("five phases + setup position").
+
+ontology:
+  id: five_phase_knee_angle_v1
+  version: "1.0.0"
+  description: >
+    Five knee-angle-defined pulling phases plus setup, used for B0 rule-based baseline
+    evaluation. Turnover subsumes overhead receipt after mapping from seven_phase_v1.
+  references:
+    - thiele2024snatch
+    - harbili2014comparative
+    - docs/reproduction/AUTHOR_CLARIFICATIONS.md
+
+phases:
+  - id: 0
+    name: unlabeled
+    supervised: false
+  - id: 1
+    name: setup
+    supervised: true
+    description: Coached start position before first pull onset.
+  - id: 2
+    name: first_pull
+    supervised: true
+  - id: 3
+    name: transition
+    supervised: true
+  - id: 4
+    name: second_pull
+    supervised: true
+  - id: 5
+    name: turnover
+    supervised: true
+    description: Turnover and overhead receipt (Catch merged per literature convention).
+  - id: 6
+    name: recovery
+    supervised: true
+
+transitions:
+  - from: setup
+    to: first_pull
+  - from: first_pull
+    to: transition
+  - from: transition
+    to: second_pull
+  - from: second_pull
+    to: turnover
+    priority: true
+  - from: turnover
+    to: recovery

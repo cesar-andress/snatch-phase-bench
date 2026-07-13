@@ -1,0 +1,44 @@
+# Map canonical seven-class dataset labels to five-phase knee-angle ontology (B0).
+# Original annotations are never modified; this mapping is applied at evaluation time.
+
+mapping:
+  id: seven_to_five_knee_angle_v1
+  version: "1.0.0"
+  source_ontology: seven_phase_v1
+  target_ontology: five_phase_knee_angle_v1
+  references:
+    - thiele2024snatch
+    - SnatchPhaseBench_Literature_Foundation.md Part 5.1
+    - docs/reproduction/AUTHOR_CLARIFICATIONS.md
+
+rules:
+  - type: identity
+    source: unlabeled
+    target: unlabeled
+  - type: identity
+    source: setup
+    target: setup
+  - type: identity
+    source: first_pull
+    target: first_pull
+  - type: identity
+    source: transition
+    target: transition
+  - type: identity
+    source: second_pull
+    target: second_pull
+  - type: identity
+    source: turnover
+    target: turnover
+  - type: merge
+    sources:
+      - catch
+    target: turnover
+    rationale: >
+      Biomechanics literature defines a single Turnover (Catch) phase bounded by
+      knee-extension events (Thiele et al., 2024; literature foundation Part 5.1).
+      The dataset keeps Catch separate for finer CV labelling; B0 evaluation merges
+      Catch into Turnover only.
+  - type: identity
+    source: recovery
+    target: recovery

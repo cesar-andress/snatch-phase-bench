@@ -78,4 +78,6 @@ Implementation: `boundary.py` (TODO). See [`benchmark/BENCHMARK_PLAN.md`](benchm
 | Segmental F1@IoU | `segment.py` | Implemented |
 | Boundary MAE (frames/ms) | `boundary.py` | TODO — **P0 for benchmark** |
 | Boundary within-τ | `boundary.py` | TODO |
-| Per-transition breakdown | — | TODO |
+| Per-transition breakdown | `boundary.py` + ontology | TODO |
+
+Phase ontologies and the seven→five mapping for B0 are defined in `configs/ontology/` and loaded via `snatch_phase_bench.ontology`.

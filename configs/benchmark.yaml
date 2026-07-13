@@ -1,0 +1,79 @@
+# SnatchPhaseBench canonical benchmark manifest (contract for all experiments).
+# Version bumps require re-running affected models per BENCHMARK_GOVERNANCE.md.
+
+benchmark:
+  id: snatchphasebench-v1
+  version: "1.0.0"
+  protocol_version: protocol-v1.0-draft
+  stats_version: stats-v1.0-draft
+
+dataset:
+  version: ds-v1.0
+  frame_labels_file: master_frame_labels.csv
+  frame_label_rows: 35825
+  videos: 208
+  athletes: 70
+  tensor_checksums:
+    X_sha256: 8497a69a2c6d80f24c0fc6242500aa931ab2c00e8172b534a98f86d92ed698b4
+    y_sha256: 0175c1c314fd22fef37d4b16a96b038d4643765c323c8b13599ff9a9b17c3546
+  windows: 21249
+
+ontology:
+  canonical: configs/ontology/seven_phase_v1.yaml
+  b0: configs/ontology/five_phase_knee_angle_v1.yaml
+  mapping_b0: configs/ontology/seven_to_five_knee_angle_v1.yaml
+
+split:
+  version: athlete_split_v1
+  file: athlete_split.json
+  train_athletes: 49
+  val_athletes: 10
+  test_athletes: 11
+
+preprocessing:
+  version: preprocess-v1.0
+  window_size: 31
+  stride: 1
+  features_per_frame: 99
+  pose_extractor: mediapipe
+  pose_version: "0.10.30"
+  pose_model: full
+
+baselines:
+  B0:
+    status: planned
+    config: configs/benchmark/rule_knee_angle.yaml
+    ontology: five_phase_knee_angle_v1
+  B1:
+    status: verified
+    version: B1-repro-v1
+    config: configs/baseline_lstm.yaml
+    ontology: seven_phase_v1
+    checkpoint_sha256_prefix: ea5ff9ca
+
+evaluation:
+  version: eval-v1.0.0
+  primary_metrics:
+    - boundary_mae_ms
+    - segmental_f1_at_50
+    - edit_score
+  secondary_metrics:
+    - frame_accuracy
+    - segmental_f1_at_10
+    - segmental_f1_at_25
+    - window_accuracy
+  segment_iou_thresholds: [0.10, 0.25, 0.50]
+  boundary_tolerances_frames: [1, 2, 3]
+  default_fps: 30
+
+seeds: [42, 123, 456]
+
+tiers:
+  - id: B0
+    description: Rule-based knee-angle segmenter
+  - id: B1
+    description: Frozen thesis LSTM (reproduction reference)
+  - id: B2
+    description: MS-TCN, MS-TCN++, ASFormer
+  - id: B3
+    description: Optional foundation-model encoders

@@ -1,0 +1,9 @@
+mapping:
+  id: invalid_incomplete_mapping
+  version: "0.0.0"
+  source_ontology: seven_phase_v1
+  target_ontology: five_phase_knee_angle_v1
+  rules:
+    - type: identity
+      source: setup
+      target: setup

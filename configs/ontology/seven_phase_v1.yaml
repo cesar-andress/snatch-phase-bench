@@ -1,0 +1,62 @@
+# Canonical seven-class snatch phase ontology (dataset annotations).
+# Source: docs/reproduction/AUTHOR_CLARIFICATIONS.md
+
+ontology:
+  id: seven_phase_v1
+  version: "1.0.0"
+  description: >
+    Seven supervised snatch phases used in master_frame_labels.csv, derived from
+    six-phase computer-vision decompositions plus an explicit Setup phase.
+  references:
+    - docs/reproduction/AUTHOR_CLARIFICATIONS.md
+    - cao2022snatch
+    - chen2022snatch
+
+phases:
+  - id: 0
+    name: unlabeled
+    supervised: false
+    description: Undefined frames; excluded at window center during B1 training.
+  - id: 1
+    name: setup
+    supervised: true
+    description: Active coached start position before barbell separation.
+  - id: 2
+    name: first_pull
+    supervised: true
+    description: Initial barbell separation from platform.
+  - id: 3
+    name: transition
+    supervised: true
+    description: Knee-hip coordination (double-knee-bend) between pulls.
+  - id: 4
+    name: second_pull
+    supervised: true
+    description: Explosive extension through maximal upward bar velocity.
+  - id: 5
+    name: turnover
+    supervised: true
+    description: Bar ascent, arm rotation, and descent under the bar.
+  - id: 6
+    name: catch
+    supervised: true
+    description: Overhead receipt and fixation before recovery.
+  - id: 7
+    name: recovery
+    supervised: true
+    description: Stand-up after full hip/knee extension with bar stabilized overhead.
+
+transitions:
+  - from: setup
+    to: first_pull
+  - from: first_pull
+    to: transition
+  - from: transition
+    to: second_pull
+  - from: second_pull
+    to: turnover
+    priority: true
+  - from: turnover
+    to: catch
+  - from: catch
+    to: recovery
