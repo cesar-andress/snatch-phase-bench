@@ -1,7 +1,8 @@
 # MS-TCN integration infrastructure (pre-implementation)
 
-**Status:** Infrastructure ready — **MS-TCN not implemented**  
-**Parent:** [`BENCHMARK_PROTOCOL.md`](BENCHMARK_PROTOCOL.md)
+**Status:** MS-TCN **implemented** (M2)  
+**Parent:** [`BENCHMARK_PROTOCOL.md`](BENCHMARK_PROTOCOL.md)  
+**Design:** [`MS_TCN_DESIGN.md`](MS_TCN_DESIGN.md) · **Usage:** [`MS_TCN_USAGE.md`](MS_TCN_USAGE.md)
 
 This document describes the integration scaffolding so MS-TCN can be added with minimal engineering effort once architecture code is available.
 
@@ -17,10 +18,11 @@ Prepare a **frame-wise TAS pipeline** parallel to the frozen window-based LSTM (
 | Dense sequences | `snatch_phase_bench.data.frame_sequence` | Ready |
 | Athlete split | `snatch_phase_bench.data.splits` | Ready |
 | Model interface | `snatch_phase_bench.models.base` (`frame_sequence`) | Ready |
-| Training interface | `snatch_phase_bench.training.interfaces` | Ready (stub trainer) |
+| Training interface | `snatch_phase_bench.training.ms_tcn_trainer` | **Implemented** |
 | Evaluation hooks | `snatch_phase_bench.evaluation.tas_hooks` | Ready |
 | Benchmark registry | `snatch_phase_bench.benchmark.registry` | Ready |
-| Experiment config | `configs/benchmark/ms_tcn.yaml` | Stub |
+| Experiment config | `configs/benchmark/ms_tcn.yaml` | **Complete** |
+| Model | `snatch_phase_bench.models.ms_tcn` | **Implemented** |
 
 **No experimental results** are produced by this phase.
 

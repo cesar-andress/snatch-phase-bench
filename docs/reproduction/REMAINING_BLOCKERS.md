@@ -13,7 +13,7 @@
 | B0 scope decision | **Frozen exploratory reference** — [`B0_EXPLORATORY_REFERENCE.md`](../benchmark/B0_EXPLORATORY_REFERENCE.md) |
 | Boundary metric implementation | **IMPLEMENTED** (`evaluation/metrics/boundary.py`) |
 | Phase ontology (EXP-ONT) | **`configs/ontology/` + `snatch_phase_bench.ontology`** |
-| MS-TCN integration scaffolding | [`MS_TCN_INTEGRATION.md`](../benchmark/MS_TCN_INTEGRATION.md) |
+| MS-TCN model + trainer (M2) | **`models/ms_tcn/` + `training/ms_tcn_trainer.py`** |
 | Frame-sequence dataset adapter | `snatch_phase_bench.data.frame_sequence` |
 | TAS evaluation hooks | `snatch_phase_bench.evaluation.tas_hooks` |
 | Benchmark model registry | `snatch_phase_bench.benchmark.registry` |
@@ -24,7 +24,7 @@
 
 Ranked by scientific importance:
 
-1. **MS-TCN architecture + trainer** — primary B2 comparator (config stub only)
+1. **MS-TCN multi-seed benchmark runs** — implementation complete; test-set evaluation pending
 2. **MS-TCN++ and ASFormer** — extended B2 family
 3. **Experiment runner** — wire config → train → evaluate → JSON output
 4. **LOAO / multi-seed uncertainty** — required for inferential claims

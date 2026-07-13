@@ -13,7 +13,8 @@
 - [`benchmark/B0_EXPLORATORY_REFERENCE.md`](benchmark/B0_EXPLORATORY_REFERENCE.md) — B0 frozen as exploratory reference
 - [`benchmark/B0_EVIDENCE_MATRIX.md`](benchmark/B0_EVIDENCE_MATRIX.md) — B0 biomechanical evidence audit
 - [`benchmark/B0_IMPLEMENTATION_SPECIFICATION.md`](benchmark/B0_IMPLEMENTATION_SPECIFICATION.md) — archived blocked spec
-- [`benchmark/MS_TCN_INTEGRATION.md`](benchmark/MS_TCN_INTEGRATION.md) — MS-TCN infrastructure guide
+- [`benchmark/MS_TCN_DESIGN.md`](benchmark/MS_TCN_DESIGN.md) — MS-TCN paper audit and deviations
+- [`benchmark/MS_TCN_USAGE.md`](benchmark/MS_TCN_USAGE.md) — training and evaluation guide
 - [`benchmark/BENCHMARK_PROTOCOL.md`](benchmark/BENCHMARK_PROTOCOL.md) — **canonical** Phase 3 benchmark specification
 - [`benchmark/EXPERIMENT_MATRIX.md`](benchmark/EXPERIMENT_MATRIX.md) — planned experiments
 - [`benchmark/STATISTICAL_PROTOCOL.md`](benchmark/STATISTICAL_PROTOCOL.md) — inferential analysis rules
