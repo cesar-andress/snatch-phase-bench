@@ -1,72 +1,144 @@
 # Evaluation metric definitions
 
-This document defines metrics implemented or planned in `snatch_phase_bench.evaluation.metrics`.
+Operational reference for `snatch_phase_bench.evaluation`.
+Configuration contract: [`configs/benchmark.yaml`](../configs/benchmark.yaml).
+
+## Interval convention
+
+Segments use the **half-open** convention **`[start_frame, end_frame)`**:
+`start_frame` is inclusive, `end_frame` is exclusive.
+Canonical type: `evaluation.segments.CanonicalSegment`.
 
 ## Window-level classification (frozen baseline protocol)
 
 Given window predictions \(\hat{y}_i\) and labels \(y_i\) for \(i = 1,\ldots,N\):
 
 - **Accuracy:** \(\mathrm{Acc} = \frac{1}{N}\sum_i \mathbf{1}[\hat{y}_i = y_i]\)
-- **Macro precision / recall / F1:** unweighted mean over classes \(c\):
+- **Macro precision / recall / F1:** unweighted mean over classes.
 
-\[
-\mathrm{F1}_c = \frac{2\,\mathrm{Prec}_c\,\mathrm{Rec}_c}{\mathrm{Prec}_c + \mathrm{Rec}_c}
-\]
-
-- **Weighted F1:** support-weighted mean of per-class F1.
-
-This matches `sklearn.metrics.classification_report` used by the frozen baseline.
+Implementation: `evaluation.metrics.window`.
 
 ## Frame-level aggregation
 
-Given per-frame predictions obtained by aggregating overlapping windows (e.g. majority vote at each center frame):
+Overlapping window predictions collapse to unique `(video, frame)` pairs via majority vote or center-frame selection.
+Implementation: `evaluation.metrics.frame`.
 
-- Same classification metrics as above, computed on unique frames \((\text{video}, t)\).
-
-**Note:** Frame-level metrics are generally lower-correlated than window-level when stride \(<\) window size.
-
-## Segment-level
-
-Ground-truth and predicted segments are intervals \([s, e]\) with class label \(c\) on a discrete timeline \(t = 0,\ldots,T-1\).
+## Segment-level metrics
 
 ### Temporal IoU
 
-For segments \(A = [s_a, e_a]\), \(B = [s_b, e_b]\):
+For segments \(A = [s_a, e_a)\), \(B = [s_b, e_b)\):
 
 \[
-\mathrm{IoU}(A, B) = \frac{|[s_a, e_a] \cap [s_b, e_b]|}{|[s_a, e_a] \cup [s_b, e_b]|}
+\mathrm{IoU}(A, B) = \frac{|[s_a, e_a) \cap [s_b, e_b)|}{|[s_a, e_a) \cup [s_b, e_b)|}
 \]
 
 ### Segmental F1 at IoU threshold \(\tau\)
 
-A predicted segment \(\hat{S}\) matches ground truth \(S\) if same class and \(\mathrm{IoU}(\hat{S}, S) \ge \tau\).
+**Matching algorithm (greedy, class-aware, one-to-one):**
 
-Compute precision/recall/F1 over matched segments (Hungarian or greedy matching). Report F1@10, F1@25, F1@50 for \(\tau \in \{0.10, 0.25, 0.50\}\).
+1. Convert frame labels to contiguous segments (ignored labels omitted).
+2. Iterate predicted segments in order.
+3. Match each prediction to the highest-IoU unmatched ground-truth segment of the **same class** if IoU \(\ge \tau\).
+4. Compute precision/recall/F1 from TP/FP/FN counts.
 
-### Edit score (Levenshtein)
+This is **not** Hungarian matching.
 
-Convert GT and predicted segment label sequences to strings of contiguous segments. Let \(d\) be Levenshtein distance, \(n = \max(|\text{GT}|, |\text{Pred}|)\):
+Report F1@10, F1@25, F1@50 for \(\tau \in \{0.10, 0.25, 0.50\}\).
+Per-class and per-video outputs: `compute_segment_metrics_detailed()`.
+
+### Edit score
+
+After collapsing consecutive duplicate labels:
 
 \[
-\mathrm{Edit} = 1 - \frac{d}{n}
+\mathrm{Edit} = 1 - \frac{d}{\max(n_{\mathrm{gt}}, n_{\mathrm{pred}}, 1)}
 \]
 
-Higher is better; equals 1 when segment sequences match exactly.
+where \(d\) is Levenshtein distance between segment label sequences.
+Range: \([0, 1]\). Also returns raw Levenshtein distance.
 
-## Boundary metrics (planned — benchmark differentiator)
+Implementation: `evaluation.metrics.segment`.
 
-Literature foundation (Part 3.6, 6.4) recommends **millisecond-scale boundary evaluation** per phase transition, especially Second Pull→Turnover.
+## Boundary metrics
 
-For each ground-truth transition frame \(t^\*\) and predicted transition \(\hat{t}\):
+### Extraction
 
-- **Mean absolute boundary error (frames):** \(\mathrm{MAE}_b = |t^\* - \hat{t}|\)
-- **Mean absolute boundary error (ms):** \(\mathrm{MAE}_b^{ms} = \mathrm{MAE}_b \cdot 1000 / \mathrm{fps}\)
-- **Boundary within tolerance:** fraction of boundaries with \(|\hat{t} - t^\*| \le \tau\) for \(\tau \in \{1, 2, 3\}\) frames
-- **Boundary F1:** match predicted boundaries to GT within ±\(b\) frames
+Boundaries are extracted from frame labels using the configured ontology transitions.
+Each boundary record includes video id, `from_phase`, `to_phase`, frame index (first frame of destination phase), and ontology version.
 
-Report **per transition type** (not only aggregated), e.g. transition→second_pull, second_pull→turnover.
+Invalid transitions produce warnings; they are not silently accepted.
 
-Implementation: `boundary.py` (TODO). See [`benchmark/BENCHMARK_PLAN.md`](benchmark/BENCHMARK_PLAN.md).
+### Matching
+
+**Monotonic one-to-one matching per transition type:**
+
+For each transition key (e.g. `second_pull->turnover`):
+
+1. Sort ground-truth and predicted boundaries by frame index.
+2. Match each GT boundary to the nearest unused predicted boundary at or after the previous match.
+3. Unmatched GT → missed; unmatched predictions → extra.
+
+Transition types never cross-match.
+
+### Reported boundary metrics (frames are canonical)
+
+| Metric | Description |
+|--------|-------------|
+| MAE | Mean absolute frame error on matched boundaries |
+| Median AE | Median absolute frame error |
+| Std / max AE | Dispersion on matched boundaries |
+| Matched / missed / extra counts | Detection counts per transition |
+| Precision / recall / F1 | Boundary detection rates |
+| Tolerance hit rate | Fraction of matched boundaries within ±\(\tau\) frames |
+
+Aggregate **macro** (mean of per-transition MAE) and **micro** (pooled errors) values are both reported.
+
+### FPS and milliseconds
+
+**Policy:** `explicit_required_for_ms` (see `benchmark.yaml`).
+
+- Frame errors are always valid.
+- Millisecond conversion requires an **explicit per-video FPS** and provenance string.
+- If FPS is absent, millisecond fields are omitted and `FpsRequiredError` is raised when conversion is requested directly.
+- **Do not publish millisecond benchmark results until native FPS metadata are verified.**
+
+Formula: \(\mathrm{ms} = \mathrm{frames} \times 1000 / \mathrm{fps}\).
+
+Implementation: `evaluation.metrics.boundary`.
+
+## Ontology integration
+
+- Canonical evaluation ontology: `configs/ontology/seven_phase_v1.yaml`
+- Derived B0 ontology: `configs/ontology/five_phase_knee_angle_v1.yaml`
+- Mapping: `configs/ontology/seven_to_five_knee_angle_v1.yaml`
+
+Original label arrays are never modified; mappings produce derived evaluations only.
+
+High-level API: `evaluation.evaluate.evaluate_dataset_videos()`.
+
+## Machine-readable output
+
+JSON schema version `1.0.0`: `evaluation.results.BenchmarkEvaluationResult`.
+
+Example:
+
+```python
+from snatch_phase_bench.evaluation.evaluate import evaluate_dataset_videos
+
+result = evaluate_dataset_videos(
+    {
+        "athlete/clip.mp4": {
+            "y_true": gt_labels,
+            "y_pred": pred_labels,
+            # "fps": 25.0,           # optional; required for ms fields
+            # "fps_source": "manual", # required with fps
+        },
+    },
+    model_identifier="ms_tcn_seed42",
+)
+print(result.to_json())
+```
 
 ## Status
 
@@ -76,8 +148,8 @@ Implementation: `boundary.py` (TODO). See [`benchmark/BENCHMARK_PLAN.md`](benchm
 | Frame aggregation + metrics | `frame.py` | Implemented |
 | Edit score | `segment.py` | Implemented |
 | Segmental F1@IoU | `segment.py` | Implemented |
-| Boundary MAE (frames/ms) | `boundary.py` | TODO — **P0 for benchmark** |
-| Boundary within-τ | `boundary.py` | TODO |
-| Per-transition breakdown | `boundary.py` + ontology | TODO |
-
-Phase ontologies and the seven→five mapping for B0 are defined in `configs/ontology/` and loaded via `snatch_phase_bench.ontology`.
+| Boundary MAE (frames) | `boundary.py` | **Implemented** |
+| Boundary MAE (ms) | `boundary.py` | Implemented (requires explicit FPS) |
+| Boundary tolerance / P/R/F1 | `boundary.py` | **Implemented** |
+| Per-transition breakdown | `boundary.py` + ontology | **Implemented** |
+| JSON result schema | `results.py` | **Implemented** |

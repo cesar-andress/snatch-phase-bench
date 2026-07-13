@@ -28,7 +28,7 @@
 Ranked by scientific importance:
 
 1. **Benchmark implementation** — B0, B2-core TAS models, boundary evaluator (`boundary.py`), experiment runner
-2. **Boundary metric implementation (`boundary.py`)** — blocks all primary endpoints
+2. **Boundary metric implementation (`boundary.py`)** — **IMPLEMENTED** (frame-canonical; ms requires explicit FPS)
 3. **B0 rule-based baseline** — highest reviewer risk; ontology mapping from seven to five phases
 4. **B2-core TAS models** — main benchmark table
 5. **LOAO / multi-seed uncertainty** — required for inferential claims

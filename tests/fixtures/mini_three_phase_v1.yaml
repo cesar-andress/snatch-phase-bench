@@ -1,0 +1,24 @@
+ontology:
+  id: mini_three_phase_v1
+  version: "1.0.0"
+  description: Minimal three-phase ontology for hand-checked metric tests.
+
+phases:
+  - id: 0
+    name: unlabeled
+    supervised: false
+  - id: 1
+    name: phase_a
+    supervised: true
+  - id: 2
+    name: phase_b
+    supervised: true
+  - id: 3
+    name: phase_c
+    supervised: true
+
+transitions:
+  - from: phase_a
+    to: phase_b
+  - from: phase_b
+    to: phase_c

@@ -52,9 +52,12 @@ baselines:
     checkpoint_sha256_prefix: ea5ff9ca
 
 evaluation:
-  version: eval-v1.0.0
+  version: eval-v1.1.0
+  segment_interval_convention: half_open
+  ignored_label_names:
+    - unlabeled
   primary_metrics:
-    - boundary_mae_ms
+    - boundary_mae_frames
     - segmental_f1_at_50
     - edit_score
   secondary_metrics:
@@ -62,9 +65,14 @@ evaluation:
     - segmental_f1_at_10
     - segmental_f1_at_25
     - window_accuracy
+    - boundary_mae_ms
   segment_iou_thresholds: [0.10, 0.25, 0.50]
   boundary_tolerances_frames: [1, 2, 3]
-  default_fps: 30
+  fps_policy: explicit_required_for_ms
+  aggregation_policy:
+    segment_f1: macro_over_videos
+    boundary_mae_frames: micro_and_macro_over_transitions
+    boundary_counts: micro_over_dataset
 
 seeds: [42, 123, 456]
 

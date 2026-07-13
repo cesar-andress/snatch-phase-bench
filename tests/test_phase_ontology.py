@@ -69,7 +69,9 @@ def test_benchmark_manifest_contract() -> None:
     assert manifest["dataset"]["frame_label_rows"] == 35825
     assert manifest["ontology"]["canonical"].endswith("seven_phase_v1.yaml")
     assert manifest["baselines"]["B1"]["version"] == "B1-repro-v1"
-    assert "boundary_mae_ms" in manifest["evaluation"]["primary_metrics"]
+    assert "boundary_mae_frames" in manifest["evaluation"]["primary_metrics"]
+    assert "boundary_mae_ms" in manifest["evaluation"]["secondary_metrics"]
+    assert manifest["evaluation"]["fps_policy"] == "explicit_required_for_ms"
 
 
 def test_incomplete_mapping_raises() -> None:
