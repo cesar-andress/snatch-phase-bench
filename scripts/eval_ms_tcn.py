@@ -16,6 +16,7 @@ from snatch_phase_bench.evaluation.results import write_evaluation_result
 from snatch_phase_bench.evaluation.tas_hooks import evaluate_frame_predictions
 from snatch_phase_bench.experiments.config_loader import get_section
 from snatch_phase_bench.models.ms_tcn.inference import load_ms_tcn_from_checkpoint, predict_videos
+from snatch_phase_bench.training.lstm_trainer import resolve_num_classes
 from snatch_phase_bench.training.ms_tcn_trainer import MSTCNTrainer
 from snatch_phase_bench.utils.logging import setup_logging
 
@@ -51,9 +52,7 @@ def main() -> None:
         )
     )
 
-    num_classes = int(ontology_cfg.get("ignore_label_id", 0)) + int(
-        ontology_cfg.get("num_supervised_classes", 7)
-    )
+    num_classes = resolve_num_classes(ontology_cfg)
     model, _payload = load_ms_tcn_from_checkpoint(
         args.checkpoint,
         input_size=int(dataset_cfg.get("features_per_frame", 99)),

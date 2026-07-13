@@ -70,9 +70,18 @@ def standardize_by_train(
 
 def class_weights(y: np.ndarray, num_classes: int) -> torch.Tensor:
     counts = np.bincount(y, minlength=num_classes).astype(np.float32)
+    if counts.shape[0] != num_classes:
+        counts = counts[:num_classes]
     counts[counts == 0] = 1.0
     weights = counts.sum() / counts
     return torch.tensor(weights / weights.mean(), dtype=torch.float32)
+
+
+def resolve_num_classes(ontology_cfg: dict[str, int]) -> int:
+    """Return model output classes including the ignored label id (e.g. 0--7 -> 8)."""
+    supervised = int(ontology_cfg.get("num_supervised_classes", 7))
+    ignore_id = int(ontology_cfg.get("ignore_label_id", 0))
+    return supervised + 1 if ignore_id == 0 else max(supervised, ignore_id + 1)
 
 
 def run_epoch(

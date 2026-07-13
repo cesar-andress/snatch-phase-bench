@@ -16,6 +16,7 @@ from snatch_phase_bench.config import load_config, resolve_path
 from snatch_phase_bench.data.frame_sequence import iter_frame_sequences, summarize_frame_sequences
 from snatch_phase_bench.data.splits import load_athlete_split
 from snatch_phase_bench.experiments.config_loader import get_section
+from snatch_phase_bench.training.lstm_trainer import resolve_num_classes
 from snatch_phase_bench.models.registry import build_model, count_parameters
 from snatch_phase_bench.ontology.loader import load_benchmark_manifest
 from snatch_phase_bench.training.interfaces import TrainerConfig, TrainingRunContext
@@ -78,9 +79,7 @@ def main() -> None:
         )
     )
 
-    num_classes = int(ontology_cfg.get("ignore_label_id", 0)) + int(
-        ontology_cfg.get("num_supervised_classes", 7)
-    )
+    num_classes = resolve_num_classes(ontology_cfg)
     model = build_model(
         str(model_cfg["name"]),
         input_size=int(dataset_cfg.get("features_per_frame", 99)),

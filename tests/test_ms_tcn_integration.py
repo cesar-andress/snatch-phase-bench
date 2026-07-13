@@ -14,6 +14,7 @@ from snatch_phase_bench.evaluation.tas_hooks import evaluate_frame_predictions
 from snatch_phase_bench.experiments.config_loader import get_section
 from snatch_phase_bench.models.ms_tcn.inference import load_ms_tcn_from_checkpoint, predict_videos
 from snatch_phase_bench.models.registry import build_model
+from snatch_phase_bench.training.lstm_trainer import resolve_num_classes
 from snatch_phase_bench.training.interfaces import TrainerConfig, TrainingRunContext
 from snatch_phase_bench.training.ms_tcn_trainer import MSTCNTrainer
 
@@ -37,7 +38,7 @@ def test_full_train_predict_eval_pipeline(
         labels_csv=labels_csv, keypoints_dir=keypoints_dir, athlete_split=split, split_filter="val"
     )
 
-    num_classes = int(ontology_cfg["ignore_label_id"]) + int(ontology_cfg["num_supervised_classes"])
+    num_classes = resolve_num_classes(ontology_cfg)
     model = build_model(
         "ms_tcn",
         input_size=99,
@@ -96,7 +97,7 @@ def test_config_model_params_instantiate(
     config = load_model_experiment_config(PROJECT_ROOT / "configs/benchmark/ms_tcn.yaml")
     model_cfg = get_section(config, "model")
     ontology_cfg = get_section(config, "ontology")
-    num_classes = int(ontology_cfg["ignore_label_id"]) + int(ontology_cfg["num_supervised_classes"])
+    num_classes = resolve_num_classes(ontology_cfg)
     model = build_model(
         "ms_tcn",
         input_size=99,
