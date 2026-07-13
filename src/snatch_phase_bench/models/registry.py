@@ -38,6 +38,15 @@ def build_model(name: str, **kwargs: object) -> TemporalSegmentationModel:
     return get_model_factory(name)(**kwargs)
 
 
+def count_parameters(model: TemporalSegmentationModel) -> int:
+    """Return trainable + non-trainable parameter count."""
+    import torch
+
+    if isinstance(model, torch.nn.Module):
+        return sum(p.numel() for p in model.parameters())
+    return 0
+
+
 def list_models() -> list[str]:
     """Return registered model names."""
     return sorted(_REGISTRY.keys())
