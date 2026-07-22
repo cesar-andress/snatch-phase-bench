@@ -2,14 +2,11 @@
 
 from __future__ import annotations
 
-import warnings
-
 from snatch_phase_bench.benchmark.experiment_metadata import validate_reference_hardware
 from snatch_phase_bench.benchmark.gpu_runtime import (
     GpuMemoryTracker,
     capture_cuda_determinism_settings,
     collect_cuda_warnings,
-    install_cuda_warning_recorder,
     resolve_cuda_device_index,
 )
 

@@ -2,7 +2,7 @@
 
 **Milestone:** M3 — first real benchmark evidence on the complete SnatchPhaseBench dataset  
 **Frozen:** 2026-07-14  
-**Status:** Pre-declared protocol; do not change seeds or hyperparameters after viewing results.
+**Status:** Pre-declared protocol; canonical three-seed RTX 4090 campaign completed 2026-07-22. Do not change seeds or hyperparameters after viewing results.
 
 ---
 
@@ -96,7 +96,7 @@ Do not keep results from seeds trained under different batch sizes or hardware p
 
 CPU-only runs are **development/preliminary** only. They must **not** be reported as the canonical M3 benchmark or compared for runtime against GPU runs.
 
-The 2026-07-14 CPU pilot (no NVIDIA hardware on runner machine) is archived in `outputs/benchmark/ms_tcn/` but superseded pending RTX 4090 rerun.
+The 2026-07-14 CPU pilot (no NVIDIA hardware on runner machine) is archived in `outputs/benchmark/ms_tcn_cpu_pilot_20260714/` and superseded by the 2026-07-22 RTX 4090 campaign in `outputs/benchmark/ms_tcn/`.
 
 ---
 

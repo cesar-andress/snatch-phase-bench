@@ -1,0 +1,301 @@
+{
+  "aggregate": {
+    "boundary_f1": {
+      "max": 0.9574387912653481,
+      "mean": 0.9473799155295921,
+      "median": 0.9482599533660021,
+      "min": 0.936441001957426,
+      "n": 3,
+      "std": 0.008594868193680369
+    },
+    "boundary_mae_frames": {
+      "max": 1.7464646464646465,
+      "mean": 1.3220538720538721,
+      "median": 1.1303030303030304,
+      "min": 1.0893939393939394,
+      "n": 3,
+      "std": 0.30056809268086215
+    },
+    "edit_score": {
+      "max": 0.9118415254778891,
+      "mean": 0.8504862701832399,
+      "median": 0.8780949690040599,
+      "min": 0.7615223160677707,
+      "n": 3,
+      "std": 0.06439796253171795
+    },
+    "frame_macro_f1": {
+      "max": 0.9131244898546061,
+      "mean": 0.9048107998538208,
+      "median": 0.9092532520868947,
+      "min": 0.8920546576199618,
+      "n": 3,
+      "std": 0.00915736475853801
+    },
+    "segmental_f1_at_50": {
+      "max": 0.7955071261027373,
+      "mean": 0.7747249313894791,
+      "median": 0.7763273160138363,
+      "min": 0.7523403520518634,
+      "n": 3,
+      "std": 0.017659149146227897
+    }
+  },
+  "metric_series": {
+    "boundary_f1": [
+      0.936441001957426,
+      0.9574387912653481,
+      0.9482599533660021
+    ],
+    "boundary_mae_frames": [
+      1.7464646464646465,
+      1.0893939393939394,
+      1.1303030303030304
+    ],
+    "edit_score": [
+      0.8780949690040599,
+      0.9118415254778891,
+      0.7615223160677707
+    ],
+    "frame_macro_f1": [
+      0.8920546576199618,
+      0.9092532520868947,
+      0.9131244898546061
+    ],
+    "segmental_f1_at_50": [
+      0.7763273160138363,
+      0.7955071261027373,
+      0.7523403520518634
+    ]
+  },
+  "per_seed": {
+    "123": {
+      "early_stopping": {
+        "best_epoch": 10,
+        "best_metric": 0.7313026842438607,
+        "monitor": "val_segmental_f1_at_50",
+        "reason": "patience_exhausted",
+        "total_epochs": 25
+      },
+      "eval_path": "outputs/benchmark/ms_tcn/seed123/eval_test.json",
+      "metrics": {
+        "boundary_f1": 0.9574387912653481,
+        "boundary_mae_frames": 1.0893939393939394,
+        "edit_score": 0.9118415254778891,
+        "frame_macro_f1": 0.9092532520868947,
+        "segmental_f1_at_10": 0.9383102164293387,
+        "segmental_f1_at_25": 0.8935246989165484,
+        "segmental_f1_at_50": 0.7955071261027373
+      },
+      "train_summary": {
+        "batch_size": 1,
+        "device": "cuda",
+        "early_stopping": {
+          "best_epoch": 10,
+          "best_metric": 0.7313026842438607,
+          "monitor": "val_segmental_f1_at_50",
+          "reason": "patience_exhausted",
+          "total_epochs": 25
+        },
+        "evaluator_version": "eval-v1.1.0",
+        "gpu_runtime": {
+          "batch_size": 1,
+          "cuda_warnings": [],
+          "deterministic_cuda": {
+            "cudnn_benchmark": false,
+            "cudnn_deterministic": true,
+            "deterministic_algorithms_enabled": true
+          },
+          "device": "cuda",
+          "peak_allocated_bytes": 16264704,
+          "peak_allocated_mib": 15.51,
+          "peak_reserved_bytes": 37748736,
+          "peak_reserved_mib": 36.0,
+          "use_amp": false
+        },
+        "model": "ms_tcn",
+        "ontology_version": "configs/ontology/seven_phase_v1.yaml",
+        "output_dir": "outputs/benchmark/ms_tcn/seed123",
+        "parameter_count": 670688,
+        "reference_hardware": {
+          "batch_size_policy": "Fixed before all seeds. On OOM: stop, report, choose one new batch size, restart all three seeds. Do not mix results across batch sizes.\n",
+          "device": "cuda",
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "precision": "fp32",
+          "use_amp": false
+        },
+        "runtime_seconds": 39.39017728399631,
+        "seed": 123,
+        "train_stats": {
+          "athletes": 49,
+          "feature_dim": 99,
+          "frames": 24200,
+          "videos": 145
+        },
+        "train_videos": 145,
+        "use_amp": false,
+        "val_stats": {
+          "athletes": 10,
+          "feature_dim": 99,
+          "frames": 5550,
+          "videos": 30
+        },
+        "val_videos": 30
+      }
+    },
+    "42": {
+      "early_stopping": {
+        "best_epoch": 3,
+        "best_metric": 0.7347463647463647,
+        "monitor": "val_segmental_f1_at_50",
+        "reason": "patience_exhausted",
+        "total_epochs": 18
+      },
+      "eval_path": "outputs/benchmark/ms_tcn/seed42/eval_test.json",
+      "metrics": {
+        "boundary_f1": 0.936441001957426,
+        "boundary_mae_frames": 1.7464646464646465,
+        "edit_score": 0.8780949690040599,
+        "frame_macro_f1": 0.8920546576199618,
+        "segmental_f1_at_10": 0.9181340962532185,
+        "segmental_f1_at_25": 0.8863174280729139,
+        "segmental_f1_at_50": 0.7763273160138363
+      },
+      "train_summary": {
+        "batch_size": 1,
+        "device": "cuda",
+        "early_stopping": {
+          "best_epoch": 3,
+          "best_metric": 0.7347463647463647,
+          "monitor": "val_segmental_f1_at_50",
+          "reason": "patience_exhausted",
+          "total_epochs": 18
+        },
+        "evaluator_version": "eval-v1.1.0",
+        "gpu_runtime": {
+          "batch_size": 1,
+          "cuda_warnings": [],
+          "deterministic_cuda": {
+            "cudnn_benchmark": false,
+            "cudnn_deterministic": true,
+            "deterministic_algorithms_enabled": true
+          },
+          "device": "cuda",
+          "peak_allocated_bytes": 16264704,
+          "peak_allocated_mib": 15.51,
+          "peak_reserved_bytes": 37748736,
+          "peak_reserved_mib": 36.0,
+          "use_amp": false
+        },
+        "model": "ms_tcn",
+        "ontology_version": "configs/ontology/seven_phase_v1.yaml",
+        "output_dir": "outputs/benchmark/ms_tcn/seed42",
+        "parameter_count": 670688,
+        "reference_hardware": {
+          "batch_size_policy": "Fixed before all seeds. On OOM: stop, report, choose one new batch size, restart all three seeds. Do not mix results across batch sizes.\n",
+          "device": "cuda",
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "precision": "fp32",
+          "use_amp": false
+        },
+        "runtime_seconds": 27.721708801000204,
+        "seed": 42,
+        "train_stats": {
+          "athletes": 49,
+          "feature_dim": 99,
+          "frames": 24200,
+          "videos": 145
+        },
+        "train_videos": 145,
+        "use_amp": false,
+        "val_stats": {
+          "athletes": 10,
+          "feature_dim": 99,
+          "frames": 5550,
+          "videos": 30
+        },
+        "val_videos": 30
+      }
+    },
+    "456": {
+      "early_stopping": {
+        "best_epoch": 15,
+        "best_metric": 0.7271373475166044,
+        "monitor": "val_segmental_f1_at_50",
+        "reason": "patience_exhausted",
+        "total_epochs": 30
+      },
+      "eval_path": "outputs/benchmark/ms_tcn/seed456/eval_test.json",
+      "metrics": {
+        "boundary_f1": 0.9482599533660021,
+        "boundary_mae_frames": 1.1303030303030304,
+        "edit_score": 0.7615223160677707,
+        "frame_macro_f1": 0.9131244898546061,
+        "segmental_f1_at_10": 0.8506313955300727,
+        "segmental_f1_at_25": 0.8347223046209818,
+        "segmental_f1_at_50": 0.7523403520518634
+      },
+      "train_summary": {
+        "batch_size": 1,
+        "device": "cuda",
+        "early_stopping": {
+          "best_epoch": 15,
+          "best_metric": 0.7271373475166044,
+          "monitor": "val_segmental_f1_at_50",
+          "reason": "patience_exhausted",
+          "total_epochs": 30
+        },
+        "evaluator_version": "eval-v1.1.0",
+        "gpu_runtime": {
+          "batch_size": 1,
+          "cuda_warnings": [],
+          "deterministic_cuda": {
+            "cudnn_benchmark": false,
+            "cudnn_deterministic": true,
+            "deterministic_algorithms_enabled": true
+          },
+          "device": "cuda",
+          "peak_allocated_bytes": 16264704,
+          "peak_allocated_mib": 15.51,
+          "peak_reserved_bytes": 37748736,
+          "peak_reserved_mib": 36.0,
+          "use_amp": false
+        },
+        "model": "ms_tcn",
+        "ontology_version": "configs/ontology/seven_phase_v1.yaml",
+        "output_dir": "outputs/benchmark/ms_tcn/seed456",
+        "parameter_count": 670688,
+        "reference_hardware": {
+          "batch_size_policy": "Fixed before all seeds. On OOM: stop, report, choose one new batch size, restart all three seeds. Do not mix results across batch sizes.\n",
+          "device": "cuda",
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "precision": "fp32",
+          "use_amp": false
+        },
+        "runtime_seconds": 50.44556635100162,
+        "seed": 456,
+        "train_stats": {
+          "athletes": 49,
+          "feature_dim": 99,
+          "frames": 24200,
+          "videos": 145
+        },
+        "train_videos": 145,
+        "use_amp": false,
+        "val_stats": {
+          "athletes": 10,
+          "feature_dim": 99,
+          "frames": 5550,
+          "videos": 30
+        },
+        "val_videos": 30
+      }
+    }
+  },
+  "seeds": [
+    42,
+    123,
+    456
+  ],
+  "split": "test"
+}
