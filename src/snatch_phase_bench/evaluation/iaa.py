@@ -248,14 +248,16 @@ def pair_annotator_boundaries(
             "n_only_annotator2": matching.num_extra,
         }
         for match in matching.matches:
-            abs_err = abs(match.ground_truth.frame_index - match.predicted.frame_index)
+            f1 = int(match.ground_truth.frame_index)
+            f2 = int(match.predicted.frame_index)
             paired.append(
                 {
                     "video_relpath": match.ground_truth.video_id,
                     "transition_key": key,
-                    "frame_annotator1": int(match.ground_truth.frame_index),
-                    "frame_annotator2": int(match.predicted.frame_index),
-                    "abs_diff_frames": int(abs_err),
+                    "frame_annotator1": f1,
+                    "frame_annotator2": f2,
+                    "signed_diff_frames": int(f2 - f1),
+                    "abs_diff_frames": int(abs(f2 - f1)),
                 }
             )
     return paired, counts, warnings
@@ -294,6 +296,7 @@ def compute_iaa(
 
     for row in all_paired:
         row["abs_diff_ms"] = float(row["abs_diff_frames"]) * 1000.0 / fps
+        row["signed_diff_ms"] = float(row["signed_diff_frames"]) * 1000.0 / fps
 
     global_frames = summarize_absolute_differences(r["abs_diff_frames"] for r in all_paired)
     global_ms = summarize_absolute_differences(r["abs_diff_ms"] for r in all_paired)
@@ -416,6 +419,81 @@ def render_global_latex_table(result: IAAResult, label: str = "tab:iaa-global") 
             "",
         ]
     )
+
+
+def per_video_descriptive_frame(result: IAAResult) -> pd.DataFrame:
+    """One row per video with descriptive absolute-difference statistics."""
+    if not result.paired_rows:
+        return pd.DataFrame(
+            columns=[
+                "video_relpath",
+                "n_paired_boundaries",
+                "mean_abs_diff_frames",
+                "median_abs_diff_frames",
+                "p95_abs_diff_frames",
+                "max_abs_diff_frames",
+            ]
+        )
+    df = pd.DataFrame(result.paired_rows)
+    rows: list[dict[str, Any]] = []
+    for video, group in df.groupby("video_relpath", sort=True):
+        summary = summarize_absolute_differences(group["abs_diff_frames"].tolist())
+        rows.append(
+            {
+                "video_relpath": video,
+                "n_paired_boundaries": summary.n,
+                "mean_abs_diff_frames": summary.mean,
+                "median_abs_diff_frames": summary.median,
+                "p95_abs_diff_frames": summary.p95,
+                "max_abs_diff_frames": summary.max,
+            }
+        )
+    return pd.DataFrame(rows)
+
+
+def render_per_video_markdown_table(result: IAAResult) -> str:
+    frame = per_video_descriptive_frame(result)
+    lines = [
+        "| Video | N | Mean |abs| | Median |abs| | P95 |abs| | Max |abs| |",
+        "|-------|--:|----------:|------------:|--------:|-------:|",
+    ]
+    if frame.empty:
+        lines.append("| — | 0 | — | — | — | — |")
+        return "\n".join(lines)
+    for row in frame.itertuples(index=False):
+        lines.append(
+            f"| `{row.video_relpath}` | {row.n_paired_boundaries} | "
+            f"{format_optional(row.mean_abs_diff_frames)} | "
+            f"{format_optional(row.median_abs_diff_frames)} | "
+            f"{format_optional(row.p95_abs_diff_frames)} | "
+            f"{format_optional(row.max_abs_diff_frames, '{:.0f}')} |"
+        )
+    return "\n".join(lines)
+
+
+def render_per_video_latex_table(result: IAAResult, label: str = "tab:iaa-per-video") -> str:
+    frame = per_video_descriptive_frame(result)
+    lines = [
+        "\\begin{table}[t]",
+        "\\centering",
+        "\\caption{Per-video absolute boundary differences between annotators (frames).}",
+        f"\\label{{{label}}}",
+        "\\begin{tabular}{lrrrrr}",
+        "\\toprule",
+        "Video & N & Mean & Median & P95 & Max \\\\",
+        "\\midrule",
+    ]
+    for row in frame.itertuples(index=False):
+        short = Path(str(row.video_relpath)).name.replace("_", "\\_")
+        lines.append(
+            f"{short} & {row.n_paired_boundaries} & "
+            f"{format_optional(row.mean_abs_diff_frames)} & "
+            f"{format_optional(row.median_abs_diff_frames)} & "
+            f"{format_optional(row.p95_abs_diff_frames)} & "
+            f"{format_optional(row.max_abs_diff_frames, '{:.0f}')} \\\\"
+        )
+    lines.extend(["\\bottomrule", "\\end{tabular}", "\\end{table}", ""])
+    return "\n".join(lines)
 
 
 def render_transition_latex_table(result: IAAResult, label: str = "tab:iaa-transitions") -> str:

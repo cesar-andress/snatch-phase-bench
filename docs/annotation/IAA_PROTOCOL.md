@@ -170,10 +170,12 @@ Blank templates: `python scripts/prepare_iaa_workpack.py` → `analysis/iaa/anno
 Primary analysis is **boundary-centric**. After annotator-2 files are complete, run:
 
 ```bash
-python scripts/compute_iaa_agreement.py
+python scripts/run_iaa_pipeline.py
 ```
 
-The script **refuses** to write manuscript tables if any of the 20 videos is missing.
+(`scripts/compute_iaa_agreement.py` is a thin wrapper of the same entry point.)
+
+The script **refuses** to write manuscript tables/figures if any of the 20 videos is missing.
 
 ### 4.1 Recommended metrics
 
@@ -226,9 +228,10 @@ Cohen’s κ (and related categorical frame-wise coefficients) treat each frame 
 | Freeze subset | `analysis/iaa/subset_manifest.json` | Done |
 | Build work package | `python scripts/prepare_iaa_workpack.py` | Before annotator 2 starts |
 | Annotator 2 labels | `analysis/iaa/annotator2/segments/**` | Pending |
-| Compute agreement + tables | `python scripts/compute_iaa_agreement.py` | After all 20 CSVs exist |
-| Implementation | `src/snatch_phase_bench/evaluation/iaa.py` | Ready |
-| Unit tests | `tests/test_iaa.py` | Synthetic only (no fabricated study results) |
+| Compute agreement + tables + figures | `python scripts/run_iaa_pipeline.py` | After all 20 CSVs exist |
+| Pipeline documentation | [`IAA_PIPELINE.md`](IAA_PIPELINE.md) | Ready |
+| Implementation | `src/snatch_phase_bench/evaluation/iaa.py`, `iaa_pipeline.py` | Ready |
+| Unit tests | `tests/test_iaa.py`, `tests/test_iaa_pipeline.py` | Synthetic only (no fabricated study results) |
 
 Annotator-1 path default: `~/papers/Paper_TFM-main/data/annotations/master_segment_labels.csv` (read-only snapshot).
 
@@ -256,8 +259,8 @@ Until then, the manuscript should continue to state that labels are single-annot
 - [x] Computation script ready (no fabricated results)  
 - [ ] Annotator 2 recruited / briefed  
 - [ ] 20 segment CSVs deposited  
-- [ ] `compute_iaa_agreement.py` run successfully  
-- [ ] Tables inserted into the manuscript  
+- [ ] `python scripts/run_iaa_pipeline.py` run successfully  
+- [ ] Tables/figures inserted into the manuscript  
 
 ---
 

@@ -1,0 +1,34 @@
+{
+  "ready": false,
+  "n_required": 20,
+  "n_annotator1": 20,
+  "n_annotator2": 0,
+  "missing_annotator1": [],
+  "missing_annotator2": [
+    "campbell/snatch_-+86kg_campbell_emily_jade_i1_ok_000168.mp4",
+    "ficco/snatch_-88kg_ficco_cristiano_giuseppe_i1_ok_000021.mp4",
+    "cambei/snatch_-53kg_cambei_mihaela_valentina_i1_ok_000118.mp4",
+    "koanda/snatch_-86kg_koanda_solfrid_eila_amena_i1_ok_000200.mp4",
+    "montero/snatch_-48kg_montero_ramos_ludia_m_i2_ok_000149.mp4",
+    "he/snatch_-71kg_he_yueji_i2_ok_000077.mp4",
+    "sahakyan/snatch_-71kg_sahakyan_gor_i3_ok_000077.mp4",
+    "mosquera/snatch_-65kg_mosquera_valencia_f_i1_ok_000079.mp4",
+    "moeini/snatch_-94kg_moeini_sedeh_alireza_i3_ok_000018.mp4",
+    "friedrich/snatch_-94kg_friedich_raphael_i1_ok_000001.mp4",
+    "mueller/snatch_-88kg_mueller_lucas_i2_ok_000026.mp4",
+    "ozkan/snatch_-53kg_ozkan_cansel_i2_fail_000122.mp4",
+    "abokhala/snatch_-94kg_abokhala_karim_i3_fail_000005.mp4",
+    "chen/snatch_-53kg_chen_guan_ling_i2_fail_000119.mp4",
+    "muthupandi/snatch_-65kg_muthupandi_raja_i1_fail_000081.mp4",
+    "rivas/snatch_-86kg_rivas_mosquera_valeria_i3_fail_000196.mp4",
+    "adventino/snatch_-65kg_adventino_geovani_leonardo_i2_fail_000097.mp4",
+    "alipour/snatch_-94kg_alipour_ali_i1_fail_000006.mp4",
+    "karapetyan/snatch_-88k_karapetyan_andranik_i1_fail_000042.mp4",
+    "rustamov/snatch_-71k_rustamov_isa_i2_fail_000057.mp4"
+  ],
+  "annotator1_exists": true,
+  "annotator2_dir_exists": false,
+  "messages": [
+    "Annotator-2 directory not found: /home/cesar/papers/snatch-phase-bench/snatch-phase-bench/analysis/iaa/annotator2/segments. Deposit segment CSVs when available; do not invent labels."
+  ]
+}
