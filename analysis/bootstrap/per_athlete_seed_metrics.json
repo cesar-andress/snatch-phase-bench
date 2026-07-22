@@ -1,0 +1,480 @@
+{
+  "ms_tcn": {
+    "42": {
+      "bardalez": {
+        "frame_macro_f1": 0.8612731791132339,
+        "segmental_f1_at_10": 1.0,
+        "segmental_f1_at_25": 0.9047619047619048,
+        "segmental_f1_at_50": 0.7619047619047619,
+        "boundary_mae_frames": 2.1666666666666665
+      },
+      "friedrich": {
+        "frame_macro_f1": 0.9110158062269029,
+        "segmental_f1_at_10": 0.9743589743589743,
+        "segmental_f1_at_25": 0.9743589743589743,
+        "segmental_f1_at_50": 0.923076923076923,
+        "boundary_mae_frames": 1.6111111111111112
+      },
+      "genc": {
+        "frame_macro_f1": 0.8792521049469603,
+        "segmental_f1_at_10": 0.8888888888888888,
+        "segmental_f1_at_25": 0.8888888888888888,
+        "segmental_f1_at_50": 0.8333333333333333,
+        "boundary_mae_frames": 1.2777777777777777
+      },
+      "he": {
+        "frame_macro_f1": 0.9186191916029365,
+        "segmental_f1_at_10": 0.9259259259259259,
+        "segmental_f1_at_25": 0.9259259259259259,
+        "segmental_f1_at_50": 0.7936507936507936,
+        "boundary_mae_frames": 1.6666666666666667
+      },
+      "lo": {
+        "frame_macro_f1": 0.8836711219587061,
+        "segmental_f1_at_10": 0.8968253968253967,
+        "segmental_f1_at_25": 0.8968253968253967,
+        "segmental_f1_at_50": 0.8412698412698413,
+        "boundary_mae_frames": 1.472222222222222
+      },
+      "mego": {
+        "frame_macro_f1": 0.9300361682192309,
+        "segmental_f1_at_10": 0.9696969696969697,
+        "segmental_f1_at_25": 0.9696969696969697,
+        "segmental_f1_at_50": 0.8268398268398268,
+        "boundary_mae_frames": 0.9444444444444444
+      },
+      "moeini": {
+        "frame_macro_f1": 0.8590385744614323,
+        "segmental_f1_at_10": 0.5809195402298851,
+        "segmental_f1_at_25": 0.5809195402298851,
+        "segmental_f1_at_50": 0.43126436781609195,
+        "boundary_mae_frames": 3.3333333333333335
+      },
+      "montero": {
+        "frame_macro_f1": 0.9165092694569481,
+        "segmental_f1_at_10": 0.9444444444444444,
+        "segmental_f1_at_25": 0.9444444444444444,
+        "segmental_f1_at_50": 0.8492063492063492,
+        "boundary_mae_frames": 1.2777777777777777
+      },
+      "nasar": {
+        "frame_macro_f1": 0.8818614763785035,
+        "segmental_f1_at_10": 0.9487179487179487,
+        "segmental_f1_at_25": 0.8974358974358974,
+        "segmental_f1_at_50": 0.7985347985347985,
+        "boundary_mae_frames": 1.6
+      },
+      "ozbek": {
+        "frame_macro_f1": 0.8685762810026975,
+        "segmental_f1_at_10": 1.0,
+        "segmental_f1_at_25": 0.9523809523809523,
+        "segmental_f1_at_50": 0.7142857142857143,
+        "boundary_mae_frames": 2.2222222222222223
+      },
+      "rustamov": {
+        "frame_macro_f1": 0.9051238791685915,
+        "segmental_f1_at_10": 0.9696969696969697,
+        "segmental_f1_at_25": 0.8138528138528138,
+        "segmental_f1_at_50": 0.7662337662337662,
+        "boundary_mae_frames": 1.6388888888888888
+      }
+    },
+    "123": {
+      "bardalez": {
+        "frame_macro_f1": 0.9060066744345981,
+        "segmental_f1_at_10": 1.0,
+        "segmental_f1_at_25": 0.9047619047619048,
+        "segmental_f1_at_50": 0.8571428571428571,
+        "boundary_mae_frames": 0.9444444444444444
+      },
+      "friedrich": {
+        "frame_macro_f1": 0.9152687306054182,
+        "segmental_f1_at_10": 0.9743589743589743,
+        "segmental_f1_at_25": 0.9743589743589743,
+        "segmental_f1_at_50": 0.8754578754578755,
+        "boundary_mae_frames": 1.0444444444444445
+      },
+      "genc": {
+        "frame_macro_f1": 0.9225420780673473,
+        "segmental_f1_at_10": 0.9444444444444444,
+        "segmental_f1_at_25": 0.9444444444444444,
+        "segmental_f1_at_50": 0.8301587301587302,
+        "boundary_mae_frames": 0.7222222222222222
+      },
+      "he": {
+        "frame_macro_f1": 0.9277677688801705,
+        "segmental_f1_at_10": 0.9777777777777777,
+        "segmental_f1_at_25": 0.9777777777777777,
+        "segmental_f1_at_50": 0.8825396825396825,
+        "boundary_mae_frames": 0.9444444444444444
+      },
+      "lo": {
+        "frame_macro_f1": 0.9342699051451566,
+        "segmental_f1_at_10": 0.9523809523809523,
+        "segmental_f1_at_25": 0.8857142857142858,
+        "segmental_f1_at_50": 0.819047619047619,
+        "boundary_mae_frames": 0.5833333333333334
+      },
+      "mego": {
+        "frame_macro_f1": 0.9040784477830484,
+        "segmental_f1_at_10": 0.9777777777777777,
+        "segmental_f1_at_25": 0.9777777777777777,
+        "segmental_f1_at_50": 0.8634920634920635,
+        "boundary_mae_frames": 1.1388888888888888
+      },
+      "moeini": {
+        "frame_macro_f1": 0.868338639131556,
+        "segmental_f1_at_10": 0.5809195402298851,
+        "segmental_f1_at_25": 0.5809195402298851,
+        "segmental_f1_at_50": 0.4979310344827586,
+        "boundary_mae_frames": 2.5
+      },
+      "montero": {
+        "frame_macro_f1": 0.9565851546331512,
+        "segmental_f1_at_10": 1.0,
+        "segmental_f1_at_25": 0.9333333333333333,
+        "segmental_f1_at_50": 0.8380952380952381,
+        "boundary_mae_frames": 0.6388888888888888
+      },
+      "nasar": {
+        "frame_macro_f1": 0.8760895343162158,
+        "segmental_f1_at_10": 0.9440559440559441,
+        "segmental_f1_at_25": 0.8834498834498834,
+        "segmental_f1_at_50": 0.7239427239427239,
+        "boundary_mae_frames": 1.3
+      },
+      "ozbek": {
+        "frame_macro_f1": 0.8576020298778056,
+        "segmental_f1_at_10": 1.0,
+        "segmental_f1_at_25": 0.9523809523809523,
+        "segmental_f1_at_50": 0.8095238095238095,
+        "boundary_mae_frames": 1.4444444444444444
+      },
+      "rustamov": {
+        "frame_macro_f1": 0.9298205139569744,
+        "segmental_f1_at_10": 0.9696969696969697,
+        "segmental_f1_at_25": 0.8138528138528138,
+        "segmental_f1_at_50": 0.7532467532467532,
+        "boundary_mae_frames": 0.7222222222222222
+      }
+    },
+    "456": {
+      "bardalez": {
+        "frame_macro_f1": 0.8960319756579521,
+        "segmental_f1_at_10": 0.8967320261437909,
+        "segmental_f1_at_25": 0.8078431372549019,
+        "segmental_f1_at_50": 0.7686274509803921,
+        "boundary_mae_frames": 1.1111111111111112
+      },
+      "friedrich": {
+        "frame_macro_f1": 0.9419480865351233,
+        "segmental_f1_at_10": 0.9299145299145299,
+        "segmental_f1_at_25": 0.9299145299145299,
+        "segmental_f1_at_50": 0.9299145299145299,
+        "boundary_mae_frames": 0.9777777777777777
+      },
+      "genc": {
+        "frame_macro_f1": 0.9363023728974553,
+        "segmental_f1_at_10": 0.8258547008547009,
+        "segmental_f1_at_25": 0.8258547008547009,
+        "segmental_f1_at_50": 0.8258547008547009,
+        "boundary_mae_frames": 0.638888888888889
+      },
+      "he": {
+        "frame_macro_f1": 0.9223434260035691,
+        "segmental_f1_at_10": 0.8678362573099415,
+        "segmental_f1_at_25": 0.8678362573099415,
+        "segmental_f1_at_50": 0.823391812865497,
+        "boundary_mae_frames": 1.0555555555555556
+      },
+      "lo": {
+        "frame_macro_f1": 0.9209714664820521,
+        "segmental_f1_at_10": 0.8388888888888889,
+        "segmental_f1_at_25": 0.8388888888888889,
+        "segmental_f1_at_50": 0.7833333333333333,
+        "boundary_mae_frames": 0.8333333333333334
+      },
+      "mego": {
+        "frame_macro_f1": 0.9192472269272962,
+        "segmental_f1_at_10": 0.9252525252525252,
+        "segmental_f1_at_25": 0.9252525252525252,
+        "segmental_f1_at_50": 0.8202020202020202,
+        "boundary_mae_frames": 0.9722222222222222
+      },
+      "moeini": {
+        "frame_macro_f1": 0.8801032492437922,
+        "segmental_f1_at_10": 0.5572649572649573,
+        "segmental_f1_at_25": 0.5572649572649573,
+        "segmental_f1_at_50": 0.44590964590964594,
+        "boundary_mae_frames": 2.4444444444444446
+      },
+      "montero": {
+        "frame_macro_f1": 0.9397846835658354,
+        "segmental_f1_at_10": 0.8786324786324786,
+        "segmental_f1_at_25": 0.8786324786324786,
+        "segmental_f1_at_50": 0.7897435897435897,
+        "boundary_mae_frames": 0.8333333333333334
+      },
+      "nasar": {
+        "frame_macro_f1": 0.919160159022109,
+        "segmental_f1_at_10": 0.844047619047619,
+        "segmental_f1_at_25": 0.844047619047619,
+        "segmental_f1_at_50": 0.7043650793650794,
+        "boundary_mae_frames": 1.1222222222222222
+      },
+      "ozbek": {
+        "frame_macro_f1": 0.8365541547853595,
+        "segmental_f1_at_10": 0.913888888888889,
+        "segmental_f1_at_25": 0.8722222222222222,
+        "segmental_f1_at_50": 0.6972222222222222,
+        "boundary_mae_frames": 1.6111111111111112
+      },
+      "rustamov": {
+        "frame_macro_f1": 0.9350807642195029,
+        "segmental_f1_at_10": 0.8786324786324786,
+        "segmental_f1_at_25": 0.8341880341880342,
+        "segmental_f1_at_50": 0.6871794871794872,
+        "boundary_mae_frames": 0.8333333333333334
+      }
+    }
+  },
+  "asformer": {
+    "42": {
+      "bardalez": {
+        "frame_macro_f1": 0.9056664140163695,
+        "segmental_f1_at_10": 1.0,
+        "segmental_f1_at_25": 0.9047619047619048,
+        "segmental_f1_at_50": 0.8571428571428571,
+        "boundary_mae_frames": 1.0555555555555556
+      },
+      "friedrich": {
+        "frame_macro_f1": 0.9188945416955814,
+        "segmental_f1_at_10": 0.9299145299145299,
+        "segmental_f1_at_25": 0.9299145299145299,
+        "segmental_f1_at_50": 0.8786324786324786,
+        "boundary_mae_frames": 1.0555555555555556
+      },
+      "genc": {
+        "frame_macro_f1": 0.9362693108564829,
+        "segmental_f1_at_10": 0.8492063492063492,
+        "segmental_f1_at_25": 0.8492063492063492,
+        "segmental_f1_at_50": 0.8492063492063492,
+        "boundary_mae_frames": 0.5555555555555556
+      },
+      "he": {
+        "frame_macro_f1": 0.9643458399693815,
+        "segmental_f1_at_10": 0.9777777777777777,
+        "segmental_f1_at_25": 0.9777777777777777,
+        "segmental_f1_at_50": 0.8825396825396825,
+        "boundary_mae_frames": 0.6666666666666666
+      },
+      "lo": {
+        "frame_macro_f1": 0.9208999689285127,
+        "segmental_f1_at_10": 0.9301587301587302,
+        "segmental_f1_at_25": 0.8634920634920635,
+        "segmental_f1_at_50": 0.7968253968253968,
+        "boundary_mae_frames": 0.8333333333333333
+      },
+      "mego": {
+        "frame_macro_f1": 0.9273644766017879,
+        "segmental_f1_at_10": 0.9047619047619048,
+        "segmental_f1_at_25": 0.9047619047619048,
+        "segmental_f1_at_50": 0.7619047619047619,
+        "boundary_mae_frames": 0.7777777777777778
+      },
+      "moeini": {
+        "frame_macro_f1": 0.8862178662442857,
+        "segmental_f1_at_10": 0.5386973180076629,
+        "segmental_f1_at_25": 0.5386973180076629,
+        "segmental_f1_at_50": 0.4617405582922824,
+        "boundary_mae_frames": 2.2222222222222223
+      },
+      "montero": {
+        "frame_macro_f1": 0.9362439288918979,
+        "segmental_f1_at_10": 0.9,
+        "segmental_f1_at_25": 0.9,
+        "segmental_f1_at_50": 0.811111111111111,
+        "boundary_mae_frames": 0.7777777777777778
+      },
+      "nasar": {
+        "frame_macro_f1": 0.9028042789003169,
+        "segmental_f1_at_10": 0.9440559440559441,
+        "segmental_f1_at_25": 0.8834498834498834,
+        "segmental_f1_at_50": 0.7752247752247752,
+        "boundary_mae_frames": 0.8777777777777778
+      },
+      "ozbek": {
+        "frame_macro_f1": 0.9141687341158982,
+        "segmental_f1_at_10": 0.9555555555555556,
+        "segmental_f1_at_25": 0.9079365079365079,
+        "segmental_f1_at_50": 0.819047619047619,
+        "boundary_mae_frames": 0.9444444444444445
+      },
+      "rustamov": {
+        "frame_macro_f1": 0.946008611626824,
+        "segmental_f1_at_10": 0.9230769230769231,
+        "segmental_f1_at_25": 0.8278388278388278,
+        "segmental_f1_at_50": 0.7765567765567766,
+        "boundary_mae_frames": 0.8055555555555556
+      }
+    },
+    "123": {
+      "bardalez": {
+        "frame_macro_f1": 0.9316919177526687,
+        "segmental_f1_at_10": 0.9333333333333333,
+        "segmental_f1_at_25": 0.8888888888888888,
+        "segmental_f1_at_50": 0.7999999999999999,
+        "boundary_mae_frames": 0.7777777777777778
+      },
+      "friedrich": {
+        "frame_macro_f1": 0.8991418084328447,
+        "segmental_f1_at_10": 0.9299145299145299,
+        "segmental_f1_at_25": 0.9299145299145299,
+        "segmental_f1_at_50": 0.8786324786324786,
+        "boundary_mae_frames": 1.0777777777777777
+      },
+      "genc": {
+        "frame_macro_f1": 0.8854142574698959,
+        "segmental_f1_at_10": 0.9171717171717172,
+        "segmental_f1_at_25": 0.8565656565656565,
+        "segmental_f1_at_50": 0.7515151515151515,
+        "boundary_mae_frames": 0.4722222222222222
+      },
+      "he": {
+        "frame_macro_f1": 0.8639925085234216,
+        "segmental_f1_at_10": 0.8678362573099415,
+        "segmental_f1_at_25": 0.8678362573099415,
+        "segmental_f1_at_50": 0.823391812865497,
+        "boundary_mae_frames": 0.7222222222222222
+      },
+      "lo": {
+        "frame_macro_f1": 0.9332436601443458,
+        "segmental_f1_at_10": 0.9252525252525252,
+        "segmental_f1_at_25": 0.8202020202020202,
+        "segmental_f1_at_50": 0.8202020202020202,
+        "boundary_mae_frames": 0.7222222222222222
+      },
+      "mego": {
+        "frame_macro_f1": 0.8934453514505644,
+        "segmental_f1_at_10": 0.9252525252525252,
+        "segmental_f1_at_25": 0.9252525252525252,
+        "segmental_f1_at_50": 0.8202020202020202,
+        "boundary_mae_frames": 0.9444444444444445
+      },
+      "moeini": {
+        "frame_macro_f1": 0.8379340250967315,
+        "segmental_f1_at_10": 0.5572649572649573,
+        "segmental_f1_at_25": 0.5572649572649573,
+        "segmental_f1_at_50": 0.5094017094017094,
+        "boundary_mae_frames": 2.2222222222222223
+      },
+      "montero": {
+        "frame_macro_f1": 0.9028642500725751,
+        "segmental_f1_at_10": 0.9252525252525252,
+        "segmental_f1_at_25": 0.8646464646464647,
+        "segmental_f1_at_50": 0.8646464646464647,
+        "boundary_mae_frames": 0.75
+      },
+      "nasar": {
+        "frame_macro_f1": 0.7895774670067454,
+        "segmental_f1_at_10": 0.8666666666666667,
+        "segmental_f1_at_25": 0.7555555555555555,
+        "segmental_f1_at_50": 0.7555555555555555,
+        "boundary_mae_frames": 0.8611111111111112
+      },
+      "ozbek": {
+        "frame_macro_f1": 0.9049170186565992,
+        "segmental_f1_at_10": 0.9333333333333333,
+        "segmental_f1_at_25": 0.9333333333333333,
+        "segmental_f1_at_50": 0.8444444444444444,
+        "boundary_mae_frames": 1.0
+      },
+      "rustamov": {
+        "frame_macro_f1": 0.9527924416479472,
+        "segmental_f1_at_10": 0.9252525252525252,
+        "segmental_f1_at_25": 0.8646464646464647,
+        "segmental_f1_at_50": 0.8202020202020202,
+        "boundary_mae_frames": 0.5277777777777778
+      }
+    },
+    "456": {
+      "bardalez": {
+        "frame_macro_f1": 0.8994020684827075,
+        "segmental_f1_at_10": 1.0,
+        "segmental_f1_at_25": 0.9047619047619048,
+        "segmental_f1_at_50": 0.8571428571428571,
+        "boundary_mae_frames": 1.1111111111111112
+      },
+      "friedrich": {
+        "frame_macro_f1": 0.941331147279161,
+        "segmental_f1_at_10": 0.9743589743589743,
+        "segmental_f1_at_25": 0.9743589743589743,
+        "segmental_f1_at_50": 0.9743589743589743,
+        "boundary_mae_frames": 0.9333333333333333
+      },
+      "genc": {
+        "frame_macro_f1": 0.9459312440473217,
+        "segmental_f1_at_10": 0.9696969696969697,
+        "segmental_f1_at_25": 0.9030303030303031,
+        "segmental_f1_at_50": 0.8424242424242424,
+        "boundary_mae_frames": 0.4444444444444445
+      },
+      "he": {
+        "frame_macro_f1": 0.9240370573998763,
+        "segmental_f1_at_10": 1.0,
+        "segmental_f1_at_25": 1.0,
+        "segmental_f1_at_50": 0.9047619047619048,
+        "boundary_mae_frames": 1.0555555555555556
+      },
+      "lo": {
+        "frame_macro_f1": 0.9241388117555835,
+        "segmental_f1_at_10": 0.9523809523809523,
+        "segmental_f1_at_25": 0.8857142857142858,
+        "segmental_f1_at_50": 0.819047619047619,
+        "boundary_mae_frames": 0.7777777777777778
+      },
+      "mego": {
+        "frame_macro_f1": 0.9096940659164385,
+        "segmental_f1_at_10": 0.9696969696969697,
+        "segmental_f1_at_25": 0.9696969696969697,
+        "segmental_f1_at_50": 0.7662337662337662,
+        "boundary_mae_frames": 1.1666666666666667
+      },
+      "moeini": {
+        "frame_macro_f1": 0.8852933927368873,
+        "segmental_f1_at_10": 0.5809195402298851,
+        "segmental_f1_at_25": 0.5809195402298851,
+        "segmental_f1_at_50": 0.5209195402298851,
+        "boundary_mae_frames": 2.2222222222222223
+      },
+      "montero": {
+        "frame_macro_f1": 0.9160750790179397,
+        "segmental_f1_at_10": 1.0,
+        "segmental_f1_at_25": 0.9333333333333333,
+        "segmental_f1_at_50": 0.8380952380952381,
+        "boundary_mae_frames": 0.8333333333333334
+      },
+      "nasar": {
+        "frame_macro_f1": 0.8073984775773805,
+        "segmental_f1_at_10": 0.9393939393939393,
+        "segmental_f1_at_25": 0.8181818181818181,
+        "segmental_f1_at_50": 0.7099567099567099,
+        "boundary_mae_frames": 0.9166666666666666
+      },
+      "ozbek": {
+        "frame_macro_f1": 0.8410482707744412,
+        "segmental_f1_at_10": 1.0,
+        "segmental_f1_at_25": 0.9523809523809523,
+        "segmental_f1_at_50": 0.7142857142857143,
+        "boundary_mae_frames": 1.3888888888888888
+      },
+      "rustamov": {
+        "frame_macro_f1": 0.9240079248817384,
+        "segmental_f1_at_10": 0.9696969696969697,
+        "segmental_f1_at_25": 0.7532467532467532,
+        "segmental_f1_at_50": 0.7532467532467532,
+        "boundary_mae_frames": 0.75
+      }
+    }
+  }
+}
