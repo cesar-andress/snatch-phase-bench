@@ -40,7 +40,7 @@ Extracted from the literature foundation, gap analysis, benchmark plan, and curr
 |----|------------|-----------|----------|
 | EXP-01 | Validate `best_model.pt` checkpoint vs thesis JSON | `tab:baseline_reproduction` | **Done** (VERIFIED 2026-07-13) |
 | EXP-02 | Implement B0 rule-based knee-angle baseline | `tab:benchmark_comparison` | **P0** |
-| EXP-03 | Implement MS-TCN, MS-TCN++, ASFormer (**B2-core**) | `tab:benchmark_comparison` | **P0** |
+| EXP-03 | Implement MS-TCN, MS-TCN++, ASFormer (**B2-core**) | `tab:benchmark_comparison` | **Partial** — MS-TCN B2 + ASFormer B3 done (2026-07-22); MS-TCN++ pending |
 | EXP-04 | Boundary MAE (ms) per phase transition | `tab:segment_metrics`, new boundary table | **P0** |
 | EXP-05 | Segmental F1@10/25/50 + edit score for all models | `tab:segment_metrics` | P0 |
 | EXP-06 | Grouped leave-one-athlete-out or k-fold | Results uncertainty columns | P1 |
