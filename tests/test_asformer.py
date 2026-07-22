@@ -126,7 +126,7 @@ def test_asformer_manifest_tier() -> None:
     registry = load_benchmark_registry()
     spec = registry.get("asformer")
     assert spec.tier_id == "B3"
-    assert spec.status == "implemented"
+    assert spec.status == "verified"
     ms = registry.get("ms_tcn")
     assert ms.tier_id == "B2"
     assert ms.status == "verified"

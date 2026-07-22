@@ -39,7 +39,7 @@ def test_asformer_registry_and_config() -> None:
     registry = load_benchmark_registry()
     asformer = registry.get("asformer")
     assert asformer.tier_id == "B3"
-    assert asformer.status == "implemented"
+    assert asformer.status == "verified"
     assert asformer.config_path is not None
     config = load_model_experiment_config(asformer.config_path)
     assert config["model"]["name"] == "asformer"

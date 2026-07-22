@@ -1,0 +1,301 @@
+{
+  "aggregate": {
+    "boundary_f1": {
+      "max": 0.9592352092352092,
+      "mean": 0.9529084414031204,
+      "median": 0.9568230277185501,
+      "min": 0.9426670872556019,
+      "n": 3,
+      "std": 0.007308381307261729
+    },
+    "boundary_mae_frames": {
+      "max": 1.0545454545454545,
+      "mean": 0.9772727272727273,
+      "median": 0.9611111111111111,
+      "min": 0.9161616161616162,
+      "n": 3,
+      "std": 0.05763922309896058
+    },
+    "edit_score": {
+      "max": 0.9172527808891445,
+      "mean": 0.8545459871217447,
+      "median": 0.8441461736916283,
+      "min": 0.8022390067844614,
+      "n": 3,
+      "std": 0.04752654800555647
+    },
+    "frame_macro_f1": {
+      "max": 0.9229755035139549,
+      "mean": 0.9019352289035806,
+      "median": 0.9016454802064765,
+      "min": 0.8811847029903105,
+      "n": 3,
+      "std": 0.017062253032788757
+    },
+    "segmental_f1_at_50": {
+      "max": 0.7909521199803331,
+      "mean": 0.789654526179852,
+      "median": 0.7898357888788511,
+      "min": 0.7881756696803719,
+      "n": 3,
+      "std": 0.001140704808901055
+    }
+  },
+  "metric_series": {
+    "boundary_f1": [
+      0.9426670872556019,
+      0.9592352092352092,
+      0.9568230277185501
+    ],
+    "boundary_mae_frames": [
+      0.9611111111111111,
+      0.9161616161616162,
+      1.0545454545454545
+    ],
+    "edit_score": [
+      0.8441461736916283,
+      0.8022390067844614,
+      0.9172527808891445
+    ],
+    "frame_macro_f1": [
+      0.9229755035139549,
+      0.8811847029903105,
+      0.9016454802064765
+    ],
+    "segmental_f1_at_50": [
+      0.7881756696803719,
+      0.7898357888788511,
+      0.7909521199803331
+    ]
+  },
+  "per_seed": {
+    "123": {
+      "early_stopping": {
+        "best_epoch": 35,
+        "best_metric": 0.7458037387449151,
+        "monitor": "val_segmental_f1_at_50",
+        "reason": "patience_exhausted",
+        "total_epochs": 50
+      },
+      "eval_path": "outputs/benchmark/asformer/seed123/eval_test.json",
+      "metrics": {
+        "boundary_f1": 0.9592352092352092,
+        "boundary_mae_frames": 0.9161616161616162,
+        "edit_score": 0.8022390067844614,
+        "frame_macro_f1": 0.8811847029903105,
+        "segmental_f1_at_10": 0.88241189963678,
+        "segmental_f1_at_25": 0.8421915139618489,
+        "segmental_f1_at_50": 0.7898357888788511
+      },
+      "train_summary": {
+        "batch_size": 1,
+        "device": "cuda",
+        "early_stopping": {
+          "best_epoch": 35,
+          "best_metric": 0.7458037387449151,
+          "monitor": "val_segmental_f1_at_50",
+          "reason": "patience_exhausted",
+          "total_epochs": 50
+        },
+        "evaluator_version": "eval-v1.1.0",
+        "gpu_runtime": {
+          "batch_size": 1,
+          "cuda_warnings": [],
+          "deterministic_cuda": {
+            "cudnn_benchmark": false,
+            "cudnn_deterministic": true,
+            "deterministic_algorithms_enabled": true
+          },
+          "device": "cuda",
+          "peak_allocated_bytes": 104779264,
+          "peak_allocated_mib": 99.93,
+          "peak_reserved_bytes": 123731968,
+          "peak_reserved_mib": 118.0,
+          "use_amp": false
+        },
+        "model": "asformer",
+        "ontology_version": "configs/ontology/seven_phase_v1.yaml",
+        "output_dir": "outputs/benchmark/asformer/seed123",
+        "parameter_count": 1004768,
+        "reference_hardware": {
+          "batch_size_policy": "Fixed before all seeds. On OOM: stop, report, choose one new batch size, restart all three seeds. Do not mix results across batch sizes.\n",
+          "device": "cuda",
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "precision": "fp32",
+          "use_amp": false
+        },
+        "runtime_seconds": 943.342404174,
+        "seed": 123,
+        "train_stats": {
+          "athletes": 49,
+          "feature_dim": 99,
+          "frames": 24200,
+          "videos": 145
+        },
+        "train_videos": 145,
+        "use_amp": false,
+        "val_stats": {
+          "athletes": 10,
+          "feature_dim": 99,
+          "frames": 5550,
+          "videos": 30
+        },
+        "val_videos": 30
+      }
+    },
+    "42": {
+      "early_stopping": {
+        "best_epoch": 9,
+        "best_metric": 0.7426986901986902,
+        "monitor": "val_segmental_f1_at_50",
+        "reason": "patience_exhausted",
+        "total_epochs": 24
+      },
+      "eval_path": "outputs/benchmark/asformer/seed42/eval_test.json",
+      "metrics": {
+        "boundary_f1": 0.9426670872556019,
+        "boundary_mae_frames": 0.9611111111111111,
+        "edit_score": 0.8441461736916283,
+        "frame_macro_f1": 0.9229755035139549,
+        "segmental_f1_at_10": 0.8957459120468525,
+        "segmental_f1_at_25": 0.8625306424679465,
+        "segmental_f1_at_50": 0.7881756696803719
+      },
+      "train_summary": {
+        "batch_size": 1,
+        "device": "cuda",
+        "early_stopping": {
+          "best_epoch": 9,
+          "best_metric": 0.7426986901986902,
+          "monitor": "val_segmental_f1_at_50",
+          "reason": "patience_exhausted",
+          "total_epochs": 24
+        },
+        "evaluator_version": "eval-v1.1.0",
+        "gpu_runtime": {
+          "batch_size": 1,
+          "cuda_warnings": [],
+          "deterministic_cuda": {
+            "cudnn_benchmark": false,
+            "cudnn_deterministic": true,
+            "deterministic_algorithms_enabled": true
+          },
+          "device": "cuda",
+          "peak_allocated_bytes": 104779264,
+          "peak_allocated_mib": 99.93,
+          "peak_reserved_bytes": 123731968,
+          "peak_reserved_mib": 118.0,
+          "use_amp": false
+        },
+        "model": "asformer",
+        "ontology_version": "configs/ontology/seven_phase_v1.yaml",
+        "output_dir": "outputs/benchmark/asformer/seed42",
+        "parameter_count": 1004768,
+        "reference_hardware": {
+          "batch_size_policy": "Fixed before all seeds. On OOM: stop, report, choose one new batch size, restart all three seeds. Do not mix results across batch sizes.\n",
+          "device": "cuda",
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "precision": "fp32",
+          "use_amp": false
+        },
+        "runtime_seconds": 503.7383955529949,
+        "seed": 42,
+        "train_stats": {
+          "athletes": 49,
+          "feature_dim": 99,
+          "frames": 24200,
+          "videos": 145
+        },
+        "train_videos": 145,
+        "use_amp": false,
+        "val_stats": {
+          "athletes": 10,
+          "feature_dim": 99,
+          "frames": 5550,
+          "videos": 30
+        },
+        "val_videos": 30
+      }
+    },
+    "456": {
+      "early_stopping": {
+        "best_epoch": 19,
+        "best_metric": 0.7432367632367632,
+        "monitor": "val_segmental_f1_at_50",
+        "reason": "patience_exhausted",
+        "total_epochs": 34
+      },
+      "eval_path": "outputs/benchmark/asformer/seed456/eval_test.json",
+      "metrics": {
+        "boundary_f1": 0.9568230277185501,
+        "boundary_mae_frames": 1.0545454545454545,
+        "edit_score": 0.9172527808891445,
+        "frame_macro_f1": 0.9016454802064765,
+        "segmental_f1_at_10": 0.9414676650413327,
+        "segmental_f1_at_25": 0.87960225772138,
+        "segmental_f1_at_50": 0.7909521199803331
+      },
+      "train_summary": {
+        "batch_size": 1,
+        "device": "cuda",
+        "early_stopping": {
+          "best_epoch": 19,
+          "best_metric": 0.7432367632367632,
+          "monitor": "val_segmental_f1_at_50",
+          "reason": "patience_exhausted",
+          "total_epochs": 34
+        },
+        "evaluator_version": "eval-v1.1.0",
+        "gpu_runtime": {
+          "batch_size": 1,
+          "cuda_warnings": [],
+          "deterministic_cuda": {
+            "cudnn_benchmark": false,
+            "cudnn_deterministic": true,
+            "deterministic_algorithms_enabled": true
+          },
+          "device": "cuda",
+          "peak_allocated_bytes": 104779264,
+          "peak_allocated_mib": 99.93,
+          "peak_reserved_bytes": 123731968,
+          "peak_reserved_mib": 118.0,
+          "use_amp": false
+        },
+        "model": "asformer",
+        "ontology_version": "configs/ontology/seven_phase_v1.yaml",
+        "output_dir": "outputs/benchmark/asformer/seed456",
+        "parameter_count": 1004768,
+        "reference_hardware": {
+          "batch_size_policy": "Fixed before all seeds. On OOM: stop, report, choose one new batch size, restart all three seeds. Do not mix results across batch sizes.\n",
+          "device": "cuda",
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "precision": "fp32",
+          "use_amp": false
+        },
+        "runtime_seconds": 625.9439336029973,
+        "seed": 456,
+        "train_stats": {
+          "athletes": 49,
+          "feature_dim": 99,
+          "frames": 24200,
+          "videos": 145
+        },
+        "train_videos": 145,
+        "use_amp": false,
+        "val_stats": {
+          "athletes": 10,
+          "feature_dim": 99,
+          "frames": 5550,
+          "videos": 30
+        },
+        "val_videos": 30
+      }
+    }
+  },
+  "seeds": [
+    42,
+    123,
+    456
+  ],
+  "split": "test"
+}

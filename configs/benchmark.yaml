@@ -97,12 +97,14 @@ learned_models:
     ontology: seven_phase_v1
     input_layout: frame_sequence
   asformer:
-    status: implemented
+    status: verified
     tier: B3
     config: configs/benchmark/asformer.yaml
     registry_name: asformer
     ontology: seven_phase_v1
     input_layout: frame_sequence
+    frozen: true
+    note: Canonical B3 transformer baseline; do not retrain or retune.
 
 tiers:
   - id: B0

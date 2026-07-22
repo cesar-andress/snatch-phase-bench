@@ -1,0 +1,344 @@
+{
+  "benchmark_manifest": {
+    "baselines": {
+      "B0": {
+        "config": null,
+        "implementation": "none",
+        "ontology": "five_phase_knee_angle_v1",
+        "policy": "docs/benchmark/B0_EXPLORATORY_REFERENCE.md",
+        "role": "exploratory_only",
+        "status": "frozen_exploratory_reference"
+      },
+      "B1": {
+        "checkpoint_sha256_prefix": "ea5ff9ca",
+        "config": "configs/baseline_lstm.yaml",
+        "ontology": "seven_phase_v1",
+        "status": "verified",
+        "version": "B1-repro-v1"
+      }
+    },
+    "benchmark": {
+      "id": "snatchphasebench-v1",
+      "protocol_version": "protocol-v1.0-draft",
+      "stats_version": "stats-v1.0-draft",
+      "version": "1.0.0"
+    },
+    "dataset": {
+      "athletes": 70,
+      "frame_label_rows": 35825,
+      "frame_labels_file": "master_frame_labels.csv",
+      "tensor_checksums": {
+        "X_sha256": "8497a69a2c6d80f24c0fc6242500aa931ab2c00e8172b534a98f86d92ed698b4",
+        "y_sha256": "0175c1c314fd22fef37d4b16a96b038d4643765c323c8b13599ff9a9b17c3546"
+      },
+      "version": "ds-v1.0",
+      "videos": 208,
+      "windows": 21249
+    },
+    "evaluation": {
+      "aggregation_policy": {
+        "boundary_counts": "micro_over_dataset",
+        "boundary_mae_frames": "micro_and_macro_over_transitions",
+        "segment_f1": "macro_over_videos"
+      },
+      "boundary_tolerances_frames": [
+        1,
+        2,
+        3
+      ],
+      "fps_policy": "explicit_required_for_ms",
+      "ignored_label_names": [
+        "unlabeled"
+      ],
+      "primary_metrics": [
+        "boundary_mae_frames",
+        "segmental_f1_at_50",
+        "edit_score"
+      ],
+      "secondary_metrics": [
+        "frame_accuracy",
+        "segmental_f1_at_10",
+        "segmental_f1_at_25",
+        "window_accuracy",
+        "boundary_mae_ms"
+      ],
+      "segment_interval_convention": "half_open",
+      "segment_iou_thresholds": [
+        0.1,
+        0.25,
+        0.5
+      ],
+      "version": "eval-v1.1.0"
+    },
+    "learned_models": {
+      "asformer": {
+        "config": "configs/benchmark/asformer.yaml",
+        "input_layout": "frame_sequence",
+        "ontology": "seven_phase_v1",
+        "registry_name": "asformer",
+        "status": "implemented",
+        "tier": "B3"
+      },
+      "ms_tcn": {
+        "config": "configs/benchmark/ms_tcn.yaml",
+        "frozen": true,
+        "input_layout": "frame_sequence",
+        "note": "Canonical B2 baseline; do not retrain or retune.",
+        "ontology": "seven_phase_v1",
+        "registry_name": "ms_tcn",
+        "status": "verified",
+        "tier": "B2"
+      },
+      "ms_tcn_pp": {
+        "config": "configs/benchmark/ms_tcn_pp.yaml",
+        "input_layout": "frame_sequence",
+        "ontology": "seven_phase_v1",
+        "registry_name": "ms_tcn_pp",
+        "status": "planned",
+        "tier": "B2"
+      }
+    },
+    "ontology": {
+      "b0": "configs/ontology/five_phase_knee_angle_v1.yaml",
+      "canonical": "configs/ontology/seven_phase_v1.yaml",
+      "mapping_b0": "configs/ontology/seven_to_five_knee_angle_v1.yaml"
+    },
+    "preprocessing": {
+      "features_per_frame": 99,
+      "pose_extractor": "mediapipe",
+      "pose_model": "full",
+      "pose_version": "0.10.30",
+      "stride": 1,
+      "version": "preprocess-v1.0",
+      "window_size": 31
+    },
+    "seeds": [
+      42,
+      123,
+      456
+    ],
+    "split": {
+      "file": "athlete_split.json",
+      "test_athletes": 11,
+      "train_athletes": 49,
+      "val_athletes": 10,
+      "version": "athlete_split_v1"
+    },
+    "tiers": [
+      {
+        "description": "Knee-angle event vocabulary (frozen; not implemented)",
+        "id": "B0",
+        "role": "exploratory_reference"
+      },
+      {
+        "description": "Frozen thesis LSTM (verified)",
+        "id": "B1",
+        "role": "reproduction_reference"
+      },
+      {
+        "description": "Frozen MS-TCN (canonical learned TCN baseline)",
+        "id": "B2",
+        "role": "primary_comparator"
+      },
+      {
+        "description": "ASFormer (canonical transformer baseline)",
+        "id": "B3",
+        "role": "transformer_baseline"
+      },
+      {
+        "description": "Optional foundation-model encoders / future models",
+        "id": "B4",
+        "role": "optional_extension"
+      }
+    ]
+  },
+  "benchmark_manifest_path": "/home/cesar/papers/snatch-phase-bench/snatch-phase-bench/configs/benchmark.yaml",
+  "early_stopping_monitor": "val_segmental_f1_at_50",
+  "environment": {
+    "captured_at": "2026-07-22T14:09:54+00:00",
+    "cuda_available": true,
+    "cuda_determinism": {
+      "cudnn_benchmark": false,
+      "cudnn_deterministic": false,
+      "deterministic_algorithms_enabled": false
+    },
+    "cuda_device_name": "NVIDIA GeForce RTX 4090",
+    "cuda_device_vram_bytes": 25243287552,
+    "cudnn_version": 91002,
+    "driver_version": "595.71.05",
+    "gpu_name": "NVIDIA GeForce RTX 4090",
+    "machine": "x86_64",
+    "platform": "Linux-6.8.0-124-generic-x86_64-with-glibc2.35",
+    "processor": "x86_64",
+    "python_version": "3.12.13 (main, Mar  4 2026, 09:23:07) [GCC 11.4.0]",
+    "pytorch_cuda_version": "12.8",
+    "sklearn_version": "1.8.0",
+    "system_ram_kib": 131637104,
+    "torch_version": "2.10.0+cu128",
+    "vram_total_mib": "24564"
+  },
+  "experiment_config": {
+    "dataset": {
+      "adapter": "frame_sequence",
+      "features_per_frame": 99,
+      "keypoints_dir": "keypoints",
+      "labels_csv": "master_frame_labels.csv",
+      "num_landmarks": 33,
+      "use_visibility": false,
+      "use_z": true
+    },
+    "evaluation": {
+      "levels": [
+        "frame",
+        "segment",
+        "boundary"
+      ],
+      "primary_metrics": [
+        "boundary_mae_frames",
+        "segmental_f1_at_50",
+        "edit_score"
+      ],
+      "use_b0_mapping": false
+    },
+    "expected": {
+      "implementation_status": "implemented"
+    },
+    "experiment": {
+      "name": "asformer_benchmark",
+      "registry_name": "asformer",
+      "seeds": [
+        42,
+        123,
+        456
+      ],
+      "status": "implemented",
+      "tier": "B3"
+    },
+    "loss": {
+      "tmse_truncate_tau": 4,
+      "tmse_weight": 0.15
+    },
+    "model": {
+      "att_type": "sliding_att",
+      "channel_masking_rate": 0.3,
+      "input_layout": "frame_sequence",
+      "name": "asformer",
+      "num_decoders": 3,
+      "num_f_maps": 64,
+      "num_layers": 10,
+      "output_layout": "frame_sequence",
+      "r1": 2,
+      "r2": 2
+    },
+    "ontology": {
+      "id": "seven_phase_v1",
+      "ignore_label_id": 0,
+      "num_supervised_classes": 7
+    },
+    "optimizer": {
+      "learning_rate": 0.0005,
+      "name": "adam",
+      "weight_decay": 1e-05
+    },
+    "output": {
+      "checkpoint_dir": "outputs/benchmark/asformer",
+      "predictions_dir": "outputs/benchmark/asformer/predictions",
+      "reports_dir": "outputs/benchmark/asformer/reports",
+      "tensorboard_dir": "outputs/benchmark/asformer/tensorboard"
+    },
+    "paths": {
+      "use_reproduction_paths": true
+    },
+    "reference_hardware": {
+      "batch_size_policy": "Fixed before all seeds. On OOM: stop, report, choose one new batch size, restart all three seeds. Do not mix results across batch sizes.\n",
+      "device": "cuda",
+      "gpu": "NVIDIA GeForce RTX 4090",
+      "precision": "fp32",
+      "use_amp": false
+    },
+    "scheduler": {
+      "name": "none"
+    },
+    "split": {
+      "source": "athlete_split.json",
+      "strategy": "athlete_level"
+    },
+    "training": {
+      "batch_size": 1,
+      "class_weighting": true,
+      "device": "cuda",
+      "early_stopping": {
+        "monitor": "val_segmental_f1_at_50",
+        "patience": 15,
+        "rationale": "Same checkpoint selection as frozen MS-TCN B2 for fair comparison.\n"
+      },
+      "epochs": 50,
+      "standardize": "train_only",
+      "trainer": "asformer_trainer",
+      "use_amp": false
+    }
+  },
+  "experiment_config_path": "/home/cesar/papers/snatch-phase-bench/snatch-phase-bench/configs/benchmark/asformer.yaml",
+  "frozen_at": "2026-07-22T14:09:54+00:00",
+  "git_commit": "14483a53a07979a854082196238279971418aa87",
+  "git_dirty": false,
+  "hardware_validation": {
+    "checks": [
+      {
+        "detail": true,
+        "name": "cuda_available",
+        "passed": true
+      },
+      {
+        "detail": "NVIDIA GeForce RTX 4090",
+        "expected_substring": "NVIDIA GeForce RTX 4090",
+        "name": "gpu_name",
+        "passed": true
+      },
+      {
+        "detail": "595.71.05",
+        "name": "nvidia_smi",
+        "passed": true
+      }
+    ],
+    "environment": {
+      "captured_at": "2026-07-22T14:09:54+00:00",
+      "cuda_available": true,
+      "cuda_determinism": {
+        "cudnn_benchmark": false,
+        "cudnn_deterministic": false,
+        "deterministic_algorithms_enabled": false
+      },
+      "cuda_device_name": "NVIDIA GeForce RTX 4090",
+      "cuda_device_vram_bytes": 25243287552,
+      "cudnn_version": 91002,
+      "driver_version": "595.71.05",
+      "gpu_name": "NVIDIA GeForce RTX 4090",
+      "machine": "x86_64",
+      "platform": "Linux-6.8.0-124-generic-x86_64-with-glibc2.35",
+      "processor": "x86_64",
+      "python_version": "3.12.13 (main, Mar  4 2026, 09:23:07) [GCC 11.4.0]",
+      "pytorch_cuda_version": "12.8",
+      "sklearn_version": "1.8.0",
+      "system_ram_kib": 131637104,
+      "torch_version": "2.10.0+cu128",
+      "vram_total_mib": "24564"
+    },
+    "expected_gpu_substring": "NVIDIA GeForce RTX 4090",
+    "passed": true,
+    "required_device": "cuda"
+  },
+  "milestone": "B3",
+  "reference_hardware": {
+    "batch_size_policy": "Fixed before all seeds. On OOM: stop, report, choose one new batch size, restart all three seeds. Do not mix results across batch sizes.\n",
+    "device": "cuda",
+    "gpu": "NVIDIA GeForce RTX 4090",
+    "precision": "fp32",
+    "use_amp": false
+  },
+  "seeds": [
+    42,
+    123,
+    456
+  ]
+}
