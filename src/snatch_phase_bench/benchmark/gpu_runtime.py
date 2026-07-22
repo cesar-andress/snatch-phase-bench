@@ -10,6 +10,28 @@ from typing import Any
 logger = logging.getLogger(__name__)
 
 
+def resolve_cuda_device_index(device: Any = None) -> int:
+    """Return a valid CUDA device index (default 0) from a ``torch.device`` or int."""
+    if device is None:
+        return 0
+    if isinstance(device, int):
+        return int(device)
+    device_type = getattr(device, "type", None)
+    if device_type != "cuda":
+        return 0
+    index = getattr(device, "index", None)
+    if index is not None:
+        return int(index)
+    try:
+        import torch
+
+        if torch.cuda.is_available():
+            return int(torch.cuda.current_device())
+    except ImportError:
+        pass
+    return 0
+
+
 @dataclass
 class GpuMemoryTracker:
     """Track peak CUDA memory during training or inference."""
@@ -33,20 +55,29 @@ class GpuMemoryTracker:
             return
         import torch
 
-        torch.cuda.reset_peak_memory_stats(self.device_index)
+        # Eval processes may call this before any CUDA tensor exists.
+        if not torch.cuda.is_initialized():
+            torch.cuda.init()
+        index = resolve_cuda_device_index(self.device_index)
+        # Touch the device so memory stats are available.
+        torch.zeros(1, device=f"cuda:{index}")
+        torch.cuda.reset_peak_memory_stats(index)
 
     def update_peak(self) -> None:
         if not self.is_cuda():
             return
         import torch
 
+        if not torch.cuda.is_initialized():
+            return
+        index = resolve_cuda_device_index(self.device_index)
         self.peak_allocated_bytes = max(
             self.peak_allocated_bytes,
-            int(torch.cuda.max_memory_allocated(self.device_index)),
+            int(torch.cuda.max_memory_allocated(index)),
         )
         self.peak_reserved_bytes = max(
             self.peak_reserved_bytes,
-            int(torch.cuda.max_memory_reserved(self.device_index)),
+            int(torch.cuda.max_memory_reserved(index)),
         )
 
     def snapshot(self) -> dict[str, Any]:
@@ -99,10 +130,16 @@ def _recording_showwarning(message, category, filename, lineno, file=None, line=
 
 
 def install_cuda_warning_recorder() -> None:
-    """Install a process-local ``warnings.showwarning`` hook (idempotent)."""
-    global _WARNING_HOOK_INSTALLED
-    if _WARNING_HOOK_INSTALLED:
+    """Install a process-local ``warnings.showwarning`` hook (idempotent).
+
+    Re-chains if another library (e.g. pytest) replaced ``showwarning`` after
+    a previous install.
+    """
+    global _WARNING_HOOK_INSTALLED, _ORIGINAL_SHOWWARNING
+    if warnings.showwarning is _recording_showwarning:
+        _WARNING_HOOK_INSTALLED = True
         return
+    _ORIGINAL_SHOWWARNING = warnings.showwarning
     warnings.showwarning = _recording_showwarning  # type: ignore[assignment]
     _WARNING_HOOK_INSTALLED = True
 

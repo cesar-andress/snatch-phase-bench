@@ -8,7 +8,11 @@ import json
 import time
 from pathlib import Path
 
-from snatch_phase_bench.benchmark.gpu_runtime import GpuMemoryTracker, collect_cuda_warnings
+from snatch_phase_bench.benchmark.gpu_runtime import (
+    GpuMemoryTracker,
+    collect_cuda_warnings,
+    resolve_cuda_device_index,
+)
 from snatch_phase_bench.benchmark.results_export import enrich_eval_result_with_frame_metrics, export_predictions_json
 from snatch_phase_bench.benchmark.registry import load_model_experiment_config
 from snatch_phase_bench.config import load_config, resolve_path
@@ -69,7 +73,7 @@ def main() -> None:
     checkpoint_dir = args.checkpoint.parent
     mean, std = MSTCNTrainer.load_standardization(checkpoint_dir)
 
-    gpu_tracker = GpuMemoryTracker(device_index=device.index or 0 if device.type == "cuda" else 0)
+    gpu_tracker = GpuMemoryTracker(device_index=resolve_cuda_device_index(device))
     if device.type == "cuda":
         gpu_tracker.reset_peak()
 

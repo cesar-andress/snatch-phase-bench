@@ -14,7 +14,12 @@ import torch.nn as nn
 from sklearn.metrics import f1_score
 from torch.utils.data import DataLoader, Dataset
 
-from snatch_phase_bench.benchmark.gpu_runtime import GpuMemoryTracker, collect_cuda_warnings, capture_cuda_determinism_settings
+from snatch_phase_bench.benchmark.gpu_runtime import (
+    GpuMemoryTracker,
+    capture_cuda_determinism_settings,
+    collect_cuda_warnings,
+    resolve_cuda_device_index,
+)
 from snatch_phase_bench.data.frame_sequence import FrameSequenceRecord
 from snatch_phase_bench.evaluation.tas_hooks import evaluate_frame_predictions
 from snatch_phase_bench.models.base import TemporalSegmentationModel
@@ -177,7 +182,7 @@ class MSTCNTrainer(TemporalSegmentationTrainer):
 
         scaler = torch.amp.GradScaler("cuda", enabled=self.use_amp and device.type == "cuda")
         writer = self._get_writer(self.log_dir or output_dir / "tensorboard")
-        gpu_tracker = GpuMemoryTracker(device_index=device.index or 0 if device.type == "cuda" else 0)
+        gpu_tracker = GpuMemoryTracker(device_index=resolve_cuda_device_index(device))
         if device.type == "cuda":
             gpu_tracker.reset_peak()
 
