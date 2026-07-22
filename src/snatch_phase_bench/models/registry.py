@@ -7,6 +7,7 @@ from typing import Callable, TypeVar
 from snatch_phase_bench.models.base import TemporalSegmentationModel
 from snatch_phase_bench.models.lstm_baseline import LSTMBaselineModel
 from snatch_phase_bench.models.ms_tcn.model import MSTCNModel
+from snatch_phase_bench.models.asformer.model import ASFormerModel
 
 T = TypeVar("T", bound=TemporalSegmentationModel)
 
@@ -15,6 +16,7 @@ ModelFactory = Callable[..., TemporalSegmentationModel]
 _REGISTRY: dict[str, ModelFactory] = {
     "lstm_baseline": LSTMBaselineModel,
     "ms_tcn": MSTCNModel,
+    "asformer": ASFormerModel,
 }
 
 

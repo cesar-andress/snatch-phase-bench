@@ -12,7 +12,7 @@ def test_benchmark_registry_includes_b0_and_ms_tcn() -> None:
 
     assert b0.status == "frozen_exploratory_reference"
     assert b0.role == "exploratory_only"
-    assert ms_tcn.status == "implemented"
+    assert ms_tcn.status == "verified"
     assert ms_tcn.registry_name == "ms_tcn"
     assert ms_tcn.input_layout == "frame_sequence"
 
@@ -33,3 +33,14 @@ def test_ms_tcn_config_stub_loads() -> None:
     assert config["model"]["name"] == "ms_tcn"
     assert config["dataset"]["adapter"] == "frame_sequence"
     assert config["expected"]["implementation_status"] == "implemented"
+
+
+def test_asformer_registry_and_config() -> None:
+    registry = load_benchmark_registry()
+    asformer = registry.get("asformer")
+    assert asformer.tier_id == "B3"
+    assert asformer.status == "implemented"
+    assert asformer.config_path is not None
+    config = load_model_experiment_config(asformer.config_path)
+    assert config["model"]["name"] == "asformer"
+    assert config["experiment"]["tier"] == "B3"

@@ -69,7 +69,7 @@ def test_ms_tcn_ontology_settings() -> None:
 def test_ms_tcn_registry_implemented() -> None:
     registry = load_benchmark_registry()
     spec = registry.get("ms_tcn")
-    assert spec.status == "implemented"
+    assert spec.status == "verified"
     assert spec.registry_name == "ms_tcn"
     assert spec.config_path == MS_TCN_CONFIG.resolve()
 

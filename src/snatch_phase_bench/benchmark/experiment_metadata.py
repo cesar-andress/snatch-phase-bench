@@ -185,6 +185,7 @@ def build_protocol_freeze(
     early_stopping_monitor: str,
     repo_root: Path | None = None,
     reference_hardware: dict[str, Any] | None = None,
+    milestone: str = "M3",
 ) -> dict[str, Any]:
     repo_root = repo_root or Path.cwd()
     hardware_report = validate_reference_hardware(
@@ -193,7 +194,7 @@ def build_protocol_freeze(
     )
     return {
         "frozen_at": datetime.now(tz=UTC).replace(microsecond=0).isoformat(),
-        "milestone": "M3",
+        "milestone": milestone,
         "git_commit": git_commit_hash(repo_root),
         "git_dirty": git_dirty(repo_root),
         "seeds": seeds,

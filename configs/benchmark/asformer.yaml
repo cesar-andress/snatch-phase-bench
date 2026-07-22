@@ -1,0 +1,97 @@
+# ASFormer benchmark experiment config (Yi, Wen, Jiang, BMVC 2021).
+# Design reference: docs/benchmark/ASFORMER_DESIGN.md
+
+experiment:
+  name: asformer_benchmark
+  tier: B3
+  registry_name: asformer
+  status: implemented
+  seeds: [42, 123, 456]
+
+reference_hardware:
+  gpu: NVIDIA GeForce RTX 4090
+  device: cuda
+  precision: fp32
+  use_amp: false
+  batch_size_policy: >
+    Fixed before all seeds. On OOM: stop, report, choose one new batch size,
+    restart all three seeds. Do not mix results across batch sizes.
+
+paths:
+  use_reproduction_paths: true
+
+dataset:
+  adapter: frame_sequence
+  labels_csv: master_frame_labels.csv
+  keypoints_dir: keypoints
+  use_z: true
+  use_visibility: false
+  features_per_frame: 99
+  num_landmarks: 33
+
+split:
+  strategy: athlete_level
+  source: athlete_split.json
+
+ontology:
+  id: seven_phase_v1
+  num_supervised_classes: 7
+  ignore_label_id: 0
+
+model:
+  name: asformer
+  input_layout: frame_sequence
+  output_layout: frame_sequence
+  num_decoders: 3          # paper Sec. 3.3 / author release
+  num_layers: 10           # author release (paper text says 9; see ASFORMER_DESIGN.md D2)
+  num_f_maps: 64           # paper Sec. 3.3
+  r1: 2                    # author release attention channel reduction
+  r2: 2
+  channel_masking_rate: 0.3  # paper Sec. 3.3 / author release
+  att_type: sliding_att
+
+loss:
+  tmse_weight: 0.15        # author release (paper text says 0.25; see ASFORMER_DESIGN.md D3)
+  tmse_truncate_tau: 4
+
+optimizer:
+  name: adam
+  learning_rate: 0.0005    # paper Sec. 3.3 / author release
+  weight_decay: 0.00001    # author release Trainer (1e-5)
+
+scheduler:
+  name: none               # B2 protocol alignment (author release uses ReduceLROnPlateau; D6)
+
+training:
+  batch_size: 1
+  epochs: 50               # B2 protocol (paper/release use 120; D4)
+  device: cuda
+  class_weighting: true
+  standardize: train_only
+  use_amp: false
+  early_stopping:
+    monitor: val_segmental_f1_at_50
+    patience: 15
+    rationale: >
+      Same checkpoint selection as frozen MS-TCN B2 for fair comparison.
+  trainer: asformer_trainer
+
+evaluation:
+  levels:
+    - frame
+    - segment
+    - boundary
+  primary_metrics:
+    - boundary_mae_frames
+    - segmental_f1_at_50
+    - edit_score
+  use_b0_mapping: false
+
+output:
+  checkpoint_dir: outputs/benchmark/asformer
+  predictions_dir: outputs/benchmark/asformer/predictions
+  reports_dir: outputs/benchmark/asformer/reports
+  tensorboard_dir: outputs/benchmark/asformer/tensorboard
+
+expected:
+  implementation_status: implemented

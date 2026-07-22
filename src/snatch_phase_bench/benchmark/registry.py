@@ -114,13 +114,13 @@ def load_benchmark_registry(manifest_path: Path | None = None) -> BenchmarkRegis
             specs.append(
                 BenchmarkModelSpec(
                     model_id=str(model_id),
-                    tier_id="B2",
+                    tier_id=str(entry.get("tier", "B2")),
                     status=str(entry.get("status", "planned")),  # type: ignore[arg-type]
                     config_path=_resolve_config_path(entry.get("config")),
                     registry_name=str(entry.get("registry_name")) if entry.get("registry_name") else None,
                     ontology=str(entry.get("ontology")) if entry.get("ontology") else None,
                     input_layout=str(entry.get("input_layout")) if entry.get("input_layout") else None,
-                    role=tier_roles.get("B2"),
+                    role=tier_roles.get(str(entry.get("tier", "B2"))),
                 )
             )
 

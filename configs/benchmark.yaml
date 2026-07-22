@@ -81,19 +81,24 @@ seeds: [42, 123, 456]
 
 learned_models:
   ms_tcn:
-    status: implemented
+    status: verified
+    tier: B2
     config: configs/benchmark/ms_tcn.yaml
     registry_name: ms_tcn
     ontology: seven_phase_v1
     input_layout: frame_sequence
+    frozen: true
+    note: Canonical B2 baseline; do not retrain or retune.
   ms_tcn_pp:
     status: planned
+    tier: B2
     config: configs/benchmark/ms_tcn_pp.yaml
     registry_name: ms_tcn_pp
     ontology: seven_phase_v1
     input_layout: frame_sequence
   asformer:
-    status: planned
+    status: implemented
+    tier: B3
     config: configs/benchmark/asformer.yaml
     registry_name: asformer
     ontology: seven_phase_v1
@@ -108,7 +113,10 @@ tiers:
     description: Frozen thesis LSTM (verified)
   - id: B2
     role: primary_comparator
-    description: MS-TCN, MS-TCN++, ASFormer (learned TAS)
+    description: Frozen MS-TCN (canonical learned TCN baseline)
   - id: B3
+    role: transformer_baseline
+    description: ASFormer (canonical transformer baseline)
+  - id: B4
     role: optional_extension
-    description: Optional foundation-model encoders
+    description: Optional foundation-model encoders / future models

@@ -99,6 +99,9 @@ def _macro_f1_supervised(y_true: np.ndarray, y_pred: np.ndarray, ignore_label_id
 class MSTCNTrainer(TemporalSegmentationTrainer):
     """Paper-faithful MS-TCN trainer with benchmark hooks."""
 
+    checkpoint_version: str = CHECKPOINT_VERSION
+    required_model_type: type = MSTCNModel
+
     def __init__(
         self,
         *,
@@ -138,8 +141,8 @@ class MSTCNTrainer(TemporalSegmentationTrainer):
         config: TrainerConfig,
         context: TrainingRunContext,
     ) -> TemporalSegmentationModel:
-        if not isinstance(model, MSTCNModel):
-            raise TypeError("MSTCNTrainer requires MSTCNModel.")
+        if not isinstance(model, self.required_model_type):
+            raise TypeError(f"{type(self).__name__} requires {self.required_model_type.__name__}.")
 
         set_seed(context.seed)
         device = resolve_device(config.device)
@@ -292,7 +295,7 @@ class MSTCNTrainer(TemporalSegmentationTrainer):
 
             torch.save(
                 {
-                    "checkpoint_version": CHECKPOINT_VERSION,
+                    "checkpoint_version": self.checkpoint_version,
                     "epoch": epoch,
                     "model_state_dict": model.state_dict(),
                     "optimizer_state_dict": optimizer.state_dict(),
@@ -474,8 +477,8 @@ class MSTCNTrainer(TemporalSegmentationTrainer):
         mean: np.ndarray | None = None,
         std: np.ndarray | None = None,
     ) -> dict[str, np.ndarray]:
-        if not isinstance(model, MSTCNModel):
-            raise TypeError("MSTCNTrainer requires MSTCNModel.")
+        if not isinstance(model, self.required_model_type):
+            raise TypeError(f"{type(self).__name__} requires {self.required_model_type.__name__}.")
         model = model.to(device)
         model.eval()
 
@@ -502,6 +505,7 @@ class MSTCNTrainer(TemporalSegmentationTrainer):
         std: np.ndarray,
     ) -> np.ndarray:
         """Predict a single video from ``(T, D)`` features."""
+        model = model.to(device)
         standardized = ((features - mean) / std).astype(np.float32)
         tensor = torch.from_numpy(standardized).unsqueeze(0).to(device)
         model.eval()
@@ -519,7 +523,7 @@ class MSTCNTrainer(TemporalSegmentationTrainer):
     ) -> None:
         path.parent.mkdir(parents=True, exist_ok=True)
         payload: dict[str, Any] = {
-            "checkpoint_version": CHECKPOINT_VERSION,
+            "checkpoint_version": self.checkpoint_version,
             "model_name": model.name,
             "model_state_dict": model.state_dict(),
             "context": asdict(context),
