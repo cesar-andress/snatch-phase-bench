@@ -28,6 +28,7 @@ class GpuMemoryTracker:
             return False
 
     def reset_peak(self) -> None:
+        install_cuda_warning_recorder()
         if not self.is_cuda():
             return
         import torch
@@ -77,12 +78,40 @@ def capture_cuda_determinism_settings() -> dict[str, Any]:
     }
 
 
+_RECORDED_CUDA_WARNINGS: list[str] = []
+_WARNING_HOOK_INSTALLED = False
+_ORIGINAL_SHOWWARNING = warnings.showwarning
+
+
+def _is_cuda_related(text: str, category_name: str) -> bool:
+    haystack = f"{category_name} {text}".lower()
+    return any(token in haystack for token in ("cuda", "cudnn", "deterministic"))
+
+
+def _recording_showwarning(message, category, filename, lineno, file=None, line=None):
+    text = str(message)
+    category_name = getattr(category, "__name__", str(category))
+    if _is_cuda_related(text, category_name):
+        entry = f"{category_name}: {text}"
+        if entry not in _RECORDED_CUDA_WARNINGS:
+            _RECORDED_CUDA_WARNINGS.append(entry)
+    return _ORIGINAL_SHOWWARNING(message, category, filename, lineno, file=file, line=line)
+
+
+def install_cuda_warning_recorder() -> None:
+    """Install a process-local ``warnings.showwarning`` hook (idempotent)."""
+    global _WARNING_HOOK_INSTALLED
+    if _WARNING_HOOK_INSTALLED:
+        return
+    warnings.showwarning = _recording_showwarning  # type: ignore[assignment]
+    _WARNING_HOOK_INSTALLED = True
+
+
 def collect_cuda_warnings() -> list[str]:
-    """Return CUDA-related warnings emitted so far in this process."""
-    collected: list[str] = []
-    for message in warnings.getwarnings():
-        text = str(message.message)
-        category = getattr(message.category, "__name__", str(message.category))
-        if "cuda" in text.lower() or "cudnn" in text.lower() or "deterministic" in text.lower():
-            collected.append(f"{category}: {text}")
-    return collected
+    """Return CUDA-related warnings recorded by the process warning hook.
+
+    Python's ``warnings`` module has no ``getwarnings()`` API; we record via
+    ``install_cuda_warning_recorder`` (also called lazily here).
+    """
+    install_cuda_warning_recorder()
+    return list(_RECORDED_CUDA_WARNINGS)
