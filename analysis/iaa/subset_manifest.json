@@ -1,0 +1,227 @@
+{
+  "study_id": "snatchphasebench_iaa_v1",
+  "status": "subset_frozen_awaiting_annotator2",
+  "created": "2026-07-22",
+  "n_videos": 20,
+  "experimental_unit_note": "Agreement is measured on temporal boundaries within videos; the subset is stratified for diversity of athletes, weight classes, outcomes, and difficulty.",
+  "fps_hz": 25.0,
+  "frame_ms": 40.0,
+  "annotator1_source": {
+    "role": "primary_expert_labels",
+    "path_hint": "~/papers/Paper_TFM-main/data/annotations/master_segment_labels.csv",
+    "format": "segment_csv_inclusive_end"
+  },
+  "annotator2_expected_dir": "analysis/iaa/annotator2/segments",
+  "selection_criteria": [
+    "different athletes (20 unique)",
+    "different weight classes / competition sessions (clip-id buckets as session proxy)",
+    "mix of successful (ok) and unsuccessful (fail) attempts",
+    "mix of easy (complete seven-phase, longer clear phases, 1080p) and difficult (truncated fails, short transition, 720p, atypical timing)",
+    "coverage of train / val / test athlete splits"
+  ],
+  "videos": [
+    {
+      "video_relpath": "campbell/snatch_-+86kg_campbell_emily_jade_i1_ok_000168.mp4",
+      "athlete": "campbell",
+      "split": "val",
+      "weight_class": "-+86kg",
+      "outcome": "ok",
+      "difficulty": "easy",
+      "why_selected": "Long successful women's superheavy attempt (11 s, 1080p) with a long catch; easy visual exemplar and distinct +86 kg session."
+    },
+    {
+      "video_relpath": "ficco/snatch_-88kg_ficco_cristiano_giuseppe_i1_ok_000021.mp4",
+      "athlete": "ficco",
+      "split": "train",
+      "weight_class": "-88kg",
+      "outcome": "ok",
+      "difficulty": "easy",
+      "why_selected": "Clean men's -88 kg success with complete phases and generous catch/recovery; early clip-id session proxy."
+    },
+    {
+      "video_relpath": "cambei/snatch_-53kg_cambei_mihaela_valentina_i1_ok_000118.mp4",
+      "athlete": "cambei",
+      "split": "train",
+      "weight_class": "-53kg",
+      "outcome": "ok",
+      "difficulty": "easy",
+      "why_selected": "Women's -53 kg successful lift; mid clip-id bucket; complete seven-phase structure."
+    },
+    {
+      "video_relpath": "koanda/snatch_-86kg_koanda_solfrid_eila_amena_i1_ok_000200.mp4",
+      "athlete": "koanda",
+      "split": "train",
+      "weight_class": "-86kg",
+      "outcome": "ok",
+      "difficulty": "easy",
+      "why_selected": "Women's -86 kg success from a late clip-id session; diversifies competition-session proxy vs early IDs."
+    },
+    {
+      "video_relpath": "montero/snatch_-48kg_montero_ramos_ludia_m_i2_ok_000149.mp4",
+      "athlete": "montero",
+      "split": "test",
+      "weight_class": "-48kg",
+      "outcome": "ok",
+      "difficulty": "easy",
+      "why_selected": "Lightest women's class in the subset; held-out test athlete; clear complete lift."
+    },
+    {
+      "video_relpath": "he/snatch_-71kg_he_yueji_i2_ok_000077.mp4",
+      "athlete": "he",
+      "split": "test",
+      "weight_class": "-71kg",
+      "outcome": "ok",
+      "difficulty": "easy",
+      "why_selected": "Women's -71 kg successful test-split attempt with complete phases."
+    },
+    {
+      "video_relpath": "sahakyan/snatch_-71kg_sahakyan_gor_i3_ok_000077.mp4",
+      "athlete": "sahakyan",
+      "split": "val",
+      "weight_class": "-71kg",
+      "outcome": "ok",
+      "difficulty": "easy",
+      "why_selected": "Men's -71 kg long success (11 s); pairs with women's -71 kg (he) for class-matched sex diversity."
+    },
+    {
+      "video_relpath": "mosquera/snatch_-65kg_mosquera_valencia_f_i1_ok_000079.mp4",
+      "athlete": "mosquera",
+      "split": "val",
+      "weight_class": "-65kg",
+      "outcome": "ok",
+      "difficulty": "easy",
+      "why_selected": "Successful -65 kg lift pairing with a failed -65 kg clip (adventino) to contrast outcome within class."
+    },
+    {
+      "video_relpath": "moeini/snatch_-94kg_moeini_sedeh_alireza_i3_ok_000018.mp4",
+      "athlete": "moeini",
+      "split": "test",
+      "weight_class": "-94kg",
+      "outcome": "ok",
+      "difficulty": "hard",
+      "why_selected": "Known difficult athlete for learned models despite a successful lift; 720p; atypical timing/quality for boundary ambiguity."
+    },
+    {
+      "video_relpath": "friedrich/snatch_-94kg_friedich_raphael_i1_ok_000001.mp4",
+      "athlete": "friedrich",
+      "split": "test",
+      "weight_class": "-94kg",
+      "outcome": "ok",
+      "difficulty": "hard",
+      "why_selected": "720p men's -94 kg with incomplete supervised-phase coverage on an ok attempt; stresses ambiguous late-lift labelling."
+    },
+    {
+      "video_relpath": "mueller/snatch_-88kg_mueller_lucas_i2_ok_000026.mp4",
+      "athlete": "mueller",
+      "split": "val",
+      "weight_class": "-88kg",
+      "outcome": "ok",
+      "difficulty": "hard",
+      "why_selected": "Marked ok but only five supervised phases and a 2-frame transition; hard scoop boundary."
+    },
+    {
+      "video_relpath": "ozkan/snatch_-53kg_ozkan_cansel_i2_fail_000122.mp4",
+      "athlete": "ozkan",
+      "split": "train",
+      "weight_class": "-53kg",
+      "outcome": "fail",
+      "difficulty": "mixed",
+      "why_selected": "Failed attempt that still contains all seven supervised phases; unusual fail morphology."
+    },
+    {
+      "video_relpath": "abokhala/snatch_-94kg_abokhala_karim_i3_fail_000005.mp4",
+      "athlete": "abokhala",
+      "split": "train",
+      "weight_class": "-94kg",
+      "outcome": "fail",
+      "difficulty": "hard",
+      "why_selected": "Short 720p failed attempt with truncated phase set; early session proxy."
+    },
+    {
+      "video_relpath": "chen/snatch_-53kg_chen_guan_ling_i2_fail_000119.mp4",
+      "athlete": "chen",
+      "split": "train",
+      "weight_class": "-53kg",
+      "outcome": "fail",
+      "difficulty": "hard",
+      "why_selected": "Shortest clip in the corpus (3 s) with a 2-frame transition; extreme temporal compression."
+    },
+    {
+      "video_relpath": "muthupandi/snatch_-65kg_muthupandi_raja_i1_fail_000081.mp4",
+      "athlete": "muthupandi",
+      "split": "train",
+      "weight_class": "-65kg",
+      "outcome": "fail",
+      "difficulty": "hard",
+      "why_selected": "Failed -65 kg with 2-frame transition; difficult first-pull/scoop timing."
+    },
+    {
+      "video_relpath": "rivas/snatch_-86kg_rivas_mosquera_valeria_i3_fail_000196.mp4",
+      "athlete": "rivas",
+      "split": "train",
+      "weight_class": "-86kg",
+      "outcome": "fail",
+      "difficulty": "hard",
+      "why_selected": "Late clip-id women's -86 kg fail with truncated phases; diversifies session proxy."
+    },
+    {
+      "video_relpath": "adventino/snatch_-65kg_adventino_geovani_leonardo_i2_fail_000097.mp4",
+      "athlete": "adventino",
+      "split": "val",
+      "weight_class": "-65kg",
+      "outcome": "fail",
+      "difficulty": "hard",
+      "why_selected": "Val-split failed -65 kg counterpart to mosquera's success."
+    },
+    {
+      "video_relpath": "alipour/snatch_-94kg_alipour_ali_i1_fail_000006.mp4",
+      "athlete": "alipour",
+      "split": "val",
+      "weight_class": "-94kg",
+      "outcome": "fail",
+      "difficulty": "hard",
+      "why_selected": "720p truncated fail; adds lower-resolution difficulty in the val split."
+    },
+    {
+      "video_relpath": "karapetyan/snatch_-88k_karapetyan_andranik_i1_fail_000042.mp4",
+      "athlete": "karapetyan",
+      "split": "train",
+      "weight_class": "-88k",
+      "outcome": "fail",
+      "difficulty": "hard",
+      "why_selected": "Filename weight-class spelling variant (-88k); truncated fail for session/label-robustness diversity."
+    },
+    {
+      "video_relpath": "rustamov/snatch_-71k_rustamov_isa_i2_fail_000057.mp4",
+      "athlete": "rustamov",
+      "split": "test",
+      "weight_class": "-71k",
+      "outcome": "fail",
+      "difficulty": "hard",
+      "why_selected": "Test-split truncated fail with -71k spelling variant; complements -71kg successes."
+    }
+  ],
+  "diversity_summary": {
+    "n_athletes": 20,
+    "weight_classes": [
+      "-+86kg",
+      "-48kg",
+      "-53kg",
+      "-65kg",
+      "-71k",
+      "-71kg",
+      "-86kg",
+      "-88k",
+      "-88kg",
+      "-94kg"
+    ],
+    "outcomes_ok_fail": {"ok": 11, "fail": 9},
+    "splits_train_val_test": {"train": 9, "val": 6, "test": 5},
+    "resolutions_note": "Includes multiple 1280x720 clips (abokhala, alipour, friedrich, moeini) amid predominantly 1920x1080."
+  },
+  "agreement_results": null,
+  "notes": [
+    "Do not compute agreement until annotator2 segment CSVs are complete for all 20 videos.",
+    "Competition identity is not an explicit metadata field; weight class + clip-id bucket are used as session proxies from Weightlifting House broadcast extractions."
+  ]
+}

@@ -1,0 +1,5 @@
+1. Read docs/annotation/IAA_PROTOCOL.md (sections 2–3).
+2. Open each video under the raw_videos root listed in VIDEO_LIST.md.
+3. Fill blank_segment_templates/*.csv (inclusive frame intervals).
+4. Copy completed files to analysis/iaa/annotator2/segments/ mirroring paths.
+5. Do not look at annotator-1 labels or model predictions.

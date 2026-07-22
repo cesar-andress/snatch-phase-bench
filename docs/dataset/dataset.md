@@ -133,6 +133,6 @@ Output tensor shape: **`(21249, 31, 99)`**.
 
 - [ ] Pseudonymize athlete folder names for public release
 - [ ] Document native FPS and camera angles
-- [ ] Inter-annotator agreement study
+- [ ] Inter-annotator agreement study — protocol + subset frozen: [`../annotation/IAA_PROTOCOL.md`](../annotation/IAA_PROTOCOL.md) (annotator-2 labels pending; no agreement numbers yet)
 - [ ] Publish segment labels as primary benchmark format
 - [ ] Zenodo DOI with legal clearance
