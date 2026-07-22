@@ -213,38 +213,78 @@ def plot_difference_histograms(
         ax.axvline(summary.ci95_low, color="#55A868", linestyle=":", linewidth=1.2)
         ax.axvline(summary.ci95_high, color="#55A868", linestyle=":", linewidth=1.2, label="95% CI")
         ax.set_title(METRIC_LABELS[metric])
-        ax.set_xlabel("B3 − B2")
+        ax.set_xlabel(r"$\Delta$ (B3$-$B2)")
         ax.set_ylabel("Count")
     axes_flat[-1].axis("off")
     handles, labels = axes_flat[0].get_legend_handles_labels()
     axes_flat[-1].legend(handles, labels, loc="center", frameon=False)
-    fig.suptitle("Paired athlete bootstrap: ASFormer (B3) − MS-TCN (B2)", fontsize=12)
+    fig.suptitle("Paired athlete bootstrap: ASFormer (B3) $-$ MS-TCN (B2)", fontsize=12)
     fig.tight_layout()
     fig.savefig(output_dir / "bootstrap_diff_distributions.png")
     fig.savefig(output_dir / "bootstrap_diff_distributions.pdf")
     plt.close(fig)
 
-    # Forest-style CI plot
-    fig, ax = plt.subplots(figsize=(8, 4.5), dpi=150)
-    y_pos = np.arange(len(METRICS))
-    means = [diff_summaries[m].mean for m in METRICS]
-    lows = [diff_summaries[m].ci95_low for m in METRICS]
-    highs = [diff_summaries[m].ci95_high for m in METRICS]
+    # Two-panel forest: F1 metrics share a scale; MAE uses its own (frames + ms twin).
+    f1_keys = [
+        "frame_macro_f1",
+        "segmental_f1_at_10",
+        "segmental_f1_at_25",
+        "segmental_f1_at_50",
+    ]
+    fig, axes = plt.subplots(
+        1,
+        2,
+        figsize=(8.2, 3.6),
+        dpi=200,
+        gridspec_kw={"width_ratios": [1.35, 1.0]},
+    )
+    ax = axes[0]
+    y = np.arange(len(f1_keys))
+    means = [diff_summaries[m].mean for m in f1_keys]
+    lows = [diff_summaries[m].ci95_low for m in f1_keys]
+    highs = [diff_summaries[m].ci95_high for m in f1_keys]
     ax.axvline(0.0, color="black", linestyle="--", linewidth=1.0)
     ax.errorbar(
         means,
-        y_pos,
-        xerr=[np.array(means) - np.array(lows), np.array(highs) - np.array(means)],
+        y,
+        xerr=[np.asarray(means) - np.asarray(lows), np.asarray(highs) - np.asarray(means)],
         fmt="o",
-        color="#4C72B0",
-        ecolor="#4C72B0",
+        color="#2F5D8C",
+        ecolor="#2F5D8C",
         capsize=3,
+        markersize=5,
     )
-    ax.set_yticks(y_pos)
-    ax.set_yticklabels([METRIC_LABELS[m] for m in METRICS])
-    ax.set_xlabel("B3 − B2 (bootstrap mean ± 95% percentile CI)")
-    ax.set_title("Athlete-paired bootstrap differences")
-    fig.tight_layout()
+    ax.set_yticks(y)
+    ax.set_yticklabels([METRIC_LABELS[m] for m in f1_keys])
+    ax.set_xlabel(r"$\Delta$ F1  (B3$-$B2)")
+    ax.set_title("(a) Frame / segment F1")
+    ax.invert_yaxis()
+
+    ax = axes[1]
+    mae = diff_summaries["boundary_mae_frames"]
+    ax.axvline(0.0, color="black", linestyle="--", linewidth=1.0)
+    ax.errorbar(
+        [mae.mean],
+        [0],
+        xerr=[[mae.mean - mae.ci95_low], [mae.ci95_high - mae.mean]],
+        fmt="o",
+        color="#2F5D8C",
+        ecolor="#2F5D8C",
+        capsize=3,
+        markersize=5,
+    )
+    ax.set_yticks([0])
+    ax.set_yticklabels(["Boundary MAE"])
+    ax.set_xlabel(r"$\Delta$ MAE (frames; B3$-$B2)")
+    ax.set_title("(b) Boundary MAE")
+    ax2 = ax.twiny()
+    ax2.set_xlim(np.asarray(ax.get_xlim()) * 40.0)
+    ax2.set_xlabel(r"$\Delta$ MAE (ms at 25 fps)")
+    fig.suptitle(
+        r"Athlete-paired bootstrap differences ($n{=}11$; 10{,}000 resamples)",
+        fontsize=11,
+    )
+    fig.tight_layout(rect=[0, 0, 1, 0.94])
     fig.savefig(output_dir / "bootstrap_diff_forest.png")
     fig.savefig(output_dir / "bootstrap_diff_forest.pdf")
     plt.close(fig)
