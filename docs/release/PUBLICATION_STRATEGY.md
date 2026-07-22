@@ -64,16 +64,20 @@ A benchmark that is not fully reproducible is not a benchmark — release checkl
 
 ## 5. Submission readiness gates
 
-- [ ] G0: Checkpoint validated — **DONE**
-- [ ] G0.5: Phase 3 benchmark protocol documented — **DONE**
-- [ ] G1: Phase ontology reconciled
-- [ ] G2: B0 + boundary metrics reported
-- [ ] G3: MS-TCN / ASFormer baselines complete
+Updated 2026-07-22 after B2/B3 freeze. Full audit: [`SUBMISSION_READINESS_REPORT.md`](SUBMISSION_READINESS_REPORT.md).
+
+- [x] G0: Checkpoint validated — **DONE** (B1)
+- [x] G0.5: Phase 3 benchmark protocol documented — **DONE**
+- [x] G1: Phase ontology reconciled — **DONE** (`seven_phase_v1`)
+- [ ] G2: B0 + boundary metrics reported — **Partial** (boundary metrics in B2/B3; B0 not implemented)
+- [x] G3: MS-TCN / ASFormer baselines complete — **DONE** (frozen B2/B3, three seeds)
 - [ ] Essential citations verified in BibTeX
-- [ ] Related Work prose complete (not outline)
-- [ ] Results tables populated from committed experiments only
+- [ ] Related Work prose complete (not outline) — mostly done; deadlift TODO remains
+- [x] Results tables populated from committed experiments only — **DONE** for B2/B3 (verify Abstract sync)
+- [ ] Manuscript Abstract/Discussion/Conclusion synchronized with Results — **BLOCKING**
 - [ ] Reviewer checklist: all P0 items mitigated or honestly conceded
 - [ ] Legal clearance for video release or documented restriction
+- [ ] LICENSE + CITATION.cff finalized for public release
 
 ---
 
